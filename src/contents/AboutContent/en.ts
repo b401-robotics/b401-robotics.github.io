@@ -2,7 +2,7 @@ export const aboutEN = {
   sectionLabel: "About Us",
   heading: "Where Innovation Meets",
   headingAccent: "Intelligence",
-  body: "B401 is the Robotics and Intelligent Systems Laboratory of the Department of Electrical and Information Engineering, Universitas Gadjah Mada. We bridge the gap between theoretical foundations and practical engineering applications.",
+  body: "The Robotics and Intelligent Systems Laboratory provides facilities for students to study web development, embedded systems, robotics, wireless sensor networks, app development, and the internet of things. This laboratory serves student final projects, theses, and student-lecturer collaborative research.",
   highlights: [
     {
       title: "Cutting-Edge Research",

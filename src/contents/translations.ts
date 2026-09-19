@@ -18,6 +18,8 @@ import { contactEN } from "./ContactContent/en";
 import { contactID } from "./ContactContent/id";
 import { footerEN } from "./FooterContent/en";
 import { footerID } from "./FooterContent/id";
+import { achievementsEN } from "./AchievementContent/en";
+import { achievementsID } from "./AchievementContent/id";
 
 export const translations = {
   en: {
@@ -29,6 +31,7 @@ export const translations = {
     projects: projectsEN,
     members: membersEN,
     equipment: equipmentEN,
+    achievements: achievementsEN,
     contact: contactEN,
     footer: footerEN,
   },
@@ -41,6 +44,7 @@ export const translations = {
     projects: projectsID,
     members: membersID,
     equipment: equipmentID,
+    achievements: achievementsID,
     contact: contactID,
     footer: footerID,
   },

@@ -1,4 +1,4 @@
-import { lecturers } from "./memberList";
+import { lecturers, assistants } from "./memberList";
 
 export const membersID = {
   sectionLabel: "Tim Kami",
@@ -9,8 +9,11 @@ export const membersID = {
   studentsLabel: "Anggota Mahasiswa",
   lecturers: lecturers,
   studentRoles: [
-    { label: "Asisten Laboratorium", count: 6, icon: "🧑‍💻" },
-    { label: "Peneliti Aktif", count: 8, icon: "🔬" },
-    { label: "Mahasiswa Praktikum", count: 40, icon: "📚" },
+    { label: "Asisten Laboratorium", count: 26, icon: "🧑‍💻" },
+    { label: "Peneliti Aktif", count: 14, icon: "🔬" },
   ],
+  assistantsLabel: "Asisten Laboratorium",
+  assistants: assistants,
+  modalEducationLabel: "Pendidikan",
+  modalResearchLabel: "Minat Penelitian",
 } as const;

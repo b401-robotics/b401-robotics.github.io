@@ -2,7 +2,7 @@ export const aboutID = {
   sectionLabel: "Tentang Kami",
   heading: "Di Mana Inovasi Bertemu",
   headingAccent: "Kecerdasan",
-  body: "B401 adalah Laboratorium Robotika dan Sistem Cerdas milik Departemen Teknik Elektro dan Teknologi Informasi, Universitas Gadjah Mada. Kami menjembatani kesenjangan antara fondasi teori dan aplikasi rekayasa praktis.",
+  body: "Laboratorium Robotika dan Sistem Cerdas memberi sarana kepada para mahasiswa dalam mempelajari web development, embedded system, robotika, wireless sensor network, app development dan internet of things. Laboratorium ini melayani pengerjaan tugas akhir dan tesis mahasiswa dan penelitian mahasiswa bersama dosen.",
   highlights: [
     {
       title: "Penelitian Mutakhir",

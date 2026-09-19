@@ -5,34 +5,34 @@ export const researchEN = {
   body: "Our interdisciplinary research spans multiple domains, bringing together expertise in robotics, AI, and systems engineering.",
   areas: [
     {
+      tag: "Web",
+      title: "Web Development",
+      desc: "Research and development of modern web-based applications and platforms.",
+    },
+    {
+      tag: "Embedded",
+      title: "Embedded Systems",
+      desc: "Design and implementation of embedded hardware and software for various applications.",
+    },
+    {
       tag: "Robotics",
-      title: "Autonomous Mobile Robots",
-      desc: "Research on path planning, obstacle avoidance, and navigation algorithms for autonomous ground and aerial vehicles.",
+      title: "Robotics",
+      desc: "Development of robotic systems, kinematics, and intelligent control algorithms.",
     },
     {
-      tag: "AI / ML",
-      title: "Machine Learning & Computer Vision",
-      desc: "Deep learning architectures for object detection, image segmentation, and real-time visual perception systems.",
+      tag: "Network",
+      title: "Wireless Sensor Networks",
+      desc: "Wireless sensor networks for environmental monitoring and large-scale data collection.",
     },
     {
-      tag: "Control",
-      title: "Intelligent Control Systems",
-      desc: "Advanced control strategies including PID, fuzzy logic, and model predictive control for dynamic systems.",
+      tag: "App",
+      title: "App Development",
+      desc: "Mobile and desktop application development for intelligent systems integration.",
     },
     {
       tag: "IoT",
-      title: "Embedded & IoT Systems",
-      desc: "Design and prototyping of embedded systems, sensor networks, and Internet of Things applications for smart environments.",
-    },
-    {
-      tag: "Automation",
-      title: "Industrial Automation",
-      desc: "Smart manufacturing, process automation, and human-robot collaboration for Industry 4.0 applications.",
-    },
-    {
-      tag: "Signal Processing",
-      title: "Signal & Data Processing",
-      desc: "Advanced signal processing, sensor fusion, and data analytics techniques for intelligent system applications.",
+      title: "Internet of Things",
+      desc: "Integration of physical devices with the internet to build interconnected smart systems.",
     },
   ],
 } as const;

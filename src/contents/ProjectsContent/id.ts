@@ -43,5 +43,17 @@ export const projectsID = {
       tags: ["MediaPipe", "RealSense", "ROS 2"],
       status: "Active",
     },
+    {
+      title: "Robot Berjalan Bipedal",
+      desc: "Bagian bawah robot humanoid yang dirancang untuk mempelajari cara berjalan dinamis dan keseimbangan.",
+      tags: ["ROS", "C++", "Simscape"],
+      status: "Research",
+    },
+    {
+      title: "Pemantau Lingkungan LoRaWAN",
+      desc: "Jaringan sensor nirkabel terdistribusi untuk pemantauan pertanian skala besar menggunakan LoRa.",
+      tags: ["ESP32", "LoRa", "InfluxDB"],
+      status: "Completed",
+    },
   ],
 } as const;

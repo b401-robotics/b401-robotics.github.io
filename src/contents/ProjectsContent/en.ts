@@ -43,5 +43,17 @@ export const projectsEN = {
       tags: ["MediaPipe", "RealSense", "ROS 2"],
       status: "Active",
     },
+    {
+      title: "Bipedal Walking Robot",
+      desc: "A humanoid robot lower body designed to study dynamic walking and balance using zero moment point control.",
+      tags: ["ROS", "C++", "Simscape"],
+      status: "Research",
+    },
+    {
+      title: "LoRaWAN Environmental Monitor",
+      desc: "Distributed wireless sensor network for large-scale agricultural monitoring using low power wide area networks.",
+      tags: ["ESP32", "LoRa", "InfluxDB"],
+      status: "Completed",
+    },
   ],
 } as const;

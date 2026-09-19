@@ -1,4 +1,4 @@
-import { lecturers } from "./memberList";
+import { lecturers, assistants } from "./memberList";
 
 export const membersEN = {
   sectionLabel: "Our Team",
@@ -9,8 +9,11 @@ export const membersEN = {
   studentsLabel: "Student Members",
   lecturers: lecturers,
   studentRoles: [
-    { label: "Laboratory Assistant", count: 6, icon: "🧑‍💻" },
-    { label: "Active Researcher", count: 8, icon: "🔬" },
-    { label: "Practicum Student", count: 40, icon: "📚" },
+    { label: "Laboratory Assistant", count: 26, icon: "🧑‍💻" },
+    { label: "Active Researcher", count: 14, icon: "🔬" },
   ],
+  assistantsLabel: "Laboratory Assistants",
+  assistants: assistants,
+  modalEducationLabel: "Education",
+  modalResearchLabel: "Research Interests",
 } as const;
