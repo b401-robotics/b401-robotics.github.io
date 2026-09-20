@@ -53,8 +53,8 @@ export function Navbar() {
 
   const navLinks = [
     { label: "Home", path: "home" },
-    { label: t.facility, path: "research" },
-    { label: t.research, path: "projects" },
+    { label: t.facility, path: "equipment" },
+    { label: t.research, path: "research" },
     { label: t.practicums, path: "practicums" },
     { label: t.members, path: "members" },
     { label: t.contact, path: "contact" },

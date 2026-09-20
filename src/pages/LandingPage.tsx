@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams, Navigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "../components/Navbar";
-import { HeroSection } from "../components/HeroSection";
+import { HomeSheets } from "../components/HomeSheets";
 
 import { ResearchSection } from "../components/ResearchSection";
 import { PracticumsSection } from "../components/PracticumsSection";
@@ -61,7 +61,7 @@ export function LandingPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {(!section || section === "home") && <HeroSection />}
+                {(!section || section === "home") && <HomeSheets />}
 
                 {section === "research" && <ResearchSection />}
                 {section === "practicums" && <PracticumsSection />}
