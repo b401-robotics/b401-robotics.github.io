@@ -1,6 +1,7 @@
 export const navID = {
   about: "Tentang",
   research: "Penelitian",
+  facility: "Fasilitas",
   practicums: "Praktikum",
   projects: "Proyek",
   members: "Anggota",

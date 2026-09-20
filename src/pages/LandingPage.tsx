@@ -49,12 +49,7 @@ export function LandingPage() {
         <meta name="description" content="Welcome to the B401 Robotics and Intelligent Systems Laboratory. Discover our research, projects, and state-of-the-art equipment." />
       </Helmet>
 
-      <div className="min-h-screen bg-slate-50 dark:bg-zinc-950 transition-colors duration-500 relative overflow-hidden">
-        {/* Subtle, cool-toned background blobs for glassmorphism to blur */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-blue-200/40 dark:bg-blue-900/20 blur-[100px] animate-float pointer-events-none transition-colors duration-500" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-indigo-200/40 dark:bg-indigo-900/20 blur-[120px] animate-float pointer-events-none transition-colors duration-500" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-[40%] left-[60%] w-[30vw] h-[30vw] rounded-full bg-teal-200/40 dark:bg-teal-900/20 blur-[80px] animate-float pointer-events-none transition-colors duration-500" style={{ animationDelay: "4s" }} />
-
+      <div className="min-h-screen bg-slate-100 dark:bg-zinc-950 transition-colors duration-500 relative overflow-hidden">
         <div className="relative z-10 flex flex-col min-h-screen">
           <Navbar />
           <main className="flex-1 pt-24">

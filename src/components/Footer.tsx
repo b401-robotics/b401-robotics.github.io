@@ -6,22 +6,12 @@ import Logo from "../assets/logo/Logo.webp";
 export function Footer() {
   const { lang } = useLanguage();
   const t = translations[lang].footer;
-  const navT = translations[lang].nav;
   const year = new Date().getFullYear();
-
-  const quickLinks = [
-    { label: navT.research, path: "research" },
-    { label: navT.practicums, path: "practicums" },
-    { label: navT.projects, path: "projects" },
-    { label: navT.members, path: "members" },
-    { label: navT.achievements, path: "achievements" },
-    { label: navT.contact, path: "contact" },
-  ];
 
   return (
     <footer className="border-t border-zinc-200 bg-white dark:bg-white/5">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
           {/* Brand */}
           <div>
             <Link to={`/${lang}`} onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-3 mb-4 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-zinc-500/20 rounded-lg">
@@ -36,22 +26,6 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-zinc-500 text-sm leading-relaxed">{t.tagline}</p>
-          </div>
-
-          {/* Quick links */}
-          <div>
-            <h4 className="font-display font-semibold text-zinc-700 text-sm uppercase tracking-wider mb-4">
-              {t.quickLinksLabel}
-            </h4>
-            <ul className="grid grid-cols-3 gap-y-2 gap-x-4">
-              {quickLinks.map((link) => (
-                <li key={link.path}>
-                  <Link to={`/${lang}/${link.path}`} className="text-zinc-500 hover:text-zinc-700 text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-zinc-500/20 rounded-md px-1 -mx-1">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* University info */}

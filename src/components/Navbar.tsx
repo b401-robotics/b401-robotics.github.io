@@ -53,11 +53,10 @@ export function Navbar() {
 
   const navLinks = [
     { label: "Home", path: "home" },
-    { label: t.research, path: "research" },
+    { label: t.facility, path: "research" },
+    { label: t.research, path: "projects" },
     { label: t.practicums, path: "practicums" },
-    { label: t.projects, path: "projects" },
     { label: t.members, path: "members" },
-    { label: t.achievements, path: "achievements" },
     { label: t.contact, path: "contact" },
   ];
 
@@ -154,13 +153,6 @@ export function Navbar() {
             </button>
           </div>
 
-          {/* CTA */}
-          <Link
-            to={`/${lang}/contact`}
-            className="px-5 py-2 min-h-[44px] flex items-center rounded-lg bg-zinc-900 text-white text-sm font-medium hover:opacity-90 hover:shadow-lg hover:shadow-black/20 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-all duration-300"
-          >
-            {t.joinUs}
-          </Link>
         </div>
 
         {/* Mobile: lang + hamburger */}
@@ -256,13 +248,6 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                to={`/${lang}/contact`}
-                onClick={() => setMenuOpen(false)}
-                className="mt-2 px-4 py-3 min-h-[44px] flex items-center justify-center rounded-lg bg-zinc-900 text-white text-sm font-medium focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-all duration-200"
-              >
-                {t.joinUs}
-              </Link>
             </div>
           </motion.div>
         )}
