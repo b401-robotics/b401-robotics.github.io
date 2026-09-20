@@ -140,11 +140,28 @@ const result = await Bun.build({
   minify: true,
   target: "browser",
   sourcemap: "linked",
+  // Root-absolute asset URLs. Without this Bun emits relative "./foo.webp"
+  // paths, which the browser resolves against the current route (e.g. /en/)
+  // and 404s. See oven-sh/bun#22690 and #18809.
+  publicPath: "/",
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
   },
   ...cliConfig,
 });
+
+// --- GitHub Pages SPA support --------------------------------------------
+// 1. 404.html: GitHub Pages returns 404 for any path that is not a real
+//    file/directory, so a refresh on /en would 404. The 404 page rewrites
+//    the URL back to the SPA root and lets React Router take over.
+// 2. .nojekyll: stops GitHub Pages from running Jekyll over the output,
+//    which would otherwise strip underscore-prefixed files.
+const spa404Source = path.join(process.cwd(), "src", "404.html");
+if (existsSync(spa404Source)) {
+  await Bun.write(path.join(outdir, "404.html"), await Bun.file(spa404Source).text());
+}
+await Bun.write(path.join(outdir, ".nojekyll"), "");
+// -------------------------------------------------------------------------
 
 const end = performance.now();
 

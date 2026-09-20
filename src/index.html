@@ -3,6 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Restores the real path after the GitHub Pages 404 redirect.
+      The 404.html page rewrites /en/research to /?/en/research; this
+      runs before the React bundle and puts the path back so that
+      React Router sees the correct URL.
+    -->
+    <script type="text/javascript">
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      })(window.location);
+    </script>
     <meta name="description" content="B401 Robotics and Intelligent Systems Laboratory — Pioneering innovation in robotics, automation, and intelligent systems research." />
     <link rel="icon" type="image/webp" href="/src/assets/logo/Logo.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
