@@ -19,4 +19,5 @@ export const contactEN = {
   messageLabel: "Message",
   messagePlaceholder: "Tell us more...",
   sendBtn: "Send Message",
+  viewAll: "Contact Us",
 } as const;

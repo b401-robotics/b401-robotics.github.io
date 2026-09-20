@@ -13,6 +13,7 @@ export const equipmentEN = {
     { name: "Oscilloscopes & Signal Analyzers", category: "Electronics", icon: "📡" },
     { name: "3D Printing Workstation", category: "Prototyping", icon: "🖨️" },
   ],
+  viewAll: "View All Equipment",
   labFeatures: [
     {
       title: "Lab Space",

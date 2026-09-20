@@ -1,10 +1,30 @@
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 import { AnimatedCounter } from "./AnimatedCounter";
+import { PreviewSectionLayout } from "./PreviewSectionLayout";
 
-export function EquipmentSection() {
+interface EquipmentSectionProps {
+  preview?: boolean;
+}
+
+export function EquipmentSection({ preview = false }: EquipmentSectionProps = {}) {
   const { lang } = useLanguage();
   const t = translations[lang].equipment;
+
+  if (preview) {
+    return (
+      <PreviewSectionLayout
+        id="equipment"
+        sectionLabel={t.sectionLabel}
+        heading={t.heading}
+        headingAccent={t.headingAccent}
+        body={t.body}
+        ctaTo={`/${lang}/equipment`}
+        ctaLabel={t.viewAll}
+        imagePosition="right"
+      />
+    );
+  }
 
   return (
     <section id="equipment" className="section-padding">

@@ -11,11 +11,11 @@ export function HomeSheets() {
     <div className="flex flex-col">
       <HeroSection />
       <AboutSection />
-      <EquipmentSection />
-      <ResearchSection />
-      <PracticumsSection />
-      <MembersSection />
-      <ContactSection />
+      <EquipmentSection preview />
+      <ResearchSection preview />
+      <PracticumsSection preview />
+      <MembersSection preview />
+      <ContactSection preview />
     </div>
   );
 }

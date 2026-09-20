@@ -16,4 +16,5 @@ export const membersEN = {
   assistants: assistants,
   modalEducationLabel: "Education",
   modalResearchLabel: "Research Interests",
+  viewAll: "View All Members",
 } as const;

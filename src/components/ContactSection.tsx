@@ -17,7 +17,11 @@ const CONTACT_ICONS = [
   </svg>,
 ];
 
-export function ContactSection() {
+interface ContactSectionProps {
+  preview?: boolean;
+}
+
+export function ContactSection(_props: ContactSectionProps = {}) {
   const { lang } = useLanguage();
   const t = translations[lang].contact;
 

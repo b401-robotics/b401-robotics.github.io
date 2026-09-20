@@ -13,6 +13,7 @@ export const equipmentID = {
     { name: "Osiloskop & Penganalisis Sinyal", category: "Elektronika", icon: "📡" },
     { name: "Workstation Cetak 3D", category: "Prototipe", icon: "🖨️" },
   ],
+  viewAll: "Lihat Semua Peralatan",
   labFeatures: [
     {
       title: "Luas Lab",

@@ -3,6 +3,7 @@ export const researchID = {
   heading: "Bidang",
   headingAccent: "Keahlian",
   body: "Penelitian interdisipliner kami mencakup berbagai domain, memadukan keahlian dalam robotika, AI, dan rekayasa sistem.",
+  viewAll: "Lihat Semua Penelitian",
   areas: [
     {
       tag: "Web",

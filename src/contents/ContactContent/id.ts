@@ -19,4 +19,5 @@ export const contactID = {
   messageLabel: "Pesan",
   messagePlaceholder: "Ceritakan lebih lanjut...",
   sendBtn: "Kirim Pesan",
+  viewAll: "Hubungi Kami",
 } as const;

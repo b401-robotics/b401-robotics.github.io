@@ -4,6 +4,7 @@ export const practicumsEN = {
   headingAccent: "Learning",
   body: "Our practicum program is designed to complement theoretical coursework with hands-on, real-world engineering experience.",
   sessions: "sessions",
+  viewAll: "View All Practicums",
   items: [
     {
       code: "P01",

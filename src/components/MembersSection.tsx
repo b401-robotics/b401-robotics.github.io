@@ -3,6 +3,7 @@ import { useLanguage, type Language } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 import type { I_lecturers, I_assistant } from "@/contents/MembersContent/memberList";
 import { AnimatedCounter } from "./AnimatedCounter";
+import { PreviewSectionLayout } from "./PreviewSectionLayout";
 
 const STUDENT_ROLE_COLORS = [
   "from-zinc-700 to-zinc-900",
@@ -10,7 +11,11 @@ const STUDENT_ROLE_COLORS = [
   "from-emerald-500 to-teal-600",
 ];
 
-export function MembersSection() {
+interface MembersSectionProps {
+  preview?: boolean;
+}
+
+export function MembersSection({ preview = false }: MembersSectionProps = {}) {
   const { lang } = useLanguage();
   const t = translations[lang].members;
   const [selectedLecturer, setSelectedLecturer] = useState<I_lecturers | null>(null);
@@ -31,6 +36,21 @@ export function MembersSection() {
     else if (language == "id") {
       return { role: assistant.role.id };
     }
+  }
+
+  if (preview) {
+    return (
+      <PreviewSectionLayout
+        id="members"
+        sectionLabel={t.sectionLabel}
+        heading={t.heading}
+        headingAccent={t.headingAccent}
+        body={t.body}
+        ctaTo={`/${lang}/members`}
+        ctaLabel={t.viewAll}
+        imagePosition="left"
+      />
+    );
   }
 
   return (

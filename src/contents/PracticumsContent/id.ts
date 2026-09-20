@@ -4,6 +4,7 @@ export const practicumsID = {
   headingAccent: "Terstruktur",
   body: "Program praktikum kami dirancang untuk melengkapi perkuliahan teoritis dengan pengalaman rekayasa langsung di dunia nyata.",
   sessions: "sesi",
+  viewAll: "Lihat Semua Praktikum",
   items: [
     {
       code: "P01",

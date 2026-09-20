@@ -1,9 +1,29 @@
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
+import { PreviewSectionLayout } from "./PreviewSectionLayout";
 
-export function PracticumsSection() {
+interface PracticumsSectionProps {
+  preview?: boolean;
+}
+
+export function PracticumsSection({ preview = false }: PracticumsSectionProps = {}) {
   const { lang } = useLanguage();
   const t = translations[lang].practicums;
+
+  if (preview) {
+    return (
+      <PreviewSectionLayout
+        id="practicums"
+        sectionLabel={t.sectionLabel}
+        heading={t.heading}
+        headingAccent={t.headingAccent}
+        body={t.body}
+        ctaTo={`/${lang}/practicums`}
+        ctaLabel={t.viewAll}
+        imagePosition="right"
+      />
+    );
+  }
 
   return (
     <section id="practicums" className="section-padding relative">

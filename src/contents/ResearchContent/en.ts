@@ -3,6 +3,7 @@ export const researchEN = {
   heading: "Areas of",
   headingAccent: "Expertise",
   body: "Our interdisciplinary research spans multiple domains, bringing together expertise in robotics, AI, and systems engineering.",
+  viewAll: "View All Research",
   areas: [
     {
       tag: "Web",

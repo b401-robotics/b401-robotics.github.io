@@ -1,5 +1,6 @@
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
+import { PreviewSectionLayout } from "./PreviewSectionLayout";
 
 const AREA_STYLES = [
   { color: "from-zinc-400 to-zinc-500", badge: "bg-zinc-100 dark:bg-white/5 text-zinc-700 border-zinc-200", accent: "border-zinc-200 hover:border-zinc-400" },
@@ -10,9 +11,28 @@ const AREA_STYLES = [
   { color: "from-rose-500 to-pink-600", badge: "bg-gray-200/50 text-gray-700 border-gray-300", accent: "border-gray-300 hover:border-gray-700/60" },
 ];
 
-export function ResearchSection() {
+interface ResearchSectionProps {
+  preview?: boolean;
+}
+
+export function ResearchSection({ preview = false }: ResearchSectionProps = {}) {
   const { lang } = useLanguage();
   const t = translations[lang].research;
+
+  if (preview) {
+    return (
+      <PreviewSectionLayout
+        id="research"
+        sectionLabel={t.sectionLabel}
+        heading={t.heading}
+        headingAccent={t.headingAccent}
+        body={t.body}
+        ctaTo={`/${lang}/research`}
+        ctaLabel={t.viewAll}
+        imagePosition="left"
+      />
+    );
+  }
 
   return (
     <section id="research" className="section-padding">
