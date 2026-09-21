@@ -61,15 +61,6 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
                     idx !== 0 ? "border-t border-zinc-200/70 dark:border-white/10" : ""
                   }`}
                 >
-                  {/* Icon */}
-                  <div
-                    className={`text-2xl shrink-0 mt-0.5 transition-transform duration-300 ${
-                      isActive ? "scale-110" : "group-hover:scale-110 opacity-70"
-                    }`}
-                  >
-                    {p.icon}
-                  </div>
-
                   {/* Text */}
                   <div className="min-w-0 flex-1">
                     <div
@@ -129,14 +120,31 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
 
             {selected.topics.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-5">
-                {selected.topics.map((topic) => (
-                  <span
-                    key={topic}
-                    className="px-2.5 py-1 border border-zinc-300 dark:border-white/15 text-zinc-600 dark:text-zinc-300 text-xs"
-                  >
-                    {topic}
-                  </span>
-                ))}
+                {selected.topics.map((topic) => {
+                  const label = topic.label;
+                  const url = "url" in topic ? topic.url : undefined;
+                  const baseClass =
+                    "px-2.5 py-1 border text-xs transition-colors duration-200";
+
+                  return url ? (
+                    <a
+                      key={label}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${baseClass} border-zinc-300 dark:border-white/15 text-zinc-700 dark:text-zinc-200 hover:border-zinc-900 dark:hover:border-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-white/5 cursor-pointer`}
+                    >
+                      {label} ↗
+                    </a>
+                  ) : (
+                    <span
+                      key={label}
+                      className={`${baseClass} border-zinc-300 dark:border-white/15 text-zinc-600 dark:text-zinc-300`}
+                    >
+                      {label}
+                    </span>
+                  );
+                })}
               </div>
             )}
 
