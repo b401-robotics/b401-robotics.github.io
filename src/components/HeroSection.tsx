@@ -27,11 +27,12 @@ export function HeroSection() {
       id="hero"
       className="relative min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-12 lg:px-20 overflow-hidden"
     >
-      {/* Rotating background images with crossfade */}
+      {/* Rotating background images with crossfade — height matches the
+          previous 85vh hero frame, independent of the section's min-height. */}
       {BACKGROUNDS.map((src, idx) => (
         <div
           key={src}
-          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity ease-in-out ${
+          className={`absolute top-0 left-0 right-0 h-[85vh] bg-cover bg-center bg-no-repeat transition-opacity ease-in-out ${
             idx === bgIndex ? "opacity-100" : "opacity-0"
           }`}
           style={{
@@ -42,9 +43,9 @@ export function HeroSection() {
         />
       ))}
 
-      {/* Dim overlay */}
+      {/* Dim overlay — matches the image frame height, not the section */}
       <div
-        className="absolute inset-0 bg-black/35 pointer-events-none"
+        className="absolute top-0 left-0 right-0 h-[85vh] bg-black/35 pointer-events-none"
         aria-hidden="true"
       />
 
