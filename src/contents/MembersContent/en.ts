@@ -1,11 +1,12 @@
-import { lecturers, assistants } from "./memberList";
+import { lecturers, assistants, alumni } from "./memberList";
 
 export const membersEN = {
-  sectionLabel: "Our Team",
+  sectionLabel: "Our People",
   heading: "The People Behind",
   headingAccent: "B401",
-  body: "Our laboratory is powered by dedicated lecturers and talented students who share a passion for robotics and intelligent systems.",
+  body: "Our laboratory is powered by dedicated lecturers, talented students, and a proud community of alumni who share a passion for robotics and intelligent systems.",
   lecturersLabel: "Lecturers & Supervisors",
+  activeMembersLabel: "Active Laboratory Members",
   studentsLabel: "Student Members",
   lecturers: lecturers,
   studentRoles: [
@@ -14,7 +15,9 @@ export const membersEN = {
   ],
   assistantsLabel: "Laboratory Assistants",
   assistants: assistants,
+  alumniLabel: "Laboratory Alumni",
+  alumni: alumni,
   modalEducationLabel: "Education",
   modalResearchLabel: "Research Interests",
-  viewAll: "View All Members",
+  viewAll: "View All People",
 } as const;

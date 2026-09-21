@@ -4,7 +4,7 @@ export const navID = {
   facility: "Fasilitas",
   practicums: "Praktikum",
   projects: "Proyek",
-  members: "Anggota",
+  members: "Orang",
   achievements: "Pencapaian",
   contact: "Kontak",
   joinUs: "Bergabung",

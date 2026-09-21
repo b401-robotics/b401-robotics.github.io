@@ -4,7 +4,7 @@ export const navEN = {
   facility: "Facility",
   practicums: "Practicums",
   projects: "Projects",
-  members: "Members",
+  members: "People",
   achievements: "Achievements",
   contact: "Contact",
   joinUs: "Join Us",

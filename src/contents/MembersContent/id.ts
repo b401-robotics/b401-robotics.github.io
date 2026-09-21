@@ -1,11 +1,12 @@
-import { lecturers, assistants } from "./memberList";
+import { lecturers, assistants, alumni } from "./memberList";
 
 export const membersID = {
-  sectionLabel: "Tim Kami",
+  sectionLabel: "Orang Kami",
   heading: "Orang-Orang di Balik",
   headingAccent: "B401",
-  body: "Laboratorium kami digerakkan oleh dosen berdedikasi dan mahasiswa berbakat yang memiliki semangat terhadap robotika dan sistem cerdas.",
+  body: "Laboratorium kami digerakkan oleh dosen berdedikasi, mahasiswa berbakat, dan komunitas alumni yang memiliki semangat terhadap robotika dan sistem cerdas.",
   lecturersLabel: "Dosen & Pembimbing",
+  activeMembersLabel: "Anggota Laboratorium Aktif",
   studentsLabel: "Anggota Mahasiswa",
   lecturers: lecturers,
   studentRoles: [
@@ -14,7 +15,9 @@ export const membersID = {
   ],
   assistantsLabel: "Asisten Laboratorium",
   assistants: assistants,
+  alumniLabel: "Alumni Laboratorium",
+  alumni: alumni,
   modalEducationLabel: "Pendidikan",
   modalResearchLabel: "Minat Penelitian",
-  viewAll: "Lihat Semua Anggota",
+  viewAll: "Lihat Semua Orang",
 } as const;
