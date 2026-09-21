@@ -22,7 +22,7 @@ export function PreviewSectionLayout({
   imagePosition,
 }: PreviewSectionLayoutProps) {
   return (
-    <section id={id} className="section-padding">
+    <section id={id} className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col justify-center">
       <div className="max-w-6xl mx-auto px-6">
         <div
           className={`flex flex-col gap-10 lg:gap-16 items-center ${

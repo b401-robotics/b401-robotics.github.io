@@ -52,7 +52,7 @@ export function LandingPage() {
       <div className="min-h-screen bg-slate-100 dark:bg-zinc-950 transition-colors duration-500 relative overflow-hidden">
         <div className="relative z-10 flex flex-col min-h-screen">
           <Navbar />
-          <main className="flex-1 pt-24">
+          <main className="flex-1 pt-[4.75rem]">
             <AnimatePresence mode="wait">
               <motion.div 
                 key={section || "home"}

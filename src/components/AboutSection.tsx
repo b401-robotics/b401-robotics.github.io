@@ -21,7 +21,7 @@ export function AboutSection() {
   const tAbout = translations[lang].about;
 
   return (
-    <section id="about" className="section-padding">
+    <section id="about" className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col justify-center">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12 relative">
           <span className="inline-block px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 text-sm font-medium mb-4">

@@ -32,7 +32,7 @@ export function ContactSection(_props: ContactSectionProps = {}) {
   ];
 
   return (
-    <section id="contact" className="section-padding relative">
+    <section id="contact" className="section-padding relative min-h-[calc(100vh-4.75rem)] flex flex-col justify-center">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>

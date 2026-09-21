@@ -25,7 +25,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[85vh] flex items-center px-6 md:px-12 lg:px-20 overflow-hidden"
+      className="relative min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-12 lg:px-20 overflow-hidden"
     >
       {/* Rotating background images with crossfade */}
       {BACKGROUNDS.map((src, idx) => (
@@ -52,7 +52,7 @@ export function HeroSection() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="relative z-10 max-w-4xl mt-[350px]"
+        className="relative z-10 max-w-4xl mt-[250px]"
       >
         {/* Kicker */}
         <p className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-white/80 mb-8">
