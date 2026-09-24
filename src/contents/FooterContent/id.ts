@@ -2,7 +2,16 @@ export const footerID = {
   labName: "Laboratorium Robotika\n& Sistem Cerdas",
   tagline:
     "Memajukan batas robotika dan sistem cerdas melalui penelitian, pendidikan, dan inovasi.",
-  quickLinksLabel: "Tautan Cepat",
+  findUsLabel: "Lokasi Kami",
+  addressLines: [
+    "Departemen Teknik Komputer",
+    "Fakultas Teknologi Elektro dan Informatika Cerdas",
+    "Institut Teknologi Sepuluh Nopember",
+    "Surabaya, Jawa Timur, Indonesia",
+  ],
+  contactLabel: "Hubungi Kami",
+  emailValue: "b401robotics@gmail.com",
+  followLabel: "Ikuti Kami",
   institutionLabel: "Institusi",
   institutionLines: [
     "Institut Teknologi Sepuluh Nopember",

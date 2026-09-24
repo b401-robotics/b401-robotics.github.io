@@ -25,7 +25,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-12 lg:px-20 overflow-hidden"
+      className="relative min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-10 lg:px-14 overflow-hidden"
     >
       {/* Rotating background images with crossfade — height matches the
           previous 85vh hero frame, independent of the section's min-height. */}
@@ -49,22 +49,25 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        className="relative z-10 max-w-4xl mt-[250px]"
-      >
-        {/* Kicker */}
-        <p className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-white/80 mb-8">
-          {t.kicker}
-        </p>
+      {/* Content wrapper — aligned to the same max-width as every other section */}
+      <div className="relative z-10 max-w-[85rem] w-full mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="max-w-4xl mt-[370px]"
+        >
+          {/* Kicker */}
+          <p className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-white/80 mb-8">
+            {t.kicker}
+          </p>
 
-        {/* Slogan */}
-        <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-white">
-          {t.slogan}
-        </h1>
-      </motion.div>
+          {/* Slogan */}
+          <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-white">
+            {t.slogan}
+          </h1>
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -6,6 +6,10 @@ import { aboutEN } from "./AboutContent/en";
 import { aboutID } from "./AboutContent/id";
 import { researchEN } from "./ResearchContent/en";
 import { researchID } from "./ResearchContent/id";
+import { highlightEN } from "./HighlightContent/en";
+import { highlightID } from "./HighlightContent/id";
+import { activityEN } from "./ActivityContent/en";
+import { activityID } from "./ActivityContent/id";
 import { practicumsEN } from "./PracticumsContent/en";
 import { practicumsID } from "./PracticumsContent/id";
 import { projectsEN } from "./ProjectsContent/en";
@@ -27,6 +31,8 @@ export const translations = {
     hero: heroEN,
     about: aboutEN,
     research: researchEN,
+    highlight: highlightEN,
+    activity: activityEN,
     practicums: practicumsEN,
     projects: projectsEN,
     members: membersEN,
@@ -40,6 +46,8 @@ export const translations = {
     hero: heroID,
     about: aboutID,
     research: researchID,
+    highlight: highlightID,
+    activity: activityID,
     practicums: practicumsID,
     projects: projectsID,
     members: membersID,

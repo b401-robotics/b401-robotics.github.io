@@ -54,7 +54,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
 
   return (
     <section id="members" className="section-padding relative">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-[85rem] w-full mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
           <h2 className="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-zinc-100 mb-5">

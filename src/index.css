@@ -38,6 +38,31 @@
     height: 0;
   }
 
+  /* Fading thin scrollbar — the thumb opacity is driven by the
+     --sb-opacity custom property so it can fade in / out smoothly. */
+  .scrollbar-fade {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(113, 113, 122, 0.5) transparent;
+  }
+
+  .scrollbar-fade::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-fade::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-fade::-webkit-scrollbar-thumb {
+    background-color: rgba(113, 113, 122, 0.5);
+    border-radius: 9999px;
+  }
+
+  .scrollbar-fade::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(113, 113, 122, 0.7);
+  }
+
   /* Removed gradient-text */
 
   .card-glass {
@@ -45,7 +70,7 @@
   }
 
   .section-padding {
-    @apply px-6 py-12 md:py-16;
+    @apply px-6 md:px-10 lg:px-14 py-12 md:py-16;
   }
 
   .robot-img-transparent {

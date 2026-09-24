@@ -6,40 +6,56 @@ export function AchievementSection() {
   const t = translations[lang].achievements;
 
   return (
-    <section id="achievements" className="section-padding">
-      <div className="max-w-7xl mx-auto px-6">
+    <section
+      id="achievements"
+      className="section-padding max-h-[calc(100vh-4.75rem)] flex flex-col"
+    >
+      <div className="max-w-[85rem] w-full mx-auto flex flex-col flex-1 min-h-0">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 text-sm font-medium mb-4">
-            {t.sectionLabel}
-          </span>
-          <h2 className="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-zinc-100 mb-5">
+        <div className="mb-10 shrink-0 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
+          <h2 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
             {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
           </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-lg max-w-2xl mx-auto">
+          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
             {t.body}
           </p>
+          <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {t.items.map((item, idx) => (
-            <div
-              key={item.title}
-              className="card-glass rounded-2xl p-6 border border-zinc-200 dark:border-white/10 hover:border-zinc-300 dark:hover:border-zinc-500 hover:ring-2 hover:ring-zinc-300/50 dark:hover:ring-zinc-700/50 transition-all duration-300 group hover:-translate-y-1.5 hover:shadow-xl animate-fade-in"
-              style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
-            >
-              <div className="text-sm font-bold text-amber-600 dark:text-amber-400 mb-2">
-                {item.year}
-              </div>
-              <h3 className="font-display font-semibold text-zinc-900 dark:text-zinc-100 text-lg mb-3 leading-snug">
-                {item.title}
-              </h3>
-              <p className="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          ))}
+        {/* Achievement grid — news-style, scrollable when it overflows */}
+        <div className="overflow-y-auto scrollbar-fade flex-1 min-h-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 pb-2">
+            {t.items.map((item) => (
+              <article key={item.title} className="flex flex-col">
+                {/* Image on top */}
+                <div className="aspect-[16/10] w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden mb-4">
+                  {item.imageUrl ? (
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : null}
+                </div>
+
+                {/* Metadata line */}
+                <div className="text-xs font-medium uppercase tracking-[0.12em] text-amber-600 dark:text-amber-400 mb-3">
+                  {t.sectionLabel} <span className="text-zinc-400 dark:text-zinc-500">•</span> {item.year}
+                </div>
+
+                {/* Title */}
+                <h3 className="font-display font-bold text-xl md:text-2xl text-zinc-900 dark:text-zinc-100 mb-3 leading-snug">
+                  {item.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
+                  {item.desc}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

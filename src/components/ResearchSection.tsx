@@ -36,12 +36,9 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
 
   return (
     <section id="research" className="section-padding">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-[85rem] w-full mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 text-sm font-medium mb-4">
-            {t.sectionLabel}
-          </span>
           <h2 className="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-zinc-100 mb-5">
             {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
           </h2>

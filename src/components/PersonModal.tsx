@@ -61,7 +61,7 @@ export function PersonModal({
 
         {/* Info Area */}
         <div className="flex-1 p-6 sm:p-8 overflow-y-auto">
-          <h3 className="font-display font-bold text-2xl text-zinc-900 dark:text-zinc-100 leading-tight mb-2">
+          <h3 className="font-display font-bold text-xl md:text-2xl text-zinc-900 dark:text-zinc-100 leading-tight mb-2">
             {person.name}
           </h3>
           <p className="text-zinc-500 font-medium text-sm mb-6 pb-6 border-b border-zinc-200 dark:border-white/10">

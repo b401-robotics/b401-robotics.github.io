@@ -5,6 +5,9 @@ export const practicumsID = {
   body: "Program praktikum kami dirancang untuk melengkapi perkuliahan teoritis dengan pengalaman rekayasa langsung di dunia nyata.",
   sessions: "sesi",
   viewAll: "Lihat Semua Praktikum",
+  listHeading: "Daftar praktikum kami",
+  registerLabel: "Daftar",
+  registerUrl: "https://ceits.id/praktikum/pendaftaran",
   items: [
     {
       code: "P01",

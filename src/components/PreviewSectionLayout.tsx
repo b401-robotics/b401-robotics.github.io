@@ -13,7 +13,6 @@ interface PreviewSectionLayoutProps {
 
 export function PreviewSectionLayout({
   id,
-  sectionLabel,
   heading,
   headingAccent,
   body,
@@ -23,7 +22,7 @@ export function PreviewSectionLayout({
 }: PreviewSectionLayoutProps) {
   return (
     <section id={id} className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col justify-center">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-[85rem] w-full mx-auto">
         <div
           className={`flex flex-col gap-10 lg:gap-16 items-center ${
             imagePosition === "left" ? "lg:flex-row-reverse" : "lg:flex-row"
@@ -31,9 +30,6 @@ export function PreviewSectionLayout({
         >
           {/* Summary column */}
           <div className="w-full lg:w-1/2">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 text-sm font-medium mb-4">
-              {sectionLabel}
-            </span>
             <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-zinc-900 dark:text-zinc-100 mb-5 leading-tight">
               {heading} <span className="text-zinc-900 dark:text-zinc-100">{headingAccent}</span>
             </h2>

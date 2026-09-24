@@ -32,17 +32,14 @@ export function ContactSection(_props: ContactSectionProps = {}) {
   ];
 
   return (
-    <section id="contact" className="section-padding relative min-h-[calc(100vh-4.75rem)] flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="contact" className="section-padding relative min-h-[calc(100vh-4.75rem)] flex flex-col">
+      <div className="max-w-[85rem] w-full mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <span className="inline-block px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 text-sm font-medium mb-4">
-            {t.sectionLabel}
-          </span>
-          <h2 className="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-zinc-100 mb-5">
+          <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-zinc-900 dark:text-zinc-100 mb-5">
             {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
           </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-lg max-w-2xl mx-auto">{t.body}</p>
+          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl mx-auto">{t.body}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">

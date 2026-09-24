@@ -5,6 +5,9 @@ export const practicumsEN = {
   body: "Our practicum program is designed to complement theoretical coursework with hands-on, real-world engineering experience.",
   sessions: "sessions",
   viewAll: "View All Practicums",
+  listHeading: "List of our practicum",
+  registerLabel: "Register",
+  registerUrl: "https://ceits.id/praktikum/pendaftaran",
   items: [
     {
       code: "P01",

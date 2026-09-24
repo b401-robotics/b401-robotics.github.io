@@ -24,7 +24,7 @@ export function Navbar() {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     // Check initial dark mode state
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
@@ -33,7 +33,7 @@ export function Navbar() {
       document.documentElement.classList.remove('dark');
       setIsDarkMode(false);
     }
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -54,10 +54,9 @@ export function Navbar() {
   const navLinks = [
     { label: "Home", path: "home" },
     { label: t.facility, path: "equipment" },
-    { label: t.research, path: "research" },
+    { label: t.highlight, path: "highlight" },
     { label: t.practicums, path: "practicums" },
     { label: t.members, path: "members" },
-    { label: t.contact, path: "contact" },
   ];
 
   return (
@@ -68,12 +67,12 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <nav className="w-full px-6 md:px-10 lg:px-14 flex items-center justify-between">
         {/* Logo */}
         <Link to={`/${lang}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3 group min-h-[44px]">
-          <img 
-            src={Logo} 
-            alt="B401 Logo" 
+          <img
+            src={Logo}
+            alt="B401 Logo"
             className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] transition-all duration-300"
           />
           <span className="font-display font-semibold text-zinc-900 dark:text-zinc-100 text-sm hidden sm:block leading-tight whitespace-pre-line">
@@ -99,7 +98,7 @@ export function Navbar() {
           ))}
         </ul>
 
-        {/* Right side: Lang switcher + CTA */}
+        {/* Right side: Lang toggle + Dark mode toggle */}
         <div className="hidden md:flex items-center gap-3">
           {/* Dark Mode Toggle */}
           <button
@@ -109,7 +108,7 @@ export function Navbar() {
             }`}
             aria-label="Toggle Dark Mode"
           >
-            <div 
+            <div
               className={`absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-300 ${
                 isDarkMode ? "translate-x-6" : "translate-x-0"
               }`}
@@ -126,33 +125,23 @@ export function Navbar() {
             </div>
           </button>
 
-          {/* Language Switcher */}
-          <div className="relative flex items-center rounded-lg border border-zinc-200 dark:border-white/10 bg-zinc-100/80 p-1 min-h-[44px]">
-            <div 
-              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-zinc-900 rounded-md transition-transform duration-300 ease-out ${
-                lang === "en" ? "translate-x-0" : "translate-x-full"
-              }`}
-            />
-            <button
-              id="lang-en-btn"
-              onClick={() => switchLang("en")}
-              className={`relative z-10 w-11 py-1.5 text-xs font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 rounded-md ${
-                lang === "en" ? "text-white" : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:text-zinc-100"
-              }`}
-            >
-              EN
-            </button>
-            <button
-              id="lang-id-btn"
-              onClick={() => switchLang("id")}
-              className={`relative z-10 w-11 py-1.5 text-xs font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 rounded-md ${
-                lang === "id" ? "text-white" : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:text-zinc-100"
+          {/* Language Toggle — track color follows the web theme, not the language */}
+          <button
+            id="lang-toggle-btn"
+            onClick={() => switchLang(lang === "en" ? "id" : "en")}
+            className={`no-invert relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 ${
+              isDarkMode ? "bg-zinc-800 border-zinc-700" : "bg-zinc-200 border-zinc-300"
+            }`}
+            aria-label="Toggle Language"
+          >
+            <div
+              className={`absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-300 text-xs font-bold text-zinc-900 ${
+                lang === "id" ? "translate-x-6" : "translate-x-0"
               }`}
             >
-              ID
-            </button>
-          </div>
-
+              {lang === "en" ? "EN" : "ID"}
+            </div>
+          </button>
         </div>
 
         {/* Mobile: lang + hamburger */}
@@ -165,7 +154,7 @@ export function Navbar() {
             }`}
             aria-label="Toggle Dark Mode"
           >
-            <div 
+            <div
               className={`absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-300 ${
                 isDarkMode ? "translate-x-6" : "translate-x-0"
               }`}
@@ -182,32 +171,23 @@ export function Navbar() {
             </div>
           </button>
 
-          {/* Language Switcher (mobile) */}
-          <div className="relative flex items-center rounded-lg border border-zinc-200 dark:border-white/10 bg-zinc-100/80 p-1 min-h-[44px]">
-            <div 
-              className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-zinc-900 rounded-md transition-transform duration-300 ease-out ${
-                lang === "en" ? "translate-x-0" : "translate-x-full"
-              }`}
-            />
-            <button
-              id="lang-en-btn-mobile"
-              onClick={() => switchLang("en")}
-              className={`relative z-10 w-11 py-1.5 text-xs font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 rounded-md ${
-                lang === "en" ? "text-white" : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:text-zinc-100"
-              }`}
-            >
-              EN
-            </button>
-            <button
-              id="lang-id-btn-mobile"
-              onClick={() => switchLang("id")}
-              className={`relative z-10 w-11 py-1.5 text-xs font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 rounded-md ${
-                lang === "id" ? "text-white" : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:text-zinc-100"
+          {/* Language Toggle (mobile) — track color follows the web theme, not the language */}
+          <button
+            id="lang-toggle-btn-mobile"
+            onClick={() => switchLang(lang === "en" ? "id" : "en")}
+            className={`no-invert relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 ${
+              isDarkMode ? "bg-zinc-800 border-zinc-700" : "bg-zinc-200 border-zinc-300"
+            }`}
+            aria-label="Toggle Language"
+          >
+            <div
+              className={`absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-300 text-xs font-bold text-zinc-900 ${
+                lang === "id" ? "translate-x-6" : "translate-x-0"
               }`}
             >
-              ID
-            </button>
-          </div>
+              {lang === "en" ? "EN" : "ID"}
+            </div>
+          </button>
 
           {/* Hamburger */}
           <button

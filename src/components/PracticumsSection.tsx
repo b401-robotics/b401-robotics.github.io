@@ -33,21 +33,21 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
   return (
     <section
       id="practicums"
-      className="relative min-h-[calc(100vh-4.75rem)] flex flex-col justify-center px-6 py-8 md:py-12"
+      className="relative min-h-[calc(100vh-4.75rem)] flex flex-col px-6 md:px-10 lg:px-14 pt-12 pb-8 md:pt-16 md:pb-12"
     >
-      <div className="max-w-6xl w-full mx-auto">
+      <div className="max-w-[85rem] w-full mx-auto">
         {/* Header */}
         <div className="mb-8 md:mb-10 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-zinc-900 dark:text-zinc-100 mb-3">
+          <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-zinc-900 dark:text-zinc-100 mb-3">
             {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
           </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-base max-w-2xl leading-relaxed">
+          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
             {t.body}
           </p>
           <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 lg:gap-10 items-start">
           {/* Left: seamless practicum list */}
           <div className="flex flex-col">
             {t.items.map((p, idx) => {
@@ -57,7 +57,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
                   key={p.code}
                   type="button"
                   onClick={() => setSelectedCode(p.code)}
-                  className={`group text-left w-full flex items-start gap-4 py-5 transition-all duration-200 focus:outline-none ${
+                  className={`group relative text-left w-full flex items-start gap-3 py-4 transition-all duration-200 focus:outline-none ${
                     idx !== 0 ? "border-t border-zinc-200/70 dark:border-white/10" : ""
                   }`}
                 >
@@ -91,6 +91,9 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
                         : "bg-transparent group-hover:bg-zinc-300 dark:group-hover:bg-white/20"
                     }`}
                   />
+
+                  {/* Bottom underline animation */}
+                  <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-zinc-900 dark:bg-zinc-100 transition-transform duration-300 ease-out group-hover:scale-x-100" />
                 </button>
               );
             })}
@@ -98,8 +101,8 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
 
           {/* Right: selected practicum detail */}
           <div key={selected.code} className="animate-fade-in">
-            {/* Image placeholder */}
-            <div className="aspect-video w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden mb-6">
+            {/* Image placeholder — centered, 15% smaller than the column width */}
+            <div className="aspect-video w-[85%] mx-auto bg-zinc-200/60 dark:bg-white/5 overflow-hidden mb-4">
               {selected.imageUrl ? (
                 <img
                   src={selected.imageUrl}
@@ -110,16 +113,16 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
               ) : null}
             </div>
 
-            <h3 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3 leading-tight">
+            <h3 className="font-display font-bold text-xl md:text-2xl text-zinc-900 dark:text-zinc-100 mb-2 leading-tight">
               {selected.title}
             </h3>
 
-            <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-5">
+            <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-4">
               {selected.desc || selected.summary}
             </p>
 
             {selected.topics.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-5">
+              <div className="flex flex-wrap gap-2 mb-4">
                 {selected.topics.map((topic) => {
                   const label = topic.label;
                   const url = "url" in topic ? topic.url : undefined;
@@ -148,11 +151,16 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
               </div>
             )}
 
-            <div className="flex items-center gap-2 text-zinc-500 text-sm">
-              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {selected.sessions} {t.sessions}
+            <div className="pt-4 border-t border-zinc-200 dark:border-white/10">
+              <a
+                href={t.registerUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 dark:hover:shadow-white/10 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-zinc-100 focus:ring-offset-2 transition-all duration-300 group"
+              >
+                {t.registerLabel}
+                <span className="transition-transform group-hover:translate-x-1">→</span>
+              </a>
             </div>
           </div>
         </div>

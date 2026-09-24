@@ -3,8 +3,6 @@ import { useParams, Navigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "../components/Navbar";
 import { HomeSheets } from "../components/HomeSheets";
-
-import { ResearchSection } from "../components/ResearchSection";
 import { PracticumsSection } from "../components/PracticumsSection";
 import { ProjectsSection } from "../components/ProjectsSection";
 import { MembersSection } from "../components/MembersSection";
@@ -12,12 +10,13 @@ import { EquipmentSection } from "../components/EquipmentSection";
 import { AchievementSection } from "../components/AchievementSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
+import { HighlightPage } from "./HighlightPage";
 import { LanguageProvider, SUPPORTED_LANGS, type Language } from "../context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 let isFirstLoad = true;
-const isReload = typeof performance !== "undefined" && 
-  performance.getEntriesByType("navigation").length > 0 && 
+const isReload = typeof performance !== "undefined" &&
+  performance.getEntriesByType("navigation").length > 0 &&
   (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming).type === "reload";
 
 export function LandingPage() {
@@ -54,7 +53,7 @@ export function LandingPage() {
           <Navbar />
           <main className="flex-1 pt-[4.75rem]">
             <AnimatePresence mode="wait">
-              <motion.div 
+              <motion.div
                 key={section || "home"}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -63,7 +62,9 @@ export function LandingPage() {
               >
                 {(!section || section === "home") && <HomeSheets />}
 
-                {section === "research" && <ResearchSection />}
+                {/* Highlight tab — also serves the legacy /research path */}
+                {(section === "highlight" || section === "research") && <HighlightPage />}
+
                 {section === "practicums" && <PracticumsSection />}
                 {section === "projects" && <ProjectsSection />}
                 {section === "members" && <MembersSection />}
