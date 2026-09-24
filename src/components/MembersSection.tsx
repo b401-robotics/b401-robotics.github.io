@@ -74,13 +74,13 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             <div className="h-px w-full bg-zinc-200 dark:bg-white/10" />
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-6">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
             {t.lecturers.map((lecturer, idx) => (
               <div
                 key={lecturer.name}
                 onClick={() => setSelectedLecturer(lecturer)}
-                className="card-glass rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 hover:border-zinc-300 hover:ring-2 hover:ring-zinc-300/50 hover:bg-zinc-100/50 transition-all duration-300 flex flex-col animate-fade-in cursor-pointer group shadow-sm hover:shadow-md"
-                style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
+                className="card-glass rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 hover:border-zinc-300 hover:ring-2 hover:ring-zinc-300/50 transition-all duration-300 flex flex-col animate-fade-in cursor-pointer group shadow-sm hover:shadow-md"
+                style={{ animationDelay: `${0.2 + idx * 0.05}s` }}
               >
                 <div className="aspect-[4/5] w-full bg-zinc-200 relative overflow-hidden">
                   {lecturer.imageUrl ? (
@@ -91,22 +91,16 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
                       loading="lazy"
                     />
                   ) : (
-                    <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-white font-display font-bold text-5xl">
+                    <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-white font-display font-bold text-3xl md:text-4xl">
                       {lecturer.initials}
                     </div>
                   )}
                 </div>
 
-                <div className="p-4 flex-1 flex flex-col justify-between">
+                <div className="p-3 flex-1 flex flex-col justify-between">
                   <div>
-                    <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-sm leading-snug">{lecturer.name}</p>
-                    <p className="text-zinc-500 text-xs mt-1">{handleLecturerLang(lang, lecturer)?.role}</p>
-                  </div>
-                  <div className="mt-3 pt-3 border-t border-zinc-200/60 flex items-center justify-between text-zinc-400 group-hover:text-zinc-600 dark:text-zinc-300 transition-colors">
-                    <p className="text-[10px] font-medium truncate pr-3">{handleLecturerLang(lang, lecturer)?.specialty}</p>
-                    <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
+                    <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-xs leading-snug">{lecturer.name}</p>
+                    <p className="text-zinc-500 text-xs mt-0.5">{handleLecturerLang(lang, lecturer)?.role}</p>
                   </div>
                 </div>
               </div>
@@ -151,7 +145,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
                 <div className="p-3 flex-1 flex flex-col justify-between">
                   <div>
                     <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-xs leading-snug">{assistant.name}</p>
-                    <p className="text-zinc-500 text-[10px] mt-0.5">{handleAssistantLang(lang, assistant)?.role}</p>
+                    <p className="text-zinc-500 text-xs mt-0.5">{handleAssistantLang(lang, assistant)?.role}</p>
                   </div>
                 </div>
               </div>
@@ -196,9 +190,9 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
                 <div className="p-3 flex-1 flex flex-col justify-between">
                   <div>
                     <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-xs leading-snug">{person.name}</p>
-                    <p className="text-zinc-500 text-[10px] mt-0.5">{handleAlumniLang(lang, person)?.role}</p>
+                    <p className="text-zinc-500 text-xs mt-0.5">{handleAlumniLang(lang, person)?.role}</p>
                     {person.year && (
-                      <p className="text-zinc-400 text-[10px] mt-0.5">{person.year}</p>
+                      <p className="text-zinc-400 text-xs mt-0.5">{person.year}</p>
                     )}
                   </div>
                 </div>
