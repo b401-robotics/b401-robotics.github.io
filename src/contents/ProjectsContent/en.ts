@@ -8,9 +8,9 @@ export const projectsEN = {
   statusResearch: "Research",
   items: [
     {
-      title: "Autonomous Line-Following Robot",
+      title: "Autonomous Line Following Robot",
       imageUrl: "",
-      desc: "A self-navigating robot using PID control and infrared sensors for precise line tracking on complex tracks.",
+      desc: "A self navigating robot using PID control and infrared sensors for precise line tracking on complex tracks.",
       tags: ["Embedded C", "PID Control", "Sensor Fusion"],
       status: "Completed",
     },
@@ -24,26 +24,26 @@ export const projectsEN = {
     {
       title: "Smart Home Automation System",
       imageUrl: "",
-      desc: "IoT-based smart home system with voice recognition, energy monitoring, and mobile app integration.",
+      desc: "IoT based smart home system with voice recognition, energy monitoring, and mobile app integration.",
       tags: ["ESP32", "MQTT", "React Native", "TensorFlow Lite"],
       status: "Active",
     },
     {
       title: "Drone Formation Flight",
       imageUrl: "",
-      desc: "Multi-UAV coordination system enabling synchronized formation flight using distributed control algorithms.",
+      desc: "Multi UAV coordination system enabling synchronized formation flight using distributed control algorithms.",
       tags: ["PX4", "MAVLink", "Formation Control"],
       status: "Research",
     },
     {
       title: "Human Activity Recognition",
       imageUrl: "",
-      desc: "Deep learning model for real-time human activity recognition using IMU sensor data from wearable devices.",
+      desc: "Deep learning model for realtime human activity recognition using IMU sensor data from wearable devices.",
       tags: ["PyTorch", "LSTM", "IMU Sensors"],
       status: "Completed",
     },
     {
-      title: "Gesture-Controlled Wheelchair",
+      title: "Gesture Controlled Wheelchair",
       imageUrl: "",
       desc: "Assistive technology project enabling wheelchair control through hand gesture recognition using a depth camera.",
       tags: ["MediaPipe", "RealSense", "ROS 2"],
@@ -59,7 +59,7 @@ export const projectsEN = {
     {
       title: "LoRaWAN Environmental Monitor",
       imageUrl: "",
-      desc: "Distributed wireless sensor network for large-scale agricultural monitoring using low power wide area networks.",
+      desc: "Distributed wireless sensor network for large scale agricultural monitoring using low power wide area networks.",
       tags: ["ESP32", "LoRa", "InfluxDB"],
       status: "Completed",
     },

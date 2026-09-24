@@ -29,16 +29,17 @@ export const achievementsEN = {
       desc: "Reached the national finals with a traditional dance robot combining precise motion control and creative mechanical design.",
     },
     {
-      title: "1st Place — Institut Teknologi Sepuluh Nopember Internal Robotics Competition",
+      title:
+        "1st Place — Institut Teknologi Sepuluh Nopember Internal Robotics Competition",
       year: "2023",
       imageUrl: "",
-      desc: "Won the campus-level robotics competition across all ITS departments, leading the field in both the design and performance categories.",
+      desc: "Won the campus level robotics competition across all ITS departments, leading the field in both the design and performance categories.",
     },
     {
       title: "Best Paper — Student Research Symposium",
       year: "2023",
       imageUrl: "",
-      desc: "Awarded best student paper for research on vision-based object tracking for mobile manipulators.",
+      desc: "Awarded best student paper for research on vision based object tracking for mobile manipulators.",
     },
   ],
 } as const;

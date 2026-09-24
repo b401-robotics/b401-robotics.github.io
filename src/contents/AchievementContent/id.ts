@@ -29,7 +29,8 @@ export const achievementsID = {
       desc: "Mencapai babak final nasional dengan robot tari tradisional yang menggabungkan kendali gerak presisi dan desain mekanik kreatif.",
     },
     {
-      title: "Juara 1 — Kompetisi Robotika Internal Institut Teknologi Sepuluh Nopember",
+      title:
+        "Juara 1 — Kompetisi Robotika Internal Institut Teknologi Sepuluh Nopember",
       year: "2023",
       imageUrl: "",
       desc: "Memenangkan kompetisi robotika tingkat kampus di seluruh departemen ITS, memimpin di kategori desain dan performa.",

@@ -31,14 +31,14 @@ export const projectsID = {
     {
       title: "Penerbangan Formasi Drone",
       imageUrl: "",
-      desc: "Sistem koordinasi multi-UAV yang memungkinkan penerbangan formasi tersinkronisasi menggunakan algoritma kendali terdistribusi.",
+      desc: "Sistem koordinasi multi UAV yang memungkinkan penerbangan formasi tersinkronisasi menggunakan algoritma kendali terdistribusi.",
       tags: ["PX4", "MAVLink", "Kendali Formasi"],
       status: "Research",
     },
     {
       title: "Pengenalan Aktivitas Manusia",
       imageUrl: "",
-      desc: "Model deep learning untuk pengenalan aktivitas manusia secara real-time menggunakan data sensor IMU dari perangkat wearable.",
+      desc: "Model deep learning untuk pengenalan aktivitas manusia secara realtime menggunakan data sensor IMU dari perangkat wearable.",
       tags: ["PyTorch", "LSTM", "Sensor IMU"],
       status: "Completed",
     },

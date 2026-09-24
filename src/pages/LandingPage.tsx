@@ -11,13 +11,19 @@ import { AchievementSection } from "../components/AchievementSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
 import { HighlightPage } from "./HighlightPage";
-import { LanguageProvider, SUPPORTED_LANGS, type Language } from "../context/LanguageContext";
+import {
+  LanguageProvider,
+  SUPPORTED_LANGS,
+  type Language,
+} from "../context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 let isFirstLoad = true;
-const isReload = typeof performance !== "undefined" &&
+const isReload =
+  typeof performance !== "undefined" &&
   performance.getEntriesByType("navigation").length > 0 &&
-  (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming).type === "reload";
+  (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming)
+    .type === "reload";
 
 export function LandingPage() {
   const { lang, section } = useParams<{ lang: string; section?: string }>();
@@ -45,7 +51,10 @@ export function LandingPage() {
     <LanguageProvider lang={resolvedLang}>
       <Helmet>
         <title>B401 Robotics & Intelligent Systems Lab</title>
-        <meta name="description" content="Welcome to the B401 Robotics and Intelligent Systems Laboratory. Discover our research, projects, and state-of-the-art equipment." />
+        <meta
+          name="description"
+          content="Welcome to the B401 Robotics and Intelligent Systems Laboratory. Discover our research, projects, and state-of-the-art equipment."
+        />
       </Helmet>
 
       <div className="min-h-screen bg-slate-100 dark:bg-zinc-950 transition-colors duration-500 relative overflow-hidden">
@@ -63,7 +72,9 @@ export function LandingPage() {
                 {(!section || section === "home") && <HomeSheets />}
 
                 {/* Highlight tab — also serves the legacy /research path */}
-                {(section === "highlight" || section === "research") && <HighlightPage />}
+                {(section === "highlight" || section === "research") && (
+                  <HighlightPage />
+                )}
 
                 {section === "practicums" && <PracticumsSection />}
                 {section === "projects" && <ProjectsSection />}

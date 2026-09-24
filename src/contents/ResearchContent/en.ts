@@ -8,7 +8,7 @@ export const researchEN = {
     {
       tag: "Web",
       title: "Web Development",
-      desc: "Research and development of modern web-based applications and platforms.",
+      desc: "Research and development of modern web based applications and platforms.",
     },
     {
       tag: "Embedded",
@@ -23,7 +23,7 @@ export const researchEN = {
     {
       tag: "Network",
       title: "Wireless Sensor Networks",
-      desc: "Wireless sensor networks for environmental monitoring and large-scale data collection.",
+      desc: "Wireless sensor networks for environmental monitoring and large scale data collection.",
     },
     {
       tag: "App",

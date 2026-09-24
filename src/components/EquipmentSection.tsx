@@ -83,7 +83,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
   const [selected, setSelected] = useState<Facility | null>(null);
 
   return (
-    <div className="min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-10 lg:px-14 py-16">
+    <div className="min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-10 lg:px-14 py-16 animate-fade-in" style={{ animationDelay: "0.2s" }}>
       <div className="max-w-[85rem] w-full mx-auto flex flex-col lg:flex-row gap-10 lg:gap-14 items-stretch">
         {/* Image — height matches the right column (header top edge to list bottom edge) */}
         <div className="w-full lg:w-1/2 flex">

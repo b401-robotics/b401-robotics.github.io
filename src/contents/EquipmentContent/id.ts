@@ -17,25 +17,25 @@ export const equipmentID = {
           name: "Lengan Robot Kolaboratif UR5e",
           category: "Robotika",
           imageUrl: "",
-          info: "Lengan robot kolaboratif 6-DOF dari Universal Robots dengan payload 5 kg dan jangkauan 850 mm. Digunakan untuk penelitian manipulasi, tugas pick-and-place, dan integrasi dengan pipeline visi. Mendukung driver ROS 2 dan force sensing berstandar keselamatan untuk eksperimen kolaborasi manusia-robot.",
+          info: "Lengan robot kolaboratif 6-DOF dari Universal Robots dengan payload 5 kg dan jangkauan 850 mm. Digunakan untuk penelitian manipulasi, tugas pick and place, dan integrasi dengan pipeline visi. Mendukung driver ROS 2 dan force sensing berstandar keselamatan untuk eksperimen kolaborasi manusia robot.",
         },
         {
           name: "Platform Bergerak Berbasis ROS 2",
           category: "Navigasi",
           imageUrl: "",
-          info: "Basis bergerak differential-drive yang menjalankan ROS 2 Humble. Dilengkapi wheel encoder, IMU, dan lidar, digunakan untuk penelitian SLAM, perencanaan jalur, dan navigasi otonom. Mahasiswa menggunakannya untuk tugas kuliah dan demonstrasi tugas akhir.",
+          info: "Basis bergerak differential drive yang menjalankan ROS 2 Humble. Dilengkapi wheel encoder, IMU, dan lidar, digunakan untuk penelitian SLAM, perencanaan jalur, dan navigasi otonom. Mahasiswa menggunakannya untuk tugas kuliah dan demonstrasi tugas akhir.",
         },
         {
           name: "Kamera Kedalaman Intel RealSense",
           category: "Visi",
           imageUrl: "",
-          info: "Kamera kedalaman D435i dan D455 yang menyediakan aliran RGB, depth, dan IMU. Digunakan untuk deteksi objek, estimasi pose, dan kalibrasi hand-eye pada lengan robot. Didukung di ROS 2 melalui paket realsense2_camera.",
+          info: "Kamera kedalaman D435i dan D455 yang menyediakan aliran RGB, depth, dan IMU. Digunakan untuk deteksi objek, estimasi pose, dan kalibrasi hand eye pada lengan robot. Didukung di ROS 2 melalui paket realsense2_camera.",
         },
         {
           name: "GPU NVIDIA Seri Jetson",
           category: "Komputasi",
           imageUrl: "",
-          info: "Modul komputasi edge Jetson Orin Nano dan Xavier NX. Digunakan untuk menjalankan beban persepsi dan inferensi langsung di robot, menjaga latensi tetap rendah. Mendukung CUDA, TensorRT, dan PyTorch untuk pembelajaran mesin on-device.",
+          info: "Modul komputasi edge Jetson Orin Nano dan Xavier NX. Digunakan untuk menjalankan beban persepsi dan inferensi langsung di robot, menjaga latensi tetap rendah. Mendukung CUDA, TensorRT, dan PyTorch untuk pembelajaran mesin on device.",
         },
         {
           name: "Workstation Cetak 3D",
@@ -48,32 +48,32 @@ export const equipmentID = {
     {
       code: "B401",
       name: "Laboratorium B401",
-      desc: "Ruangan otomasi dan elektronika. Dilengkapi untuk bring-up perangkat keras, pekerjaan PCB, dan kendali pneumatik, ruangan ini mendukung sesi praktikum sekaligus pengembangan langsung proyek tertanam dan otomasi lab.",
+      desc: "Ruangan otomasi dan elektronika. Dilengkapi untuk bring up perangkat keras, pekerjaan PCB, dan kendali pneumatik, ruangan ini mendukung sesi praktikum sekaligus pengembangan langsung proyek tertanam dan otomasi lab.",
       imageUrl: "",
       facilities: [
         {
           name: "Drone DJI Matrice 300 RTK",
           category: "UAV",
           imageUrl: "",
-          info: "Platform quadcopter industrial dengan waktu terbang 55 menit dan rating IP45. Digunakan untuk pemetaan udara, penelitian inspeksi, dan eksperimen koordinasi multi-UAV. Mendukung positioning RTK untuk akurasi tingkat sentimeter.",
+          info: "Platform quadcopter industrial dengan waktu terbang 55 menit dan rating IP45. Digunakan untuk pemetaan udara, penelitian inspeksi, dan eksperimen koordinasi multi UAV. Mendukung positioning RTK untuk akurasi tingkat sentimeter.",
         },
         {
           name: "Sistem Pneumatik Festo",
           category: "Otomasi",
           imageUrl: "",
-          info: "Aktuator pneumatik, valve, dan kontroler PLC yang digunakan untuk mengajar dan meneliti otomasi industri. Mendukung pemrograman ladder-logic dan integrasi dengan stack ROS 2 lab untuk proyek otomasi hibrida.",
+          info: "Aktuator pneumatik, valve, dan kontroler PLC yang digunakan untuk mengajar dan meneliti otomasi industri. Mendukung pemrograman ladder logic dan integrasi dengan stack ROS 2 lab untuk proyek otomasi hibrida.",
         },
         {
           name: "Osiloskop & Penganalisis Sinyal",
           category: "Elektronika",
           imageUrl: "",
-          info: "Osiloskop digital empat kanal hingga 200 MHz, plus logic analyzer untuk debugging protokol digital. Digunakan di semua sesi praktikum dan untuk bring-up perangkat keras pada proyek tertanam.",
+          info: "Osiloskop digital empat kanal hingga 200 MHz, plus logic analyzer untuk debugging protokol digital. Digunakan di semua sesi praktikum dan untuk bring up perangkat keras pada proyek tertanam.",
         },
         {
           name: "Stasiun Soldering & Rework",
           category: "Elektronika",
           imageUrl: "",
-          info: "Soldering iron bertemperatur terkontrol, stasiun rework hot-air, dan mikroskop stereo untuk pekerjaan SMD. Digunakan untuk merakit PCB khusus dan memperbaiki board untuk proyek yang sedang berjalan.",
+          info: "Soldering iron bertemperatur terkontrol, stasiun rework hot air, dan mikroskop stereo untuk pekerjaan SMD. Digunakan untuk merakit PCB khusus dan memperbaiki board untuk proyek yang sedang berjalan.",
         },
         {
           name: "Unit Catu Daya Bench",
@@ -99,7 +99,7 @@ export const equipmentID = {
           name: "Kit Gateway LoRaWAN",
           category: "Jaringan",
           imageUrl: "",
-          info: "Gateway LoRaWAN multi-kanal dan modul end-device untuk penelitian komunikasi jarak jauh berdaya rendah. Digunakan dalam eksperimen lab dan lapangan untuk pemantauan pertanian dan lingkungan.",
+          info: "Gateway LoRaWAN multi kanal dan modul end device untuk penelitian komunikasi jarak jauh berdaya rendah. Digunakan dalam eksperimen lab dan lapangan untuk pemantauan pertanian dan lingkungan.",
         },
         {
           name: "Board Pengembangan Mikrokontroler",

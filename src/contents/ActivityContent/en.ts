@@ -9,7 +9,7 @@ export const activityEN = {
       date: "March 2025",
       tag: "Workshop",
       imageUrl: "",
-      desc: "A hands-on introduction to robotics for visiting high school students, covering basic electronics, microcontroller programming, and their first line-following robot.",
+      desc: "A hands on introduction to robotics for visiting high school students, covering basic electronics, microcontroller programming, and their first line following robot.",
     },
     {
       title: "National Robotics Competition",
@@ -30,7 +30,7 @@ export const activityEN = {
       date: "September 2024",
       tag: "Seminar",
       imageUrl: "",
-      desc: "A visiting researcher from industry presented recent advances in real-time object detection and depth estimation, followed by an open discussion with lab members.",
+      desc: "A visiting researcher from industry presented recent advances in realtime object detection and depth estimation, followed by an open discussion with lab members.",
     },
     {
       title: "Open Lab Day",

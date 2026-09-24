@@ -74,7 +74,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             <div className="h-px w-full bg-zinc-200 dark:bg-white/10" />
           </div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
             {t.lecturers.map((lecturer, idx) => (
               <div
                 key={lecturer.name}
@@ -119,7 +119,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             <div className="h-px w-full bg-zinc-200 dark:bg-white/10" />
           </div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 animate-fade-in" style={{ animationDelay: "0.3s" }}>
             {t.assistants.map((assistant, idx) => (
               <div
                 key={idx}
@@ -164,7 +164,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             <div className="h-px w-full bg-zinc-200 dark:bg-white/10" />
           </div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 animate-fade-in" style={{ animationDelay: "0.4s" }}>
             {t.alumni.map((person, idx) => (
               <div
                 key={idx}

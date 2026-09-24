@@ -30,7 +30,7 @@ export const activityID = {
       date: "September 2024",
       tag: "Seminar",
       imageUrl: "",
-      desc: "Seorang peneliti tamu dari industri memaparkan kemajuan terbaru dalam deteksi objek real-time dan estimasi kedalaman, dilanjutkan dengan diskusi terbuka bersama anggota lab.",
+      desc: "Seorang peneliti tamu dari industri memaparkan kemajuan terbaru dalam deteksi objek realtime dan estimasi kedalaman, dilanjutkan dengan diskusi terbuka bersama anggota lab.",
     },
     {
       title: "Open Lab Day",

@@ -12,7 +12,7 @@ export function ActivityLabSection() {
     >
       <div className="max-w-[85rem] w-full mx-auto flex flex-col flex-1 min-h-0">
         {/* Header */}
-        <div className="mb-10 shrink-0">
+        <div className="mb-10 shrink-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
           <h2 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
             {t.heading}{" "}
             <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
@@ -24,7 +24,7 @@ export function ActivityLabSection() {
         </div>
 
         {/* Activity list — image left, text right, scrollable on overflow */}
-        <div className="flex flex-col overflow-y-auto scrollbar-fade flex-1 min-h-0">
+        <div className="flex flex-col overflow-y-auto scrollbar-fade flex-1 min-h-0 animate-fade-in" style={{ animationDelay: "0.2s" }}>
           {t.items.map((item, idx) => (
             <article
               key={item.title}

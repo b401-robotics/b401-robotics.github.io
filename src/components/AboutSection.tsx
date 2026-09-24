@@ -9,7 +9,7 @@ export function AboutSection() {
 
   return (
     <section id="about" className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col">
-      <div className="max-w-[85rem] w-full mx-auto mt-16 md:mt-28">
+      <div className="max-w-[85rem] w-full mx-auto mt-16 md:mt-28 animate-fade-in" style={{ animationDelay: "0.1s" }}>
         <div className="text-center">
           <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-zinc-900 dark:text-zinc-100 mb-10">
             {tAbout.heading}{" "}

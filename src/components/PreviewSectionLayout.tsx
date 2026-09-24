@@ -24,9 +24,10 @@ export function PreviewSectionLayout({
     <section id={id} className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col justify-center">
       <div className="max-w-[85rem] w-full mx-auto">
         <div
-          className={`flex flex-col gap-10 lg:gap-16 items-center ${
+          className={`flex flex-col gap-10 lg:gap-16 items-center animate-fade-in ${
             imagePosition === "left" ? "lg:flex-row-reverse" : "lg:flex-row"
           }`}
+          style={{ animationDelay: "0.1s" }}
         >
           {/* Summary column */}
           <div className="w-full lg:w-1/2">

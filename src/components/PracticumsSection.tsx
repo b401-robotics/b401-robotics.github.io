@@ -57,9 +57,10 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
                   key={p.code}
                   type="button"
                   onClick={() => setSelectedCode(p.code)}
-                  className={`group relative text-left w-full flex items-start gap-3 py-4 transition-all duration-200 focus:outline-none ${
+                  className={`group relative text-left w-full flex items-start gap-3 py-4 transition-all duration-200 focus:outline-none animate-fade-in ${
                     idx !== 0 ? "border-t border-zinc-200/70 dark:border-white/10" : ""
                   }`}
+                  style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
                 >
                   {/* Text */}
                   <div className="min-w-0 flex-1">
