@@ -32,7 +32,7 @@ export function HeroSection() {
       {BACKGROUNDS.map((src, idx) => (
         <div
           key={src}
-          className={`absolute top-0 left-0 right-0 h-[85vh] bg-cover bg-center bg-no-repeat transition-opacity ease-in-out ${
+          className={`absolute top-0 left-0 right-0 h-full md:h-[85vh] bg-cover bg-center bg-no-repeat transition-opacity ease-in-out ${
             idx === bgIndex ? "opacity-100" : "opacity-0"
           }`}
           style={{
@@ -45,7 +45,7 @@ export function HeroSection() {
 
       {/* Dim overlay — matches the image frame height, not the section */}
       <div
-        className="absolute top-0 left-0 right-0 h-[85vh] bg-black/35 pointer-events-none"
+        className="absolute top-0 left-0 right-0 h-full md:h-[85vh] bg-black/35 pointer-events-none"
         aria-hidden="true"
       />
 
@@ -55,7 +55,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="max-w-4xl mt-[370px]"
+          className="max-w-4xl mt-[35vh] md:mt-[370px]"
         >
           {/* Kicker */}
           <p className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-white/80 mb-8">

@@ -8,9 +8,9 @@ export function AchievementSection() {
   return (
     <section
       id="achievements"
-      className="section-padding max-h-[calc(100vh-4.75rem)] flex flex-col"
+      className="section-padding md:max-h-[calc(100vh-4.75rem)] flex flex-col"
     >
-      <div className="max-w-[85rem] w-full mx-auto flex flex-col flex-1 min-h-0">
+      <div className="max-w-[85rem] w-full mx-auto flex flex-col md:flex-1 md:min-h-0">
         {/* Header */}
         <div className="mb-10 shrink-0 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
           <h2 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
@@ -23,7 +23,7 @@ export function AchievementSection() {
         </div>
 
         {/* Achievement grid — news-style, scrollable when it overflows */}
-        <div className="overflow-y-auto scrollbar-fade flex-1 min-h-0">
+        <div className="md:overflow-y-auto md:scrollbar-fade md:flex-1 md:min-h-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 pb-2 animate-fade-in" style={{ animationDelay: "0.2s" }}>
             {t.items.map((item) => (
               <article key={item.title} className="flex flex-col">

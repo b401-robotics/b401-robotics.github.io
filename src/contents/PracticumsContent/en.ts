@@ -2,7 +2,7 @@ export const practicumsEN = {
   sectionLabel: "Practicums",
   heading: "Structured",
   headingAccent: "Learning",
-  body: "Our practicum program is designed to complement theoretical coursework with hands-on, real-world engineering experience.",
+  body: "Our practicum program is designed to complement theoretical coursework with hands on, real world engineering experience.",
   sessions: "sessions",
   viewAll: "View All Practicums",
   listHeading: "List of our practicum",
@@ -14,15 +14,28 @@ export const practicumsEN = {
       title: "Telematics Workshop",
       icon: "📡",
       imageUrl: "",
-      summary: "Foundations of telematics, PCB design, and ESP8266 development boards.",
-      desc: "Introduces students to the fundamentals of telematics, from reading and drawing schematics through to laying out a printed circuit board. Students also get hands-on with 3D enclosure design in Fusion 360 before writing their first firmware for the ESP8266 development board.",
+      summary:
+        "Foundations of telematics, PCB design, and ESP8266 development boards.",
+      desc: "Introduces students to the fundamentals of telematics, from reading and drawing schematics through to laying out a printed circuit board. Students also get hands on with 3D enclosure design in Fusion 360 before writing their first firmware for the ESP8266 development board.",
       sessions: "4",
       level: "",
       topics: [
-        { label: "Telematic Basics", url: "https://b401-robotics.github.io/modul-workshop-telematika/P1.pdf" },
-        { label: "Schematic and PCB Design Basics", url: "https://b401-robotics.github.io/modul-workshop-telematika/P2.pdf" },
-        { label: "3D Design Fusion 360 Basics", url: "https://b401-robotics.github.io/modul-workshop-telematika/P3.pdf" },
-        { label: "ESP8266 Development Board", url: "https://b401-robotics.github.io/modul-workshop-telematika/P4.pdf" },
+        {
+          label: "Telematic Basics",
+          url: "https://b401-robotics.github.io/modul-workshop-telematika/P1.pdf",
+        },
+        {
+          label: "Schematic and PCB Design Basics",
+          url: "https://b401-robotics.github.io/modul-workshop-telematika/P2.pdf",
+        },
+        {
+          label: "3D Design Fusion 360 Basics",
+          url: "https://b401-robotics.github.io/modul-workshop-telematika/P3.pdf",
+        },
+        {
+          label: "ESP8266 Development Board",
+          url: "https://b401-robotics.github.io/modul-workshop-telematika/P4.pdf",
+        },
       ],
     },
     {
@@ -30,16 +43,32 @@ export const practicumsEN = {
       title: "Digital Circuit",
       icon: "🔌",
       imageUrl: "",
-      summary: "Combinational and sequential logic, from Karnaugh maps to counters.",
+      summary:
+        "Combinational and sequential logic, from Karnaugh maps to counters.",
       desc: "Builds a solid grounding in digital logic design. Students work through decoders, multiplexers, and demultiplexers, learn to simplify Boolean expressions with Karnaugh maps, and finish by implementing sequential circuits such as registers and synchronous and asynchronous counters.",
       sessions: "5",
       level: "",
       topics: [
-        { label: "Dasar Rangkaian Digital", url: "https://drive.google.com/file/d/1c6oJ_MBw8AyEQRKVE_oYLuJ80ElkOYI0/view" },
-        { label: "Decoder, Demux, dan Mux", url: "https://drive.google.com/file/d/1yUubh5EB3dNeRap2PpEHH5uczceIEywC/view" },
-        { label: "Karnough Map", url: "https://drive.google.com/file/d/1eUIJqrdeyzwCrgwEnu0CaRmAmFVwJYKO/view" },
-        { label: "Rangkaian Sequential", url: "https://drive.google.com/file/d/12TgRQAlvIZ-bSLmpTPcq0IeNOEu9LRjL/view" },
-        { label: "Register and Counter", url: "https://drive.google.com/file/d/1S8-QqSwMwINfl79DC5JyAf5YzeXg5oUN/view?usp=drive_link" },
+        {
+          label: "Dasar Rangkaian Digital",
+          url: "https://drive.google.com/file/d/1c6oJ_MBw8AyEQRKVE_oYLuJ80ElkOYI0/view",
+        },
+        {
+          label: "Decoder, Demux, dan Mux",
+          url: "https://drive.google.com/file/d/1yUubh5EB3dNeRap2PpEHH5uczceIEywC/view",
+        },
+        {
+          label: "Karnough Map",
+          url: "https://drive.google.com/file/d/1eUIJqrdeyzwCrgwEnu0CaRmAmFVwJYKO/view",
+        },
+        {
+          label: "Rangkaian Sequential",
+          url: "https://drive.google.com/file/d/12TgRQAlvIZ-bSLmpTPcq0IeNOEu9LRjL/view",
+        },
+        {
+          label: "Register and Counter",
+          url: "https://drive.google.com/file/d/1S8-QqSwMwINfl79DC5JyAf5YzeXg5oUN/view?usp=drive_link",
+        },
       ],
     },
     {
@@ -47,7 +76,8 @@ export const practicumsEN = {
       title: "Embedded Systems",
       icon: "🧩",
       imageUrl: "",
-      summary: "Programming microcontrollers and interfacing with the physical world.",
+      summary:
+        "Programming microcontrollers and interfacing with the physical world.",
       desc: "Still in development.",
       sessions: "-",
       level: "",

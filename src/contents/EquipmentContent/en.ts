@@ -2,7 +2,7 @@ export const equipmentEN = {
   sectionLabel: "Facilities",
   heading: "Our",
   headingAccent: "Laboratories",
-  body: "The Robotics & Intelligent Systems Lab operates across three dedicated rooms, each set up for a different part of our work — from heavy manipulation and fabrication through to embedded prototyping, networking, and software development.",
+  body: "The Robotics & Intelligent Systems Lab operates across three dedicated rooms, each set up for a different part of our work from heavy manipulation and fabrication through to embedded prototyping, networking, and software development.",
   facilitiesLabel: "Facilities in this room",
   clickForMoreInfo: "Click for more info",
   viewAll: "View All Equipment",

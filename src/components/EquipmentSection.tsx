@@ -116,7 +116,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
             <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-zinc-500 dark:text-zinc-400 mb-1">
               {facilitiesLabel}
             </h4>
-            <div className="flex flex-col max-h-[320px] overflow-y-auto scrollbar-fade">
+            <div className="flex flex-col md:max-h-[320px] md:overflow-y-auto scrollbar-fade">
               {room.facilities.map((f, i) => (
                 <button
                   key={f.name}
