@@ -53,8 +53,8 @@ export function Navbar() {
 
   const navLinks = [
     { label: "Home", path: "home" },
-    { label: t.facility, path: "equipment" },
     { label: t.highlight, path: "highlight" },
+    { label: t.facility, path: "equipment" },
     { label: t.practicums, path: "practicums" },
     { label: t.members, path: "members" },
   ];
@@ -67,7 +67,7 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <nav className="w-full px-6 md:px-10 lg:px-14 flex items-center justify-between">
+      <nav className="w-full nav-edge-px flex items-center justify-between">
         {/* Logo */}
         <Link to={`/${lang}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3 group min-h-[44px]">
           <img

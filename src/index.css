@@ -27,6 +27,14 @@
     font-family: 'Poppins', sans-serif;
   }
 
+  /* Navbar horizontal padding — keeps the logo and toggles flush with the
+     outer 85rem section envelope on wide viewports, while preserving a
+     1.5rem minimum gutter on narrow screens. */
+  .nav-edge-px {
+    padding-left: max(1.5rem, calc((100vw - 85rem) / 2));
+    padding-right: max(1.5rem, calc((100vw - 85rem) / 2));
+  }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
