@@ -1,6 +1,7 @@
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
-import Logo from "../assets/logo/Logo.webp";
+import LogoLight from "../assets/logo/B401_transparent.png";
+import LogoDark from "../assets/logo/B401_white_cutout.png";
 
 export function AboutSection() {
   const { lang } = useLanguage();
@@ -18,9 +19,15 @@ export function AboutSection() {
 
           <div className="flex items-center justify-center gap-4 md:gap-6 mb-10">
             <img
-              src={Logo}
+              src={LogoLight}
               alt="B401 Logo"
-              className="w-20 h-20 md:w-28 md:h-28 object-contain shrink-0"
+              className="w-20 h-20 md:w-28 md:h-28 object-contain shrink-0 dark:hidden"
+              loading="lazy"
+            />
+            <img
+              src={LogoDark}
+              alt="B401 Logo"
+              className="w-20 h-20 md:w-28 md:h-28 object-contain shrink-0 hidden dark:block"
               loading="lazy"
             />
             <span className="font-display font-semibold text-zinc-900 dark:text-zinc-100 text-left text-xl md:text-2xl leading-tight whitespace-pre-line">

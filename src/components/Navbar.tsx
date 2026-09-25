@@ -3,7 +3,8 @@ import { useNavigate, useLocation, Link, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage, type Language } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
-import Logo from "../assets/logo/Logo.webp";
+import LogoLight from "../assets/logo/B401_transparent.png";
+import LogoDark from "../assets/logo/B401_white_cutout.png";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -63,7 +64,7 @@ export function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-4 ${
         scrolled
-          ? "bg-white/60 dark:bg-zinc-900/80 backdrop-blur-xl shadow-sm dark:shadow-black/20"
+          ? "bg-white dark:bg-zinc-900 shadow-sm dark:shadow-black/20"
           : "bg-transparent"
       }`}
     >
@@ -71,9 +72,14 @@ export function Navbar() {
         {/* Logo */}
         <Link to={`/${lang}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3 group min-h-[44px]">
           <img
-            src={Logo}
+            src={LogoLight}
             alt="B401 Logo"
-            className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] transition-all duration-300"
+            className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] transition-all duration-300 dark:hidden"
+          />
+          <img
+            src={LogoDark}
+            alt="B401 Logo"
+            className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] transition-all duration-300 hidden dark:block"
           />
           <span className="font-display font-semibold text-zinc-900 dark:text-zinc-100 text-sm hidden sm:block leading-tight whitespace-pre-line">
             {t.labName}
@@ -82,20 +88,29 @@ export function Navbar() {
 
         {/* Desktop Links */}
         <ul className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <li key={link.path}>
-              <Link
-                to={`/${lang}/${link.path === "home" ? "" : link.path}`}
-                className={`px-4 py-2 min-h-[44px] flex items-center text-sm rounded-lg transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-zinc-500/20 ${
-                  activeSection === link.path
-                    ? "text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-white/5"
-                    : "text-zinc-700 hover:text-zinc-900 dark:text-zinc-100 hover:bg-white/60"
-                }`}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.path;
+            return (
+              <li key={link.path}>
+                <Link
+                  to={`/${lang}/${link.path === "home" ? "" : link.path}`}
+                  className={`group relative px-4 py-2 min-h-[44px] flex items-center text-sm transition-colors duration-200 font-medium focus:outline-none ${
+                    isActive
+                      ? "text-zinc-900 dark:text-zinc-100"
+                      : "text-zinc-700 hover:text-zinc-900 dark:text-zinc-100"
+                  }`}
+                >
+                  {link.label}
+                  {/* Underline — scales in on hover, always visible when active */}
+                  <span
+                    className={`absolute bottom-1 left-4 right-4 h-0.5 origin-left rounded-full bg-zinc-900 dark:bg-zinc-100 transition-transform duration-300 ease-out ${
+                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         {/* Right side: Lang toggle + Dark mode toggle */}
@@ -214,20 +229,28 @@ export function Navbar() {
             className="md:hidden overflow-hidden bg-white/95 dark:bg-zinc-900/95 backdrop-blur-lg border-t border-zinc-200 dark:border-zinc-800"
           >
             <div className="px-6 py-4 flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={`/${lang}/${link.path === "home" ? "" : link.path}`}
-                  onClick={() => setMenuOpen(false)}
-                  className={`px-4 py-3 min-h-[44px] flex items-center text-sm rounded-lg transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-zinc-500/20 ${
-                    activeSection === link.path
-                      ? "text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-white/5"
-                      : "text-zinc-700 hover:text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:bg-white/5"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    to={`/${lang}/${link.path === "home" ? "" : link.path}`}
+                    onClick={() => setMenuOpen(false)}
+                    className={`group relative px-4 py-3 min-h-[44px] flex items-center text-sm transition-colors duration-200 font-medium focus:outline-none ${
+                      isActive
+                        ? "text-zinc-900 dark:text-zinc-100"
+                        : "text-zinc-700 hover:text-zinc-900 dark:text-zinc-100"
+                    }`}
+                  >
+                    {link.label}
+                    <span
+                      className={`absolute bottom-1 left-4 right-4 h-0.5 origin-left rounded-full bg-zinc-900 dark:bg-zinc-100 transition-transform duration-300 ease-out ${
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
             </div>
           </motion.div>
         )}

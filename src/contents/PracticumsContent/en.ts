@@ -13,7 +13,11 @@ export const practicumsEN = {
       code: "P01",
       title: "Telematics Workshop",
       icon: "📡",
-      imageUrl: "",
+      images: [
+        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Zaini.jpg",
+        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Eko-Pram.jpg",
+        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Zaini.jpg",
+      ],
       summary:
         "Foundations of telematics, PCB design, and ESP8266 development boards.",
       desc: "Introduces students to the fundamentals of telematics, from reading and drawing schematics through to laying out a printed circuit board. Students also get hands on with 3D enclosure design in Fusion 360 before writing their first firmware for the ESP8266 development board.",
@@ -42,7 +46,9 @@ export const practicumsEN = {
       code: "P02",
       title: "Digital Circuit",
       icon: "🔌",
-      imageUrl: "",
+      images: [
+        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Zaini.jpg",
+      ],
       summary:
         "Combinational and sequential logic, from Karnaugh maps to counters.",
       desc: "Builds a solid grounding in digital logic design. Students work through decoders, multiplexers, and demultiplexers, learn to simplify Boolean expressions with Karnaugh maps, and finish by implementing sequential circuits such as registers and synchronous and asynchronous counters.",
@@ -75,7 +81,9 @@ export const practicumsEN = {
       code: "P03",
       title: "Embedded Systems",
       icon: "🧩",
-      imageUrl: "",
+      images: [
+        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Zaini.jpg",
+      ],
       summary:
         "Programming microcontrollers and interfacing with the physical world.",
       desc: "Still in development.",

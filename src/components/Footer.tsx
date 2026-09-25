@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
-import Logo from "../assets/logo/Logo.webp";
+import LogoLight from "../assets/logo/B401_transparent.png";
+import LogoDark from "../assets/logo/B401_white_cutout.png";
 
 const SOCIALS = [
   {
@@ -62,9 +63,15 @@ export function Footer() {
               className="flex items-center gap-3 mb-4 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-zinc-500/20 rounded-lg"
             >
               <img
-                src={Logo}
+                src={LogoLight}
                 alt="B401 Logo"
-                className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300"
+                className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300 dark:hidden"
+                loading="lazy"
+              />
+              <img
+                src={LogoDark}
+                alt="B401 Logo"
+                className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300 hidden dark:block"
                 loading="lazy"
               />
               <span className="font-display font-semibold text-zinc-900 dark:text-zinc-100 text-sm leading-tight whitespace-pre-line group-hover:text-zinc-700 dark:group-hover:text-zinc-300 transition-colors">
