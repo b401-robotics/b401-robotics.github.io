@@ -1,9 +1,7 @@
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 
 export function ProjectsSection() {
-  const { lang } = useLanguage();
-  const t = translations[lang].projects;
+  const t = translations.projects;
 
   const getStatusLabel = (status: string) => {
     switch (status) {

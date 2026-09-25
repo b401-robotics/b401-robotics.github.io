@@ -8,14 +8,14 @@ export function App() {
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          {/* Redirect bare root to English */}
-          <Route path="/" element={<Navigate to="/en" replace />} />
+          {/* Home */}
+          <Route path="/" element={<LandingPage />} />
 
-          {/* Language-prefixed landing page: /en, /en/about, etc. */}
-          <Route path="/:lang/:section?" element={<LandingPage />} />
+          {/* Section pages: /highlight, /equipment, /practicums, etc. */}
+          <Route path="/:section" element={<LandingPage />} />
 
-          {/* Fallback: redirect any unknown path to English */}
-          <Route path="*" element={<Navigate to="/en" replace />} />
+          {/* Fallback: redirect any unknown path to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

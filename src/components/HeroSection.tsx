@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 import Ur5Image from "../assets/img/ur5.webp";
 import NrfImage from "../assets/img/nrf.webp";
@@ -11,8 +10,7 @@ const ROTATION_MS = 5000;
 const FADE_MS = 2000;
 
 export function HeroSection() {
-  const { lang } = useLanguage();
-  const t = translations[lang].hero;
+  const t = translations.hero;
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {

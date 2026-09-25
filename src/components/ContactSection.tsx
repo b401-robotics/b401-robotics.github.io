@@ -1,4 +1,3 @@
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 
 const CONTACT_ICONS = [
@@ -22,8 +21,7 @@ interface ContactSectionProps {
 }
 
 export function ContactSection(_props: ContactSectionProps = {}) {
-  const { lang } = useLanguage();
-  const t = translations[lang].contact;
+  const t = translations.contact;
 
   const contactItems = [
     { label: t.locationLabel, value: t.locationValue },

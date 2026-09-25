@@ -1,40 +1,18 @@
-import { type Language } from "@/context/LanguageContext"
-
 export interface I_lecturers {
     name: string,
-    role: {en: string, id: string}
-    specialty: {en: string, id: string}
+    role: string,
+    specialty: string,
     initials: string,
     education?: string[],
     expertise?: string,
     imageUrl?: string
 }
 
-// interface I_lecturersFiltered {
-//     name: string,
-//     role: string,
-//     specialty: string,
-//     initials: string
-// }
-
-// export function lecturersLangFilter(lang: Language, lecturers: Array<I_lecturersAll>) {
-//     let role = [];
-//     let specialty = [];
-//     if(lang == "en")
-//     {
-//         for(let i = 0; i < lecturers.length; i++)
-//         {
-//             role.push(lecturers[i]?.roleEN);
-//             specialty.push(lecturers[i]?.specialtyEN)
-//         }
-//     }
-// }
-
 export const lecturers: Array<I_lecturers> = [
     {
         name: "Dr. Ahmad Zaini, S.T., M.Sc.",
-        role: {en:"Head of Laboratory", id: "Kepala Laboratorium"},
-        specialty: {en: "", id: ""},
+        role: "Head of Laboratory",
+        specialty: "",
         initials: "AZ",
         education: [
             "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -45,8 +23,8 @@ export const lecturers: Array<I_lecturers> = [
     },
     {
         name: "Muhtadin, S.T., M.T.",
-        role: {en:"Lecturer", id: "Dosen"},
-        specialty: {en: "", id: ""},
+        role: "Lecturer",
+        specialty: "",
         initials: "M",
         education: [
             "S1: Teknik Sistem Komputer, Institut Teknologi Sepuluh Nopember",
@@ -57,8 +35,8 @@ export const lecturers: Array<I_lecturers> = [
     },
     {
         name: "Eko Pramunanto, S.T., M.T.",
-        role: {en:"Lecturer", id: "Dosen"},
-        specialty: {en: "", id: ""},
+        role: "Lecturer",
+        specialty: "",
         initials: "EP",
         education: [
             "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -69,8 +47,8 @@ export const lecturers: Array<I_lecturers> = [
     },
     {
         name: "Ir. Hany Boedinugroho, M.T.",
-        role: {en:"Lecturer", id: "Dosen"},
-        specialty: {en: "", id: ""},
+        role: "Lecturer",
+        specialty: "",
         initials: "HB",
         education: [
             "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -81,8 +59,8 @@ export const lecturers: Array<I_lecturers> = [
     },
     {
         name: "Prof. Dr. Ir. Mauridhi Hery Purnomo, M.Eng.",
-        role: {en:"Lecturer", id: "Dosen"},
-        specialty: {en: "", id: ""},
+        role: "Lecturer",
+        specialty: "",
         initials: "MH",
         education: [
             "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -94,8 +72,8 @@ export const lecturers: Array<I_lecturers> = [
     },
     {
         name: "Atar Fuady Babgei, S.T., M.Sc.",
-        role: {en:"Lecturer", id: "Dosen"},
-        specialty: {en: "", id: ""},
+        role: "Lecturer",
+        specialty: "",
         initials: "AF",
         education: [
             "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -108,7 +86,7 @@ export const lecturers: Array<I_lecturers> = [
 
 export interface I_alumni {
     name: string,
-    role: {en: string, id: string},
+    role: string,
     initials: string,
     year?: string,
     education?: string[],
@@ -118,7 +96,7 @@ export interface I_alumni {
 
 export interface I_assistant {
     name: string,
-    role: {en: string, id: string},
+    role: string,
     initials: string,
     education?: string[],
     expertise?: string,
@@ -130,7 +108,7 @@ export interface I_assistant {
 export const assistants: Array<I_assistant> = [
     {
         name: "John Doe",
-        role: { en: "Lead Assistant", id: "Asisten Utama" },
+        role: "Lead Assistant",
         initials: "JD",
         education: [
             "S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember",
@@ -139,7 +117,7 @@ export const assistants: Array<I_assistant> = [
     },
     {
         name: "Jane Smith",
-        role: { en: "Hardware Assistant", id: "Asisten Perangkat Keras" },
+        role: "Hardware Assistant",
         initials: "JS",
         education: [
             "S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember",
@@ -148,7 +126,7 @@ export const assistants: Array<I_assistant> = [
     },
     {
         name: "Michael Johnson",
-        role: { en: "Software Assistant", id: "Asisten Perangkat Lunak" },
+        role: "Software Assistant",
         initials: "MJ",
         education: [
             "S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember",
@@ -157,7 +135,7 @@ export const assistants: Array<I_assistant> = [
     },
     {
         name: "Emily Davis",
-        role: { en: "Research Assistant", id: "Asisten Peneliti" },
+        role: "Research Assistant",
         initials: "ED",
         education: [
             "S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember",
@@ -166,7 +144,7 @@ export const assistants: Array<I_assistant> = [
     },
     {
         name: "David Wilson",
-        role: { en: "Network Assistant", id: "Asisten Jaringan" },
+        role: "Network Assistant",
         initials: "DW",
         education: [
             "S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember",
@@ -175,7 +153,7 @@ export const assistants: Array<I_assistant> = [
     },
     {
         name: "Sarah Brown",
-        role: { en: "AI/ML Assistant", id: "Asisten AI/ML" },
+        role: "AI/ML Assistant",
         initials: "SB",
         education: [
             "S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember",
@@ -184,7 +162,7 @@ export const assistants: Array<I_assistant> = [
     },
     {
         name: "James Miller",
-        role: { en: "IoT Assistant", id: "Asisten IoT" },
+        role: "IoT Assistant",
         initials: "JM",
         education: [
             "S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember",
@@ -193,7 +171,7 @@ export const assistants: Array<I_assistant> = [
     },
     {
         name: "Olivia Taylor",
-        role: { en: "Robotics Assistant", id: "Asisten Robotika" },
+        role: "Robotics Assistant",
         initials: "OT",
         education: [
             "S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember",
@@ -207,7 +185,7 @@ export const assistants: Array<I_assistant> = [
 export const alumni: Array<I_alumni> = [
     {
         name: "Bagas Prakoso",
-        role: { en: "Robotics Research Alumni", id: "Alumni Penelitian Robotika" },
+        role: "Robotics Research Alumni",
         initials: "BP",
         year: "2024",
         education: [
@@ -217,7 +195,7 @@ export const alumni: Array<I_alumni> = [
     },
     {
         name: "Citra Lestari",
-        role: { en: "Embedded Systems Alumni", id: "Alumni Sistem Tertanam" },
+        role: "Embedded Systems Alumni",
         initials: "CL",
         year: "2023",
         education: [
@@ -227,7 +205,7 @@ export const alumni: Array<I_alumni> = [
     },
     {
         name: "Dimas Saputra",
-        role: { en: "IoT Research Alumni", id: "Alumni Penelitian IoT" },
+        role: "IoT Research Alumni",
         initials: "DS",
         year: "2023",
         education: [
@@ -237,7 +215,7 @@ export const alumni: Array<I_alumni> = [
     },
     {
         name: "Eka Wijaya",
-        role: { en: "Computer Vision Alumni", id: "Alumni Visi Komputer" },
+        role: "Computer Vision Alumni",
         initials: "EW",
         year: "2022",
         education: [
@@ -247,7 +225,7 @@ export const alumni: Array<I_alumni> = [
     },
     {
         name: "Fitri Handayani",
-        role: { en: "Wireless Sensor Networks Alumni", id: "Alumni Jaringan Sensor Nirkabel" },
+        role: "Wireless Sensor Networks Alumni",
         initials: "FH",
         year: "2022",
         education: [
@@ -257,7 +235,7 @@ export const alumni: Array<I_alumni> = [
     },
     {
         name: "Gilang Ramadhan",
-        role: { en: "Automation Alumni", id: "Alumni Otomasi" },
+        role: "Automation Alumni",
         initials: "GR",
         year: "2021",
         education: [

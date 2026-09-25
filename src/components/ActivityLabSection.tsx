@@ -1,9 +1,7 @@
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 
 export function ActivityLabSection() {
-  const { lang } = useLanguage();
-  const t = translations[lang].activity;
+  const t = translations.activity;
 
   return (
     <section

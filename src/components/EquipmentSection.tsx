@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 import { PreviewSectionLayout } from "./PreviewSectionLayout";
 import { FacilityModal } from "./FacilityModal";
@@ -9,8 +8,7 @@ interface EquipmentSectionProps {
 }
 
 export function EquipmentSection({ preview = false }: EquipmentSectionProps = {}) {
-  const { lang } = useLanguage();
-  const t = translations[lang].equipment;
+  const t = translations.equipment;
 
   if (preview) {
     return (
@@ -20,7 +18,7 @@ export function EquipmentSection({ preview = false }: EquipmentSectionProps = {}
         heading={t.heading}
         headingAccent={t.headingAccent}
         body={t.body}
-        ctaTo={`/${lang}/equipment`}
+        ctaTo="/equipment"
         ctaLabel={t.viewAll}
         imagePosition="right"
       />

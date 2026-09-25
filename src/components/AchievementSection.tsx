@@ -1,9 +1,7 @@
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 
 export function AchievementSection() {
-  const { lang } = useLanguage();
-  const t = translations[lang].achievements;
+  const t = translations.achievements;
 
   return (
     <section

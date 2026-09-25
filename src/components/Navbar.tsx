@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation, Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage, type Language } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 import LogoLight from "../assets/logo/B401_transparent.png";
 import LogoDark from "../assets/logo/B401_white_cutout.png";
@@ -10,28 +9,20 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const { lang } = useLanguage();
-  const t = translations[lang].nav;
-  const navigate = useNavigate();
-  const location = useLocation();
+  const t = translations.nav;
   const { section } = useParams<{ section?: string }>();
   const activeSection = section || "home";
-
-  function switchLang(targetLang: Language) {
-    const newPath = location.pathname.replace(/^\/(en|id)/, `/${targetLang}`);
-    navigate(newPath + location.search + location.hash);
-  }
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     // Check initial dark mode state
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
+    if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark");
       setIsDarkMode(true);
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
       setIsDarkMode(false);
     }
 
@@ -39,14 +30,14 @@ export function Navbar() {
   }, []);
 
   const toggleDarkMode = () => {
-    setIsDarkMode(prev => {
+    setIsDarkMode((prev) => {
       const next = !prev;
       if (next) {
-        document.documentElement.classList.add('dark');
-        localStorage.theme = 'dark';
+        document.documentElement.classList.add("dark");
+        localStorage.theme = "dark";
       } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.theme = 'light';
+        document.documentElement.classList.remove("dark");
+        localStorage.theme = "light";
       }
       return next;
     });
@@ -70,7 +61,7 @@ export function Navbar() {
     >
       <nav className="w-full nav-edge-px flex items-center justify-between">
         {/* Logo */}
-        <Link to={`/${lang}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3 group min-h-[44px]">
+        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3 group min-h-[44px]">
           <img
             src={LogoLight}
             alt="B401 Logo"
@@ -93,7 +84,7 @@ export function Navbar() {
             return (
               <li key={link.path}>
                 <Link
-                  to={`/${lang}/${link.path === "home" ? "" : link.path}`}
+                  to={link.path === "home" ? "/" : `/${link.path}`}
                   className={`group relative px-4 py-2 min-h-[44px] flex items-center text-sm transition-colors duration-200 font-medium focus:outline-none ${
                     isActive
                       ? "text-zinc-900 dark:text-zinc-100"
@@ -113,9 +104,8 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* Right side: Lang toggle + Dark mode toggle */}
+        {/* Right side: Dark mode toggle (desktop) */}
         <div className="hidden md:flex items-center gap-3">
-          {/* Dark Mode Toggle */}
           <button
             onClick={toggleDarkMode}
             className={`no-invert relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 ${
@@ -137,31 +127,12 @@ export function Navbar() {
                   <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 4.22a1 1 0 011.415 1.415l-.708.708a1 1 0 01-1.414-1.414l.707-.708zM17 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zm-4.22 4.22a1 1 0 01-1.415 1.415l-.708-.708a1 1 0 011.414-1.414l.707.708zM10 17a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zm-4.22-4.22a1 1 0 01-1.415-1.415l.708-.708a1 1 0 011.414 1.414l-.707.708zM3 10a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zM5.78 5.78a1 1 0 011.414-1.414l.708.708a1 1 0 01-1.415 1.415l-.708-.708zM10 5a5 5 0 100 10 5 5 0 000-10z" clipRule="evenodd" />
                 </svg>
               )}
-            </div>
-          </button>
-
-          {/* Language Toggle — track color follows the web theme, not the language */}
-          <button
-            id="lang-toggle-btn"
-            onClick={() => switchLang(lang === "en" ? "id" : "en")}
-            className={`no-invert relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 ${
-              isDarkMode ? "bg-zinc-800 border-zinc-700" : "bg-zinc-200 border-zinc-300"
-            }`}
-            aria-label="Toggle Language"
-          >
-            <div
-              className={`absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-300 text-xs font-bold text-zinc-900 ${
-                lang === "id" ? "translate-x-6" : "translate-x-0"
-              }`}
-            >
-              {lang === "en" ? "EN" : "ID"}
             </div>
           </button>
         </div>
 
-        {/* Mobile: lang + hamburger */}
+        {/* Mobile: dark mode + hamburger */}
         <div className="md:hidden flex items-center gap-2">
-          {/* Dark Mode Toggle (mobile) */}
           <button
             onClick={toggleDarkMode}
             className={`no-invert relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 ${
@@ -183,24 +154,6 @@ export function Navbar() {
                   <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 4.22a1 1 0 011.415 1.415l-.708.708a1 1 0 01-1.414-1.414l.707-.708zM17 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zm-4.22 4.22a1 1 0 01-1.415 1.415l-.708-.708a1 1 0 011.414-1.414l.707.708zM10 17a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zm-4.22-4.22a1 1 0 01-1.415-1.415l.708-.708a1 1 0 011.414 1.414l-.707.708zM3 10a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zM5.78 5.78a1 1 0 011.414-1.414l.708.708a1 1 0 01-1.415 1.415l-.708-.708zM10 5a5 5 0 100 10 5 5 0 000-10z" clipRule="evenodd" />
                 </svg>
               )}
-            </div>
-          </button>
-
-          {/* Language Toggle (mobile) — track color follows the web theme, not the language */}
-          <button
-            id="lang-toggle-btn-mobile"
-            onClick={() => switchLang(lang === "en" ? "id" : "en")}
-            className={`no-invert relative flex items-center w-14 h-8 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-zinc-500/50 ${
-              isDarkMode ? "bg-zinc-800 border-zinc-700" : "bg-zinc-200 border-zinc-300"
-            }`}
-            aria-label="Toggle Language"
-          >
-            <div
-              className={`absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-sm flex items-center justify-center transition-transform duration-300 text-xs font-bold text-zinc-900 ${
-                lang === "id" ? "translate-x-6" : "translate-x-0"
-              }`}
-            >
-              {lang === "en" ? "EN" : "ID"}
             </div>
           </button>
 
@@ -234,7 +187,7 @@ export function Navbar() {
                 return (
                   <Link
                     key={link.path}
-                    to={`/${lang}/${link.path === "home" ? "" : link.path}`}
+                    to={link.path === "home" ? "/" : `/${link.path}`}
                     onClick={() => setMenuOpen(false)}
                     className={`group relative px-4 py-3 min-h-[44px] flex items-center text-sm transition-colors duration-200 font-medium focus:outline-none ${
                       isActive

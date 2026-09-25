@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 import LogoLight from "../assets/logo/B401_transparent.png";
 import LogoDark from "../assets/logo/B401_white_cutout.png";
@@ -47,8 +46,7 @@ const SOCIALS = [
 ];
 
 export function Footer() {
-  const { lang } = useLanguage();
-  const t = translations[lang].footer;
+  const t = translations.footer;
   const year = new Date().getFullYear();
 
   return (
@@ -58,7 +56,7 @@ export function Footer() {
           {/* Column 1 — Brand: logo + slogan */}
           <div>
             <Link
-              to={`/${lang}`}
+              to="/"
               onClick={() => window.scrollTo(0, 0)}
               className="flex items-center gap-3 mb-4 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-zinc-500/20 rounded-lg"
             >

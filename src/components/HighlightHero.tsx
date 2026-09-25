@@ -1,9 +1,7 @@
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 
 export function HighlightHero() {
-  const { lang } = useLanguage();
-  const t = translations[lang].highlight;
+  const t = translations.highlight;
 
   return (
     <section

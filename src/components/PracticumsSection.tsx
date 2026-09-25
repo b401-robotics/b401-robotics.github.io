@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 import { PreviewSectionLayout } from "./PreviewSectionLayout";
 
@@ -8,8 +7,7 @@ interface PracticumsSectionProps {
 }
 
 export function PracticumsSection({ preview = false }: PracticumsSectionProps = {}) {
-  const { lang } = useLanguage();
-  const t = translations[lang].practicums;
+  const t = translations.practicums;
   const [selectedCode, setSelectedCode] = useState<string>(t.items[0]?.code ?? "");
 
   if (preview) {
@@ -20,7 +18,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
         heading={t.heading}
         headingAccent={t.headingAccent}
         body={t.body}
-        ctaTo={`/${lang}/practicums`}
+        ctaTo="/practicums"
         ctaLabel={t.viewAll}
         imagePosition="right"
       />

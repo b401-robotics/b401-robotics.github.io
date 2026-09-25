@@ -1,12 +1,10 @@
-import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../contents/translations";
 import LogoLight from "../assets/logo/B401_transparent.png";
 import LogoDark from "../assets/logo/B401_white_cutout.png";
 
 export function AboutSection() {
-  const { lang } = useLanguage();
-  const tAbout = translations[lang].about;
-  const tNav = translations[lang].nav;
+  const tAbout = translations.about;
+  const tNav = translations.nav;
 
   return (
     <section id="about" className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col">

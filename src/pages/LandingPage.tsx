@@ -11,11 +11,6 @@ import { AchievementSection } from "../components/AchievementSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
 import { HighlightPage } from "./HighlightPage";
-import {
-  LanguageProvider,
-  SUPPORTED_LANGS,
-  type Language,
-} from "../context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 let isFirstLoad = true;
@@ -26,7 +21,7 @@ const isReload =
     .type === "reload";
 
 export function LandingPage() {
-  const { lang, section } = useParams<{ lang: string; section?: string }>();
+  const { section } = useParams<{ section?: string }>();
   const location = useLocation();
 
   useEffect(() => {
@@ -36,19 +31,12 @@ export function LandingPage() {
   // Redirect to home if it's the very first load and the user reloaded on a section
   if (isFirstLoad && isReload && section) {
     isFirstLoad = false;
-    return <Navigate to={`/${lang}`} replace />;
+    return <Navigate to="/" replace />;
   }
   isFirstLoad = false;
 
-  // Redirect any unknown lang slug to English
-  if (!lang || !SUPPORTED_LANGS.includes(lang as Language)) {
-    return <Navigate to="/en" replace />;
-  }
-
-  const resolvedLang = lang as Language;
-
   return (
-    <LanguageProvider lang={resolvedLang}>
+    <>
       <Helmet>
         <title>B401 Robotics & Intelligent Systems Lab</title>
         <meta
@@ -88,6 +76,6 @@ export function LandingPage() {
           <Footer />
         </div>
       </div>
-    </LanguageProvider>
+    </>
   );
 }
