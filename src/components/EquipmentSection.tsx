@@ -61,16 +61,16 @@ export function EquipmentSection({ preview = false }: EquipmentSectionProps = {}
 interface Facility {
   readonly name: string;
   readonly category: string;
-  readonly imageUrl: string;
-  readonly info: string;
+  readonly image: string;
+  readonly description: string;
 }
 
 interface LabRoomProps {
   room: {
     readonly code: string;
     readonly name: string;
-    readonly desc: string;
-    readonly imageUrl: string;
+    readonly description: string;
+    readonly image: string;
     readonly facilities: readonly Facility[];
   };
   facilitiesLabel: string;
@@ -86,9 +86,9 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
         {/* Image — height matches the right column (header top edge to list bottom edge) */}
         <div className="w-full lg:w-1/2 flex">
           <div className="w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden flex-1 min-h-[280px] lg:min-h-0">
-            {room.imageUrl ? (
+            {room.image ? (
               <img
-                src={room.imageUrl}
+                src={room.image}
                 alt={room.name}
                 className="w-full h-full object-cover"
                 loading="lazy"
@@ -106,7 +106,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
             {room.name}
           </h3>
           <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-8">
-            {room.desc}
+            {room.description}
           </p>
 
           {/* Facility list — scrollbar always visible */}
@@ -126,9 +126,9 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
                 >
                   {/* Thumbnail */}
                   <div className="w-12 h-12 shrink-0 bg-zinc-200/60 dark:bg-white/5 overflow-hidden">
-                    {f.imageUrl ? (
+                    {f.image ? (
                       <img
-                        src={f.imageUrl}
+                        src={f.image}
                         alt={f.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         loading="lazy"

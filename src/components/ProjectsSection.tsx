@@ -36,9 +36,9 @@ export function ProjectsSection() {
               <article key={project.title} className="flex flex-col">
                 {/* Image on top */}
                 <div className="aspect-[16/10] w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden mb-4">
-                  {project.imageUrl ? (
+                  {project.image ? (
                     <img
-                      src={project.imageUrl}
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -58,7 +58,7 @@ export function ProjectsSection() {
 
                 {/* Description */}
                 <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-4">
-                  {project.desc}
+                  {project.description}
                 </p>
 
                 {/* Tags */}

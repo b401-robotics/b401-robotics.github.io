@@ -2,8 +2,8 @@ interface FacilityModalProps {
   facility: {
     name: string;
     category: string;
-    imageUrl?: string;
-    info: string;
+    image?: string;
+    description: string;
   };
   onClose: () => void;
 }
@@ -35,9 +35,9 @@ export function FacilityModal({ facility, onClose }: FacilityModalProps) {
 
         {/* Large image */}
         <div className="w-full aspect-video bg-zinc-100 dark:bg-white/5 shrink-0">
-          {facility.imageUrl ? (
+          {facility.image ? (
             <img
-              src={facility.imageUrl}
+              src={facility.image}
               alt={facility.name}
               className="w-full h-full object-cover"
             />
@@ -57,7 +57,7 @@ export function FacilityModal({ facility, onClose }: FacilityModalProps) {
             {facility.name}
           </h3>
           <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
-            {facility.info}
+            {facility.description}
           </p>
         </div>
       </div>

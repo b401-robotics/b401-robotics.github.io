@@ -32,9 +32,9 @@ export function ActivityLabSection() {
             >
               {/* Image on the left */}
               <div className="w-full md:w-64 shrink-0 aspect-video bg-zinc-200/60 dark:bg-white/5 overflow-hidden">
-                {item.imageUrl ? (
+                {item.image ? (
                   <img
-                    src={item.imageUrl}
+                    src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover"
                     loading="lazy"
@@ -53,7 +53,7 @@ export function ActivityLabSection() {
                 </h3>
 
                 <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
-                  {item.desc}
+                  {item.description}
                 </p>
               </div>
             </article>

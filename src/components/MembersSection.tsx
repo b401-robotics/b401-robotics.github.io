@@ -60,9 +60,9 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
                 style={{ animationDelay: `${0.2 + idx * 0.05}s` }}
               >
                 <div className="aspect-[4/5] w-full bg-zinc-200 relative overflow-hidden">
-                  {lecturer.imageUrl ? (
+                  {lecturer.image ? (
                     <img
-                      src={lecturer.imageUrl}
+                      src={lecturer.image}
                       alt={lecturer.name}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
@@ -105,9 +105,9 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
                 style={{ animationDelay: `${0.2 + idx * 0.05}s` }}
               >
                 <div className="aspect-[4/5] w-full bg-zinc-200 relative overflow-hidden">
-                  {assistant.imageUrl ? (
+                  {assistant.image ? (
                     <img
-                      src={assistant.imageUrl}
+                      src={assistant.image}
                       alt={assistant.name}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
@@ -150,9 +150,9 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
                 style={{ animationDelay: `${0.1 + idx * 0.05}s` }}
               >
                 <div className="aspect-[4/5] w-full bg-zinc-200 relative overflow-hidden">
-                  {person.imageUrl ? (
+                  {person.image ? (
                     <img
-                      src={person.imageUrl}
+                      src={person.image}
                       alt={person.name}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
@@ -185,7 +185,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
           person={{
             name: selectedLecturer.name,
             initials: selectedLecturer.initials,
-            imageUrl: selectedLecturer.imageUrl,
+            image: selectedLecturer.image,
             role: selectedLecturer.role,
             specialty: selectedLecturer.specialty,
             education: selectedLecturer.education,
@@ -203,7 +203,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
           person={{
             name: selectedAssistant.name,
             initials: selectedAssistant.initials,
-            imageUrl: selectedAssistant.imageUrl,
+            image: selectedAssistant.image,
             role: selectedAssistant.role,
             education: selectedAssistant.education,
             expertise: selectedAssistant.expertise,
@@ -220,7 +220,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
           person={{
             name: selectedAlumni.name,
             initials: selectedAlumni.initials,
-            imageUrl: selectedAlumni.imageUrl,
+            image: selectedAlumni.image,
             role: selectedAlumni.role,
             education: selectedAlumni.education,
             expertise: selectedAlumni.expertise,

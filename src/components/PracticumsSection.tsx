@@ -110,7 +110,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
             </h3>
 
             <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-4">
-              {selected.desc || selected.summary}
+              {selected.description || selected.summary}
             </p>
 
             {selected.topics.length > 0 && (

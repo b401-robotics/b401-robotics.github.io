@@ -1,16 +1,16 @@
-import { navEN } from "./NavContent/en";
-import { heroEN } from "./HeroContent/en";
-import { aboutEN } from "./AboutContent/en";
-import { researchEN } from "./ResearchContent/en";
-import { highlightEN } from "./HighlightContent/en";
-import { activityEN } from "./ActivityContent/en";
-import { practicumsEN } from "./PracticumsContent/en";
-import { projectsEN } from "./ProjectsContent/en";
-import { membersEN } from "./MembersContent/en";
-import { equipmentEN } from "./EquipmentContent/en";
-import { contactEN } from "./ContactContent/en";
-import { footerEN } from "./FooterContent/en";
-import { achievementsEN } from "./AchievementContent/en";
+import { navEN } from "./NavContent";
+import { heroEN } from "./HeroContent";
+import { aboutEN } from "./AboutContent";
+import { researchEN } from "./ResearchContent";
+import { highlightEN } from "./HighlightContent";
+import { activityEN } from "./ActivityContent";
+import { practicumsEN } from "./PracticumsContent";
+import { projectsEN } from "./ProjectsContent";
+import { membersEN } from "./MembersContent";
+import { equipmentEN } from "./EquipmentContent";
+import { contactEN } from "./ContactContent";
+import { footerEN } from "./FooterContent";
+import { achievementsEN } from "./AchievementContent";
 
 export const translations = {
   nav: navEN,

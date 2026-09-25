@@ -2,7 +2,7 @@ interface PersonModalProps {
   person: {
     name: string;
     initials: string;
-    imageUrl?: string;
+    image?: string;
     role: string;
     specialty?: string;
     education?: string[];
@@ -45,9 +45,9 @@ export function PersonModal({
 
         {/* Image / Initials Area */}
         <div className="w-full md:w-2/5 md:min-h-[400px] shrink-0 bg-zinc-100 dark:bg-white/5">
-          {person.imageUrl ? (
+          {person.image ? (
             <img
-              src={person.imageUrl}
+              src={person.image}
               alt={person.name}
               className="w-full h-full object-cover object-top"
               loading="lazy"
