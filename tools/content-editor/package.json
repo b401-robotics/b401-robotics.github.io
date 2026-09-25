@@ -1,0 +1,30 @@
+{
+  "name": "content-editor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "server": "bun run server/index.ts"
+  },
+  "dependencies": {
+    "diff": "^7.0.0",
+    "lucide-react": "^1.16.0",
+    "prettier": "^3.5.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "ts-morph": "^25.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/diff": "^7.0.2",
+    "@types/node": "^22.13.9",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.0"
+  }
+}

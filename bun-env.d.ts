@@ -21,6 +21,21 @@ declare module "*.png" {
   export default path;
 }
 
+declare module "*.webp" {
+  const path: string;
+  export default path;
+}
+
+declare module "*.jpg" {
+  const path: string;
+  export default path;
+}
+
+declare module "*.jpeg" {
+  const path: string;
+  export default path;
+}
+
 declare module "*.css" {
   const content: string;
   export default content;
