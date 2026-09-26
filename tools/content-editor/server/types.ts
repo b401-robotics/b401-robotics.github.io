@@ -1,4 +1,4 @@
-export type SectionKind = "paired" | "standalone" | "en-only" | "read-only";
+export type SectionKind = "en-only" | "standalone" | "read-only";
 
 export interface DiscoveredSection {
   key: string;
@@ -6,27 +6,21 @@ export interface DiscoveredSection {
   kind: SectionKind;
   files: {
     en?: string;
-    id?: string;
     standalone?: string;
   };
   exportNameEn?: string;
-  exportNameId?: string;
   standaloneExport?: string;
-  hasEn: boolean;
-  hasId: boolean;
   readOnly?: boolean;
   readOnlyReason?: string;
 }
 
 export interface SectionDetail {
   meta: DiscoveredSection;
-  enValue?: any;
-  idValue?: any;
-  standaloneValue?: any;
+  value?: any;
 }
 
 export interface ValidationIssue {
-  type: "mismatch" | "translations" | "typescript";
+  type: "translations" | "typescript";
   severity: "error" | "warning";
   section?: string;
   message: string;

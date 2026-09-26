@@ -1,6 +1,6 @@
 import React from "react";
 import type { SchemaNode } from "../lib/schema";
-import { ArrowRightLeft, Copy } from "lucide-react";
+import { Copy } from "lucide-react";
 import { ImageUrlEditor } from "./ImageUrlEditor";
 import { ArrayFieldEditor } from "./ArrayFieldEditor";
 
@@ -9,9 +9,6 @@ interface FieldEditorProps {
   value: any;
   onChange: (val: any) => void;
   path?: string[];
-  counterpartValue?: any;
-  onCopyFromCounterpart?: () => void;
-  isIdColumn?: boolean;
   disabled?: boolean;
 }
 
@@ -19,14 +16,13 @@ export const FieldEditor: React.FC<FieldEditorProps> = ({
   schema,
   value,
   onChange,
-  counterpartValue,
-  onCopyFromCounterpart,
-  isIdColumn,
   disabled = false,
 }) => {
   const label = schema.label || schema.key;
 
-  // Bilingual String: { en: string, id: string }
+  // Bilingual String: { en: string, id: string } — a per-field bilingual
+  // value is still supported since content may hold both languages inside a
+  // single field, independent of the EN/ID section-column feature removed.
   if (schema.type === "bilingualString") {
     const enVal = value?.en ?? "";
     const idVal = value?.id ?? "";
@@ -132,8 +128,6 @@ export const FieldEditor: React.FC<FieldEditorProps> = ({
         schema={schema}
         value={Array.isArray(value) ? value : []}
         onChange={onChange}
-        counterpartValue={counterpartValue}
-        isIdColumn={isIdColumn}
         disabled={disabled}
       />
     );
@@ -143,21 +137,9 @@ export const FieldEditor: React.FC<FieldEditorProps> = ({
   if (schema.type === "multilineString") {
     return (
       <div className="space-y-1">
-        <div className="flex items-center justify-between">
-          <label className="block text-xs font-semibold text-zinc-600 dark:text-zinc-300">
-            {label}
-          </label>
-          {isIdColumn && onCopyFromCounterpart && counterpartValue && (
-            <button
-              type="button"
-              onClick={onCopyFromCounterpart}
-              className="text-[11px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 flex items-center gap-1 transition"
-              title="Copy counterpart value"
-            >
-              <Copy className="w-3 h-3" /> Copy EN
-            </button>
-          )}
-        </div>
+        <label className="block text-xs font-semibold text-zinc-600 dark:text-zinc-300">
+          {label}
+        </label>
         <textarea
           rows={3}
           disabled={disabled}
@@ -188,20 +170,6 @@ export const FieldEditor: React.FC<FieldEditorProps> = ({
                   [propKey]: newPropVal,
                 })
               }
-              counterpartValue={counterpartValue ? counterpartValue[propKey] : undefined}
-              onCopyFromCounterpart={
-                onCopyFromCounterpart
-                  ? () => {
-                      if (counterpartValue && counterpartValue[propKey] !== undefined) {
-                        onChange({
-                          ...(value || {}),
-                          [propKey]: counterpartValue[propKey],
-                        });
-                      }
-                    }
-                  : undefined
-              }
-              isIdColumn={isIdColumn}
               disabled={disabled}
             />
           ))}
@@ -213,21 +181,9 @@ export const FieldEditor: React.FC<FieldEditorProps> = ({
   // Single-line String (default)
   return (
     <div className="space-y-1">
-      <div className="flex items-center justify-between">
-        <label className="block text-xs font-semibold text-zinc-600 dark:text-zinc-300">
-          {label}
-        </label>
-        {isIdColumn && onCopyFromCounterpart && counterpartValue && (
-          <button
-            type="button"
-            onClick={onCopyFromCounterpart}
-            className="text-[11px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 flex items-center gap-1 transition"
-            title="Copy counterpart value"
-          >
-            <Copy className="w-3 h-3" /> Copy EN
-          </button>
-        )}
-      </div>
+      <label className="block text-xs font-semibold text-zinc-600 dark:text-zinc-300">
+        {label}
+      </label>
       <input
         type="text"
         disabled={disabled}

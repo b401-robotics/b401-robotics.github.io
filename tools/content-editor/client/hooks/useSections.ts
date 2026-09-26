@@ -15,8 +15,9 @@ export function useSections() {
       const data = await fetchSections();
       setSections(data);
       if (!selectedKey && data.length > 0) {
-        // default select first non-readonly paired section
-        const first = data.find((s) => s.kind === "paired") || data[0];
+        // Default to the first editable content section, falling back to
+        // the first section of any kind.
+        const first = data.find((s) => s.kind === "en-only") || data[0];
         if (first) setSelectedKey(first.key);
       }
     } catch (err: any) {

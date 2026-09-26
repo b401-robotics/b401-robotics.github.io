@@ -4,7 +4,7 @@ import { discoverSections, getAssetsImgDir, listAssetImages } from "./discoverSe
 import { readSection } from "./readSection";
 import { writeSection, generateSectionDiff } from "./writeSection";
 import { validateContent } from "./validate";
-import { scaffoldSection, createIdForSection } from "./scaffold";
+import { scaffoldSection } from "./scaffold";
 import { addClient, removeClient, broadcast } from "./watcher";
 
 function json(data: any, status = 200) {
@@ -41,6 +41,23 @@ function verifySecurity(req: Request): Response | null {
   }
 
   return null;
+}
+
+function resolveAssetPath(relPath: string): string | null {
+  if (!relPath) return null;
+  const normalized = relPath.replace(/\\/g, "/");
+  if (normalized.startsWith("/")) return null;
+  const segments = normalized.split("/");
+  if (segments.some((seg) => seg === ".." || seg === "" || seg === ".")) {
+    return null;
+  }
+
+  const baseDir = path.resolve(getAssetsImgDir());
+  const resolved = path.resolve(baseDir, normalized);
+  const rel = path.relative(baseDir, resolved);
+  if (rel.startsWith("..") || path.isAbsolute(rel)) return null;
+
+  return resolved;
 }
 
 export async function handleRequest(req: Request): Promise<Response> {
@@ -123,24 +140,20 @@ export async function handleRequest(req: Request): Promise<Response> {
       });
     }
 
-    // GET /api/assets/images  (list image files in src/assets/img)
+    // GET /api/assets/images
     if (pathname === "/api/assets/images" && req.method === "GET") {
       return json({ images: listAssetImages() });
     }
 
-    // GET /api/assets/images/:filename  (serve raw image bytes for preview)
-    const assetImgMatch = pathname.match(/^\/api\/assets\/images\/([^/]+)$/);
+    // GET /api/assets/images/<relative-path>
+    const assetImgMatch = pathname.match(/^\/api\/assets\/images\/(.+)$/);
     if (assetImgMatch && req.method === "GET") {
-      const name = decodeURIComponent(assetImgMatch[1]!);
-      if (name.includes("..") || name.includes("/") || name.includes("\\")) {
-        return json({ error: "Invalid filename" }, 400);
+      const relPath = decodeURIComponent(assetImgMatch[1]!);
+      const resolved = resolveAssetPath(relPath);
+      if (!resolved) {
+        return json({ error: "Invalid asset path" }, 400);
       }
-      const baseDir = path.resolve(getAssetsImgDir());
-      const resolved = path.resolve(baseDir, name);
-      if (resolved !== path.join(baseDir, path.basename(name))) {
-        return json({ error: "Invalid filename" }, 400);
-      }
-      if (!fs.existsSync(resolved)) {
+      if (!fs.existsSync(resolved) || !fs.statSync(resolved).isFile()) {
         return json({ error: "Not found" }, 404);
       }
       const file = Bun.file(resolved);
@@ -174,69 +187,46 @@ export async function handleRequest(req: Request): Promise<Response> {
       return json({ success: true, sections });
     }
 
-    // POST /api/section/:key/create-id
-    const createIdMatch = pathname.match(/^\/api\/section\/([^/]+)\/create-id$/);
-    if (createIdMatch && req.method === "POST") {
-      const sectionKey = decodeURIComponent(createIdMatch[1]!);
-      await createIdForSection(sectionKey);
-      const sections = discoverSections();
-      broadcast("sections_updated", sections);
-      return json({ success: true, sections });
-    }
-
     // GET /api/members / PUT /api/members
     if (pathname === "/api/members") {
       if (req.method === "GET") {
-        const { value: lecturers } = await readSection("lecturers", "standalone");
-        const { value: assistants } = await readSection("assistants", "standalone");
-        const { value: alumni } = await readSection("alumni", "standalone");
+        const { value: lecturers } = await readSection("lecturers");
+        const { value: assistants } = await readSection("assistants");
+        const { value: alumni } = await readSection("alumni");
         return json({ lecturers, assistants, alumni });
       }
       if (req.method === "PUT") {
         const body = await req.json();
-        if (body.lecturers) await writeSection("lecturers", "standalone", body.lecturers);
-        if (body.assistants) await writeSection("assistants", "standalone", body.assistants);
-        if (body.alumni) await writeSection("alumni", "standalone", body.alumni);
+        if (body.lecturers) await writeSection("lecturers", body.lecturers);
+        if (body.assistants) await writeSection("assistants", body.assistants);
+        if (body.alumni) await writeSection("alumni", body.alumni);
         return json({ success: true });
       }
     }
 
-    // POST /api/section/:key/:lang/diff
-    const diffMatch = pathname.match(/^\/api\/section\/([^/]+)\/([^/]+)\/diff$/);
+    // POST /api/section/:key/diff
+    const diffMatch = pathname.match(/^\/api\/section\/([^/]+)\/diff$/);
     if (diffMatch && req.method === "POST") {
       const sectionKey = decodeURIComponent(diffMatch[1]!);
-      const lang = diffMatch[2]! as "en" | "id" | "standalone";
       const body = await req.json();
-      const res = await generateSectionDiff(sectionKey, lang, body.value);
+      const res = await generateSectionDiff(sectionKey, body.value);
       return json(res);
     }
 
-    // GET /api/section/:key/:lang
-    const sectionGetMatch = pathname.match(/^\/api\/section\/([^/]+)\/([^/]+)$/);
-    if (sectionGetMatch && req.method === "GET") {
-      const sectionKey = decodeURIComponent(sectionGetMatch[1]!);
-      const lang = sectionGetMatch[2]! as "en" | "id" | "standalone";
-      const res = await readSection(sectionKey, lang);
+    // GET /api/section/:key
+    const sectionMatch = pathname.match(/^\/api\/section\/([^/]+)$/);
+    if (sectionMatch && req.method === "GET") {
+      const sectionKey = decodeURIComponent(sectionMatch[1]!);
+      const res = await readSection(sectionKey);
       return json(res);
     }
 
-    // PUT /api/section/:key/:lang
-    const sectionPutMatch = pathname.match(/^\/api\/section\/([^/]+)\/([^/]+)$/);
-    if (sectionPutMatch && req.method === "PUT") {
-      const sectionKey = decodeURIComponent(sectionPutMatch[1]!);
-      const lang = sectionPutMatch[2]! as "en" | "id" | "standalone";
+    // PUT /api/section/:key
+    if (sectionMatch && req.method === "PUT") {
+      const sectionKey = decodeURIComponent(sectionMatch[1]!);
       const body = await req.json();
-      const res = await writeSection(sectionKey, lang, body.value);
+      const res = await writeSection(sectionKey, body.value);
       return json(res);
-    }
-
-    // POST /api/preview/:key/:lang
-    const previewMatch = pathname.match(/^\/api\/preview\/([^/]+)\/([^/]+)$/);
-    if (previewMatch && req.method === "POST") {
-      const sectionKey = decodeURIComponent(previewMatch[1]!);
-      const lang = previewMatch[2]! as "en" | "id" | "standalone";
-      const body = await req.json();
-      return json({ preview: body.value, key: sectionKey, lang });
     }
 
     return json({ error: "Endpoint not found" }, 404);

@@ -3,29 +3,16 @@ import { Eye, X, Code, Layout } from "lucide-react";
 
 interface PreviewPaneProps {
   sectionKey: string;
-  enValue: any;
-  idValue: any;
-  standaloneValue?: any;
-  isStandalone?: boolean;
+  value: any;
   onClose: () => void;
 }
 
 export const PreviewPane: React.FC<PreviewPaneProps> = ({
   sectionKey,
-  enValue,
-  idValue,
-  standaloneValue,
-  isStandalone,
+  value,
   onClose,
 }) => {
-  const [lang, setLang] = useState<"en" | "id">("en");
   const [viewMode, setViewMode] = useState<"card" | "json">("card");
-
-  const activeData = isStandalone
-    ? standaloneValue
-    : lang === "en"
-    ? enValue
-    : idValue;
 
   const renderCardView = (data: any) => {
     if (!data) return <p className="text-zinc-400 text-xs">No data to preview.</p>;
@@ -55,13 +42,13 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({
 
                 {item.role && (
                   <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-1">
-                    {typeof item.role === "object" ? item.role[lang] || item.role.en : item.role}
+                    {item.role}
                   </p>
                 )}
 
-                {(item.desc || item.summary || item.body || item.expertise) && (
+                {(item.description || item.summary || item.body || item.expertise || item.info) && (
                   <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed mb-2">
-                    {item.desc || item.summary || item.body || item.expertise}
+                    {item.description || item.summary || item.body || item.expertise || item.info}
                   </p>
                 )}
 
@@ -123,9 +110,9 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({
                     <div className="font-semibold text-xs text-zinc-800 dark:text-zinc-200">
                       {sub.title || sub.name || `Entry ${sIdx + 1}`}
                     </div>
-                    {sub.desc && (
+                    {(sub.description || sub.desc || sub.info) && (
                       <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
-                        {sub.desc}
+                        {sub.description || sub.desc || sub.info}
                       </p>
                     )}
                   </div>
@@ -149,27 +136,6 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          {!isStandalone && (
-            <div className="flex rounded-md bg-zinc-100 dark:bg-zinc-800 p-0.5">
-              <button
-                onClick={() => setLang("en")}
-                className={`px-2 py-0.5 text-xs font-medium rounded ${
-                  lang === "en" ? "bg-white dark:bg-zinc-700 shadow-xs" : "text-zinc-500"
-                }`}
-              >
-                EN
-              </button>
-              <button
-                onClick={() => setLang("id")}
-                className={`px-2 py-0.5 text-xs font-medium rounded ${
-                  lang === "id" ? "bg-white dark:bg-zinc-700 shadow-xs" : "text-zinc-500"
-                }`}
-              >
-                ID
-              </button>
-            </div>
-          )}
-
           <div className="flex rounded-md bg-zinc-100 dark:bg-zinc-800 p-0.5">
             <button
               onClick={() => setViewMode("card")}
@@ -199,10 +165,10 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({
       <div className="flex-1 overflow-auto p-4 bg-zinc-50/50 dark:bg-zinc-950/50">
         {viewMode === "json" ? (
           <pre className="font-mono text-xs text-zinc-700 dark:text-zinc-300 whitespace-pre-wrap bg-white dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800">
-            {JSON.stringify(activeData, null, 2)}
+            {JSON.stringify(value, null, 2)}
           </pre>
         ) : (
-          renderCardView(activeData)
+          renderCardView(value)
         )}
       </div>
     </div>

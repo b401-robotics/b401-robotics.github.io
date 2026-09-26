@@ -18,20 +18,52 @@ export function getAssetsImgDir(): string {
 
 const IMAGE_EXT_REGEX = /\.(png|jpe?g|gif|webp|svg|avif|bmp|ico)$/i;
 
+/**
+ * Recursively list every image file under `src/assets/img`, including files
+ * nested inside subfolders. Returned paths are POSIX-relative to
+ * `src/assets/img` — e.g. "ur5.webp" or "rooms/tw2-901.webp".
+ */
 export function listAssetImages(): string[] {
-  const dir = getAssetsImgDir();
-  if (!fs.existsSync(dir)) return [];
-  try {
-    return fs
-      .readdirSync(dir, { withFileTypes: true })
-      .filter((e) => e.isFile() && IMAGE_EXT_REGEX.test(e.name))
-      .map((e) => e.name)
-      .sort((a, b) => a.localeCompare(b));
-  } catch {
-    return [];
-  }
+  const rootDir = getAssetsImgDir();
+  if (!fs.existsSync(rootDir)) return [];
+
+  const out: string[] = [];
+
+  const walk = (dir: string, prefix: string) => {
+    let entries: fs.Dirent[];
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      if (entry.name.startsWith(".")) continue;
+      const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) {
+        walk(path.join(dir, entry.name), rel);
+      } else if (entry.isFile() && IMAGE_EXT_REGEX.test(entry.name)) {
+        out.push(rel);
+      }
+    }
+  };
+
+  walk(rootDir, "");
+  out.sort((a, b) => a.localeCompare(b));
+  return out;
 }
 
+const RESERVED_FILES = new Set(["translations.ts"]);
+
+/**
+ * Discover content sections from the flat `src/contents/*.ts` layout.
+ *
+ * - Exports ending in `EN` (e.g. `equipmentEN`) become editable content
+ *   sections keyed by the base name (`equipment`). `ID` exports are
+ *   ignored — the editor only edits the EN source now.
+ * - Any other export (e.g. `lecturers`, `assistants`, `alumni`) becomes a
+ *   standalone data section keyed by the export name.
+ * - `.tsx` files surface as read-only.
+ */
 export function discoverSections(): DiscoveredSection[] {
   const contentsDir = getContentsDir();
   if (!fs.existsSync(contentsDir)) {
@@ -46,133 +78,68 @@ export function discoverSections(): DiscoveredSection[] {
   const entries = fs.readdirSync(contentsDir, { withFileTypes: true });
 
   for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
-    const folderName = entry.name;
-    const folderPath = path.join(contentsDir, folderName);
+    if (!entry.isFile()) continue;
 
-    const filesInFolder = fs.readdirSync(folderPath);
+    const fileName = entry.name;
+    if (RESERVED_FILES.has(fileName)) continue;
+    if (fileName.endsWith(".d.ts")) continue;
+    if (fileName.endsWith(".test.ts") || fileName.endsWith(".spec.ts")) continue;
 
-    const enFile = filesInFolder.find((f) => f === "en.ts");
-    const idFile = filesInFolder.find((f) => f === "id.ts");
+    const filePath = path.join(contentsDir, fileName);
+    const fallbackKey = fileName.replace(/\.(ts|tsx)$/, "");
 
-    const enFilePath = enFile ? path.join(folderPath, enFile) : undefined;
-    const idFilePath = idFile ? path.join(folderPath, idFile) : undefined;
+    // Read-only JSX files
+    if (fileName.endsWith(".tsx")) {
+      sections.push({
+        key: fallbackKey,
+        folder: fileName,
+        kind: "read-only",
+        files: { standalone: filePath },
+        readOnly: true,
+        readOnlyReason: "JSX component — must be edited directly in source code.",
+      });
+      continue;
+    }
 
-    const enExports: string[] = [];
-    const idExports: string[] = [];
+    if (!fileName.endsWith(".ts")) continue;
 
-    if (enFilePath) {
-      const sf = project.addSourceFileAtPath(enFilePath);
+    let exportNames: string[] = [];
+    try {
+      const sf = project.addSourceFileAtPath(filePath);
       for (const stmt of sf.getVariableStatements()) {
         if (stmt.hasExportKeyword()) {
           for (const decl of stmt.getDeclarations()) {
-            enExports.push(decl.getName());
+            exportNames.push(decl.getName());
           }
         }
       }
+    } catch {
+      // Skip files that fail to parse
+      continue;
     }
 
-    if (idFilePath) {
-      const sf = project.addSourceFileAtPath(idFilePath);
-      for (const stmt of sf.getVariableStatements()) {
-        if (stmt.hasExportKeyword()) {
-          for (const decl of stmt.getDeclarations()) {
-            idExports.push(decl.getName());
-          }
-        }
-      }
-    }
+    if (exportNames.length === 0) continue;
 
-    // Pair <x>EN and <x>ID
-    const pairedKeys = new Set<string>();
-
-    for (const expEn of enExports) {
-      if (expEn.endsWith("EN")) {
-        const baseKey = expEn.slice(0, -2);
-        const expId = `${baseKey}ID`;
-        if (idExports.includes(expId)) {
-          pairedKeys.add(baseKey);
-          sections.push({
-            key: baseKey,
-            folder: folderName,
-            kind: "paired",
-            files: {
-              en: enFilePath,
-              id: idFilePath,
-            },
-            exportNameEn: expEn,
-            exportNameId: expId,
-            hasEn: true,
-            hasId: true,
-          });
-        } else {
-          // EN-only section
-          sections.push({
-            key: baseKey,
-            folder: folderName,
-            kind: "en-only",
-            files: {
-              en: enFilePath,
-            },
-            exportNameEn: expEn,
-            hasEn: true,
-            hasId: false,
-          });
-        }
-      } else {
-        // standalone export in en.ts
+    for (const exp of exportNames) {
+      if (exp.length > 2 && exp.endsWith("EN")) {
+        const base = exp.slice(0, -2);
         sections.push({
-          key: expEn,
-          folder: folderName,
-          kind: "standalone",
-          files: {
-            standalone: enFilePath,
-          },
-          standaloneExport: expEn,
-          hasEn: true,
-          hasId: false,
+          key: base,
+          folder: fileName,
+          kind: "en-only",
+          files: { en: filePath },
+          exportNameEn: exp,
         });
-      }
-    }
-
-    // Check for other .ts files (e.g. memberList.ts)
-    for (const fileName of filesInFolder) {
-      if (fileName === "en.ts" || fileName === "id.ts") continue;
-      if (fileName.endsWith(".ts") && !fileName.endsWith(".d.ts")) {
-        const otherFilePath = path.join(folderPath, fileName);
-        const sf = project.addSourceFileAtPath(otherFilePath);
-        for (const stmt of sf.getVariableStatements()) {
-          if (stmt.hasExportKeyword()) {
-            for (const decl of stmt.getDeclarations()) {
-              const exportName = decl.getName();
-              sections.push({
-                key: exportName,
-                folder: folderName,
-                kind: "standalone",
-                files: {
-                  standalone: otherFilePath,
-                },
-                standaloneExport: exportName,
-                hasEn: true,
-                hasId: true,
-              });
-            }
-          }
-        }
-      } else if (fileName.endsWith(".tsx")) {
-        // Read-only file e.g. handleHeading.tsx
-        const baseName = fileName.replace(/\.tsx$/, "");
+      } else if (exp.length > 2 && exp.endsWith("ID")) {
+        // Legacy ID exports are ignored — the editor only edits EN now.
+        continue;
+      } else {
         sections.push({
-          key: baseName,
-          folder: folderName,
-          kind: "read-only",
-          files: {
-            standalone: path.join(folderPath, fileName),
-          },
-          hasEn: true,
-          hasId: true,
-          readOnly: true,
-          readOnlyReason: "JSX component — must be edited directly in source code.",
+          key: exp,
+          folder: fileName,
+          kind: "standalone",
+          files: { standalone: filePath },
+          standaloneExport: exp,
         });
       }
     }

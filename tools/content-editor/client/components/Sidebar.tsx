@@ -7,8 +7,6 @@ import {
   FileText,
   Database,
   Lock,
-  PlusCircle,
-  Folder,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -17,7 +15,6 @@ interface SidebarProps {
   onSelect: (key: string) => void;
   onOpenNewSectionModal: () => void;
   onRefresh: () => void;
-  onCreateId: (key: string) => void;
   dirtyKeys: Set<string>;
   loading: boolean;
 }
@@ -28,7 +25,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onSelect,
   onOpenNewSectionModal,
   onRefresh,
-  onCreateId,
   dirtyKeys,
   loading,
 }) => {
@@ -45,8 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     );
   }, [sections, search]);
 
-  const paired = filteredSections.filter((s) => s.kind === "paired");
-  const enOnly = filteredSections.filter((s) => s.kind === "en-only");
+  const contentSections = filteredSections.filter((s) => s.kind === "en-only");
   const standalone = filteredSections.filter((s) => s.kind === "standalone");
   const readOnly = filteredSections.filter((s) => s.kind === "read-only");
 
@@ -87,19 +82,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
               className="w-2 h-2 rounded-full bg-amber-500 shrink-0 shadow-xs"
               title="Unsaved changes"
             />
-          )}
-
-          {s.kind === "en-only" && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onCreateId(s.key);
-              }}
-              className="opacity-80 group-hover:opacity-100 px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px] font-semibold flex items-center gap-0.5 hover:bg-emerald-200 transition"
-              title="Create ID translation"
-            >
-              <PlusCircle className="w-2.5 h-2.5" /> ID
-            </button>
           )}
 
           {s.kind === "read-only" && (
@@ -163,21 +145,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sections List */}
       <div className="flex-1 overflow-y-auto p-3 space-y-4">
-        {paired.length > 0 && (
+        {contentSections.length > 0 && (
           <div className="space-y-1">
             <span className="px-2 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
-              Paired Sections ({paired.length})
+              Sections ({contentSections.length})
             </span>
-            <div className="space-y-0.5">{paired.map(renderSectionItem)}</div>
-          </div>
-        )}
-
-        {enOnly.length > 0 && (
-          <div className="space-y-1">
-            <span className="px-2 text-[10px] font-bold uppercase tracking-wider text-amber-500">
-              EN Only Sections ({enOnly.length})
-            </span>
-            <div className="space-y-0.5">{enOnly.map(renderSectionItem)}</div>
+            <div className="space-y-0.5">{contentSections.map(renderSectionItem)}</div>
           </div>
         )}
 

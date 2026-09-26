@@ -23,19 +23,19 @@ export async function fetchSections(): Promise<DiscoveredSection[]> {
 }
 
 export async function fetchSectionData(
-  key: string,
-  lang: "en" | "id" | "standalone"
+  key: string
 ): Promise<{ section: DiscoveredSection; value: any }> {
-  return request<{ section: DiscoveredSection; value: any }>(`/section/${encodeURIComponent(key)}/${lang}`);
+  return request<{ section: DiscoveredSection; value: any }>(
+    `/section/${encodeURIComponent(key)}`
+  );
 }
 
 export async function saveSectionData(
   key: string,
-  lang: "en" | "id" | "standalone",
   value: any
 ): Promise<{ success: boolean; changed: boolean }> {
   return request<{ success: boolean; changed: boolean }>(
-    `/section/${encodeURIComponent(key)}/${lang}`,
+    `/section/${encodeURIComponent(key)}`,
     {
       method: "PUT",
       body: JSON.stringify({ value }),
@@ -45,11 +45,10 @@ export async function saveSectionData(
 
 export async function fetchSectionDiff(
   key: string,
-  lang: "en" | "id" | "standalone",
   value: any
 ): Promise<{ diff: string; changed: boolean }> {
   return request<{ diff: string; changed: boolean }>(
-    `/section/${encodeURIComponent(key)}/${lang}/diff`,
+    `/section/${encodeURIComponent(key)}/diff`,
     {
       method: "POST",
       body: JSON.stringify({ value }),
@@ -63,15 +62,6 @@ export async function validateProject(): Promise<ValidationReport> {
 
 export async function reloadSections(): Promise<{ success: boolean; sections: DiscoveredSection[] }> {
   return request<{ success: boolean; sections: DiscoveredSection[] }>("/reload", { method: "POST" });
-}
-
-export async function createIdForSection(
-  key: string
-): Promise<{ success: boolean; sections: DiscoveredSection[] }> {
-  return request<{ success: boolean; sections: DiscoveredSection[] }>(
-    `/section/${encodeURIComponent(key)}/create-id`,
-    { method: "POST" }
-  );
 }
 
 export async function scaffoldNewSection(data: {
@@ -90,6 +80,15 @@ export async function fetchAssetsImages(): Promise<string[]> {
   return res.images;
 }
 
-export function getAssetImagePreviewUrl(filename: string): string {
-  return `${API_BASE}/assets/images/${encodeURIComponent(filename)}`;
+/**
+ * Build a URL for the asset-image serving endpoint. Each path segment is
+ * encoded individually so nested paths like "rooms/tw2-901.webp" keep their
+ * slash separators intact.
+ */
+export function getAssetImagePreviewUrl(relPath: string): string {
+  const encoded = relPath
+    .split("/")
+    .map((seg) => encodeURIComponent(seg))
+    .join("/");
+  return `${API_BASE}/assets/images/${encoded}`;
 }

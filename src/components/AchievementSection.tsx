@@ -21,7 +21,7 @@ export function AchievementSection() {
         </div>
 
         {/* Achievement grid — news-style, scrollable when it overflows */}
-        <div className="md:overflow-y-auto md:scrollbar-fade md:flex-1 md:min-h-0">
+        <div className="md:overflow-y-auto scrollbar-fade md:flex-1 md:min-h-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 pb-2 animate-fade-in" style={{ animationDelay: "0.2s" }}>
             {t.items.map((item) => (
               <article key={item.title} className="flex flex-col">

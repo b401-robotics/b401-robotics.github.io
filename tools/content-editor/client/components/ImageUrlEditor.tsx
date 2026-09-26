@@ -19,14 +19,32 @@ interface ImageUrlEditorProps {
 
 const IMAGE_EXT_REGEX = /\.(png|jpe?g|gif|webp|svg|avif|bmp|ico)$/i;
 
+/**
+ * Resolve a stored image value to a URL the browser can preview.
+ *
+ * The value is one of:
+ *   - empty
+ *   - an absolute http(s)/data/blob URL
+ *   - a source-relative path to an asset, e.g. "../assets/img/rooms/a.webp"
+ *     (the canonical form the editor writes and reads)
+ *   - a bare filename such as "ur5.webp"
+ *   - a legacy absolute path such as "/assets/..." (passed through as-is)
+ */
 function resolvePreviewUrl(value: string): string {
   if (!value) return "";
   if (/^(https?:|data:|blob:)/i.test(value)) return value;
-  if (value.startsWith("/")) return value;
-  const filename = value.split(/[\\/]/).pop() || "";
-  if (filename && IMAGE_EXT_REGEX.test(filename)) {
-    return getAssetImagePreviewUrl(filename);
+
+  const normalized = value.replace(/\\/g, "/");
+  const marker = normalized.lastIndexOf("assets/img/");
+  if (marker >= 0) {
+    const rel = normalized.slice(marker + "assets/img/".length);
+    const filename = rel.split("/").pop() || "";
+    if (IMAGE_EXT_REGEX.test(filename)) {
+      return getAssetImagePreviewUrl(rel);
+    }
   }
+
+  if (value.startsWith("/")) return value;
   return value;
 }
 
@@ -66,8 +84,11 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
     }
   };
 
-  const pick = (filename: string) => {
-    onChange(`../../assets/img/${filename}`);
+  const pick = (relPath: string) => {
+    // Store the source-relative path (from a file in src/contents/ to the
+    // asset). On save, the server promotes this to an `import` statement so
+    // Vite can hash and cache-bust the asset.
+    onChange(`../assets/img/${relPath}`);
     setPickerOpen(false);
   };
 
@@ -76,7 +97,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
       <div className="flex items-center justify-between">
         <label className="block text-xs font-semibold text-zinc-600 dark:text-zinc-300">
           {label}{" "}
-          <span className="text-[10px] text-zinc-400 font-normal">(Image URL)</span>
+          <span className="text-[10px] text-zinc-400 font-normal">(Image)</span>
         </label>
       </div>
 
@@ -102,7 +123,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
               disabled={disabled}
               value={strVal}
               onChange={(e) => onChange(e.target.value)}
-              placeholder="https://... or pick from src/assets/img"
+              placeholder="https://... or ../assets/img/..."
               className="w-full pl-8 pr-2.5 py-1.5 text-sm bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-zinc-100"
             />
           </div>
@@ -170,25 +191,27 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
                 </div>
               ) : (
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                  {images.map((name) => {
-                    const url = getAssetImagePreviewUrl(name);
+                  {images.map((rel) => {
+                    const url = getAssetImagePreviewUrl(rel);
                     const isSelected =
-                      strVal === name || strVal.endsWith(`/${name}`);
+                      strVal === rel ||
+                      strVal.endsWith(`/${rel}`) ||
+                      strVal.endsWith(`assets/img/${rel}`);
                     return (
                       <button
-                        key={name}
+                        key={rel}
                         type="button"
-                        onClick={() => pick(name)}
+                        onClick={() => pick(rel)}
                         className={`group relative aspect-square rounded-xl border overflow-hidden bg-zinc-100 dark:bg-zinc-800 transition ${
                           isSelected
                             ? "border-blue-500 ring-2 ring-blue-500/40"
                             : "border-zinc-200 dark:border-zinc-800 hover:border-blue-400"
                         }`}
-                        title={name}
+                        title={rel}
                       >
                         <img
                           src={url}
-                          alt={name}
+                          alt={rel}
                           className="w-full h-full object-cover"
                           loading="lazy"
                         />
@@ -198,7 +221,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
                           </div>
                         )}
                         <div className="absolute inset-x-0 bottom-0 bg-black/60 text-white text-[10px] px-1.5 py-0.5 truncate text-left">
-                          {name}
+                          {rel}
                         </div>
                       </button>
                     );
@@ -208,8 +231,9 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
             </div>
 
             <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 text-[11px] text-zinc-400">
-              Picked value will be inserted as{" "}
-              <code>../../assets/img/&lt;filename&gt;</code>.
+              Picked value is stored as{" "}
+              <code>../assets/img/&lt;relative-path&gt;</code> and promoted to an{" "}
+              <code>import</code> on save, so Vite can hash and cache-bust it.
             </div>
           </div>
         </div>

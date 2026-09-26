@@ -25,7 +25,7 @@ export const NewSectionDialog: React.FC<NewSectionDialogProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!folderName.trim() || !key.trim()) {
-      showToast("error", "Folder name and section key are required.");
+      showToast("error", "File name and section key are required.");
       return;
     }
 
@@ -37,7 +37,11 @@ export const NewSectionDialog: React.FC<NewSectionDialogProps> = ({
         label: label.trim() || undefined,
       });
 
-      showToast("success", "Section created!", `Scaffolded ${folderName} and updated translations.ts`);
+      showToast(
+        "success",
+        "Section created!",
+        `Scaffolded ${folderName} and updated translations.ts`
+      );
       onSuccess(key.trim().toLowerCase());
       onClose();
     } catch (err: any) {
@@ -68,7 +72,7 @@ export const NewSectionDialog: React.FC<NewSectionDialogProps> = ({
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <div>
             <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
-              Folder Name <span className="text-rose-500">*</span>
+              File Name <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
@@ -85,17 +89,17 @@ export const NewSectionDialog: React.FC<NewSectionDialogProps> = ({
               className="w-full px-3 py-2 text-sm bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-zinc-100"
             />
             <p className="text-[11px] text-zinc-400 mt-1">
-              Creates folder in <code>src/contents/&lt;FolderName&gt;/</code>
+              Creates <code>src/contents/&lt;FileName&gt;.ts</code>
             </p>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
-              Export Key Prefix <span className="text-rose-500">*</span>
+              Export Key <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
-              placeholder="e.g. awards (generates awardsEN & awardsID)"
+              placeholder="e.g. awards (generates awardsEN)"
               value={key}
               onChange={(e) => setKey(e.target.value)}
               required

@@ -9,7 +9,6 @@ import {
   FileCode2,
   Sun,
   Moon,
-  Copy,
   Loader2,
 } from "lucide-react";
 
@@ -21,13 +20,11 @@ interface ToolbarProps {
   onToggleValidate: () => void;
   onTogglePreview: () => void;
   onToggleDiff: () => void;
-  onCopyAllEnToId?: () => void;
   canSave: boolean;
   canDiscard: boolean;
   canUndo: boolean;
   canRedo: boolean;
   isSaving: boolean;
-  isPaired: boolean;
   isReadOnly?: boolean;
   darkMode: boolean;
   onToggleDarkMode: () => void;
@@ -44,13 +41,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   onToggleValidate,
   onTogglePreview,
   onToggleDiff,
-  onCopyAllEnToId,
   canSave,
   canDiscard,
   canUndo,
   canRedo,
   isSaving,
-  isPaired,
   isReadOnly,
   darkMode,
   onToggleDarkMode,
@@ -60,7 +55,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
   return (
     <header className="h-14 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-4 flex items-center justify-between shrink-0">
-      {/* Left controls: Undo, Redo, Copy all */}
+      {/* Left controls: Undo, Redo */}
       <div className="flex items-center gap-1.5">
         <button
           onClick={onUndo}
@@ -78,20 +73,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         >
           <Redo2 className="w-4 h-4" />
         </button>
-
-        <div className="h-4 w-px bg-zinc-200 dark:bg-zinc-800 mx-1" />
-
-        {isPaired && onCopyAllEnToId && (
-          <button
-            onClick={onCopyAllEnToId}
-            disabled={isReadOnly}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-lg text-xs font-medium transition"
-            title="Fill all ID fields with EN content"
-          >
-            <Copy className="w-3.5 h-3.5 text-blue-500" />
-            <span className="hidden sm:inline">Fill ID with EN</span>
-          </button>
-        )}
       </div>
 
       {/* Right controls: Diff, Preview, Validate, Discard, Save, Theme */}

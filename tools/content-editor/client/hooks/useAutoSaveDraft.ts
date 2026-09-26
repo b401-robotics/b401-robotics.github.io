@@ -3,14 +3,13 @@ import { deepEqual } from "../lib/format";
 
 export function useAutoSaveDraft<T>(
   sectionKey: string | null,
-  lang: string,
   currentValue: T,
   serverValue: T | null
 ) {
   const [hasDraft, setHasDraft] = useState(false);
   const [draftValue, setDraftValue] = useState<T | null>(null);
 
-  const storageKey = sectionKey ? `b401_draft_${sectionKey}_${lang}` : null;
+  const storageKey = sectionKey ? `b401_draft_${sectionKey}` : null;
   const isInitialMount = useRef(true);
 
   // Check for existing draft on section / serverValue load
