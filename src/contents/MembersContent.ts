@@ -19,5 +19,8 @@ export const membersEN = {
   alumni: alumni,
   modalEducationLabel: "Education",
   modalResearchLabel: "Research Interests",
+  modalExperienceLabel: "Experience",
+  modalAchievementsLabel: "Achievements",
+  modalContactLabel: "Contact",
   viewAll: "View All People",
 } as const;

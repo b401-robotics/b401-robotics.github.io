@@ -18,7 +18,10 @@ export interface SchemaNode {
 }
 
 const MULTILINE_FIELD_REGEX = /(body|desc|summary|info|locationvalue|hoursvalue|expertise|biography|abstract|details)/i;
-const IMAGE_FIELD_REGEX = /(image|img|photo|picture|avatar|thumbnail|thumb|banner|cover|poster|portrait|asset|icon|logo)/i;
+// `icon` is intentionally excluded — icons in this project are emoji strings
+// (e.g. "📡"), not image URLs, so they stay plain text fields. `logo` is kept
+// since it typically points at a raster/SVG asset.
+const IMAGE_FIELD_REGEX = /(image|img|photo|picture|avatar|thumbnail|thumb|banner|cover|poster|portrait|asset|logo)/i;
 
 export function inferSchema(value: any, key = "root"): SchemaNode {
   const label = key
@@ -49,12 +52,21 @@ export function inferSchema(value: any, key = "root"): SchemaNode {
   }
 
   if (Array.isArray(value)) {
+    // When the field name looks like an image collection (e.g. `images`,
+    // `photos`, `galleryImages`), each element is rendered with the asset
+    // picker so users can browse `src/assets/img/` per item. Otherwise the
+    // array is treated as plain strings.
+    const isImageArray = IMAGE_FIELD_REGEX.test(key);
+    const itemSchema: SchemaNode = isImageArray
+      ? { type: "imageUrl", key: "item", label: "Image" }
+      : { type: "string", key: "item", label: "Item" };
+
     if (value.length === 0) {
       return {
         type: "stringArray",
         key,
         label,
-        itemSchema: { type: "string", key: "item", label: "Item" },
+        itemSchema,
       };
     }
 
@@ -64,7 +76,7 @@ export function inferSchema(value: any, key = "root"): SchemaNode {
         type: "stringArray",
         key,
         label,
-        itemSchema: { type: "string", key: "item", label: "Item" },
+        itemSchema,
       };
     }
 

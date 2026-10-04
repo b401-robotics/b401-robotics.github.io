@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { translations } from "../contents/translations";
-import type { I_lecturers, I_assistant, I_alumni } from "../contents/MembersContent/memberList";
+import type { I_lecturers, I_assistant, I_alumni } from "../contents/memberList";
 import { PreviewSectionLayout } from "./PreviewSectionLayout";
 import { PersonModal } from "./PersonModal";
 
@@ -207,9 +207,11 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             role: selectedAssistant.role,
             education: selectedAssistant.education,
             expertise: selectedAssistant.expertise,
+            contact: selectedAssistant.contact,
           }}
           educationLabel={t.modalEducationLabel}
           researchLabel={t.modalResearchLabel}
+          contactLabel={t.modalContactLabel}
           onClose={() => setSelectedAssistant(null)}
         />
       )}
@@ -224,9 +226,11 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             role: selectedAlumni.role,
             education: selectedAlumni.education,
             expertise: selectedAlumni.expertise,
+            contact: selectedAlumni.contact,
           }}
           educationLabel={t.modalEducationLabel}
           researchLabel={t.modalResearchLabel}
+          contactLabel={t.modalContactLabel}
           onClose={() => setSelectedAlumni(null)}
         />
       )}

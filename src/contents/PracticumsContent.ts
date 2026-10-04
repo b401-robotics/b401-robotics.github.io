@@ -1,3 +1,8 @@
+import rdigImage from "../assets/img/practicum/Rdig.jpeg";
+import _20250926193050Image from "../assets/img/practicum/20250926_193050.jpg";
+import _20251020190750Image from "../assets/img/practicum/20251020_190750.jpg";
+import _20251020190803Image from "../assets/img/practicum/20251020_190803.jpg";
+
 // The `images` array on each practicum accepts either:
 //   1. External URL strings (shown below), or
 //   2. Locally imported assets from `src/assets/img/`, e.g.:
@@ -21,14 +26,11 @@ export const practicumsEN = {
       code: "P01",
       title: "Telematics Workshop",
       icon: "📡",
-      images: [
-        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Zaini.jpg",
-        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Eko-Pram.jpg",
-        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Zaini.jpg",
-      ],
+      images: [rdigImage],
       summary:
         "Foundations of telematics, PCB design, and ESP8266 development boards.",
-      description: "Introduces students to the fundamentals of telematics, from reading and drawing schematics through to laying out a printed circuit board. Students also get hands on with 3D enclosure design in Fusion 360 before writing their first firmware for the ESP8266 development board.",
+      description:
+        "Introduces students to the fundamentals of telematics, from reading and drawing schematics through to laying out a printed circuit board. Students also get hands on with 3D enclosure design in Fusion 360 before writing their first firmware for the ESP8266 development board.",
       sessions: "4",
       level: "",
       topics: [
@@ -55,11 +57,14 @@ export const practicumsEN = {
       title: "Digital Circuit",
       icon: "🔌",
       images: [
-        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Zaini.jpg",
+        _20250926193050Image,
+        _20251020190750Image,
+        _20251020190803Image,
       ],
       summary:
         "Combinational and sequential logic, from Karnaugh maps to counters.",
-      description: "Builds a solid grounding in digital logic design. Students work through decoders, multiplexers, and demultiplexers, learn to simplify Boolean expressions with Karnaugh maps, and finish by implementing sequential circuits such as registers and synchronous and asynchronous counters.",
+      description:
+        "Builds a solid grounding in digital logic design. Students work through decoders, multiplexers, and demultiplexers, learn to simplify Boolean expressions with Karnaugh maps, and finish by implementing sequential circuits such as registers and synchronous and asynchronous counters.",
       sessions: "5",
       level: "",
       topics: [
@@ -89,9 +94,7 @@ export const practicumsEN = {
       code: "P03",
       title: "Embedded Systems",
       icon: "🧩",
-      images: [
-        "https://www.its.ac.id/komputer/wp-content/uploads/sites/28/2026/02/Pak-Zaini.jpg",
-      ],
+      images: [],
       summary:
         "Programming microcontrollers and interfacing with the physical world.",
       description: "Still in development.",

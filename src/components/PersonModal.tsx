@@ -7,9 +7,12 @@ interface PersonModalProps {
     specialty?: string;
     education?: string[];
     expertise?: string;
+    contact?: string;
   };
   educationLabel: string;
   researchLabel: string;
+  contactLabel?: string;
+  showResearchHeader?: boolean;
   onClose: () => void;
 }
 
@@ -17,6 +20,8 @@ export function PersonModal({
   person,
   educationLabel,
   researchLabel,
+  contactLabel,
+  showResearchHeader = true,
   onClose,
 }: PersonModalProps) {
   return (
@@ -91,12 +96,37 @@ export function PersonModal({
 
             {person.expertise && (
               <div>
-                <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider mb-3">
-                  {researchLabel}
-                </h4>
+                {showResearchHeader && (
+                  <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider mb-3">
+                    {researchLabel}
+                  </h4>
+                )}
                 <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
                   {person.expertise}
                 </p>
+              </div>
+            )}
+
+            {person.contact && (
+              <div>
+                <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider mb-3">
+                  {contactLabel}
+                </h4>
+                <ul className="space-y-2">
+                  {person.contact
+                    .split("•")
+                    .map((item) => item.trim())
+                    .filter(Boolean)
+                    .map((item, i) => (
+                      <li
+                        key={i}
+                        className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
+                        <span className="leading-relaxed break-words">{item}</span>
+                      </li>
+                    ))}
+                </ul>
               </div>
             )}
           </div>
