@@ -12,27 +12,27 @@
 //
 // When `image` is omitted or empty, the card and modal fall back to
 // rendering the person's `initials` on a dark placeholder.
-import ur5Image from "../assets/img/ur5.webp";
-import nrfImage from "../assets/img/nrf.webp";
-import droneImage from "../assets/img/drone.webp";
-import nrfImage2 from "../assets/img/people/NRF.png";
-import na70Image from "../assets/img/people/Na70.png";
-import senimanImage from "../assets/img/Seniman.png";
-import risangImage from "../assets/img/people/risang.jpeg";
-import rakanImage from "../assets/img/people/Rakan.png";
-import wildinImage from "../assets/img/people/wildin.jpeg";
-import filaImage from "../assets/img/people/Fila.png";
-import eduImage from "../assets/img/people/Edu.png";
-import theoImage from "../assets/img/people/Theo.png";
-import xnandImage from "../assets/img/people/Xnand.png";
-import navisImage from "../assets/img/people/Navis.png";
-import nurImage from "../assets/img/people/Nur.png";
-import akhulImage from "../assets/img/people/Akhul.png";
-import sultanImage from "../assets/img/people/Sultan.png";
-import malvinImage from "../assets/img/people/Malvin.png";
-import devlinImage from "../assets/img/people/Devlin.png";
-import palelImage from "../assets/img/people/Palel.png";
-import rianImage from "../assets/img/people/Rian.png";
+import ur5Image from "../assets/webp/ur5.webp";
+import nrfImage from "../assets/webp/nrf.webp";
+import droneImage from "../assets/webp/drone.webp";
+import nrfImage2 from "../assets/webp/people/NRF.webp";
+import na70Image from "../assets/webp/people/Na70.webp";
+import senimanImage from "../assets/webp/Seniman.webp";
+import risangImage from "../assets/webp/people/risang.webp";
+import rakanImage from "../assets/webp/people/Rakan.webp";
+import wildinImage from "../assets/webp/people/wildin.webp";
+import filaImage from "../assets/webp/people/Fila.webp";
+import eduImage from "../assets/webp/people/Edu.webp";
+import theoImage from "../assets/webp/people/Theo.webp";
+import xnandImage from "../assets/webp/people/Xnand.webp";
+import navisImage from "../assets/webp/people/Navis.webp";
+import nurImage from "../assets/webp/people/Nur.webp";
+import akhulImage from "../assets/webp/people/Akhul.webp";
+import sultanImage from "../assets/webp/people/Sultan.webp";
+import malvinImage from "../assets/webp/people/Malvin.webp";
+import devlinImage from "../assets/webp/people/Devlin.webp";
+import palelImage from "../assets/webp/people/Palel.webp";
+import rianImage from "../assets/webp/people/Rian.webp";
 
 export interface I_lecturers {
   name: string;
@@ -139,6 +139,7 @@ export interface I_alumni {
   year?: string;
   education?: string[];
   expertise?: string;
+  thesis?: string[];
   experience?: string[];
   achievements?: string[];
   contact?: string;
@@ -501,8 +502,8 @@ export const assistants: Array<I_assistant> = [
 // Placeholder alumni list — replace the names, roles, and years with the
 // real alumni data when available. Same image-source rules apply here.
 // `contact` uses the same dummy placeholder convention as the assistants.
-// `experience` and `achievements` are dummy placeholder lists rendered as
-// vertical bullet lists inside the card info modal.
+// `thesis`, `experience`, and `achievements` are dummy placeholder lists
+// rendered as vertical bullet lists inside the card info modal.
 export const alumni: Array<I_alumni> = [
   {
     name: "Bagas Prakoso",
@@ -510,6 +511,10 @@ export const alumni: Array<I_alumni> = [
     initials: "BP",
     year: "2024",
     education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
+    thesis: [
+      "S1 Thesis: \"Vision-Based SLAM for Indoor Mobile Robots Using ORB-SLAM3\"",
+      "Developed and validated a monocular SLAM pipeline on the B401 TurtleBot platform.",
+    ],
     expertise:
       "Mobile robot navigation and SLAM. Now working on autonomous systems in industry.",
     experience: [
@@ -532,6 +537,10 @@ export const alumni: Array<I_alumni> = [
     initials: "CL",
     year: "2023",
     education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
+    thesis: [
+      "S1 Thesis: \"Energy-Efficient Duty Cycling for Battery-Powered Wireless Sensor Nodes\"",
+      "Achieved 40% power reduction on a custom STM32-based sensor node.",
+    ],
     expertise:
       "Low-power embedded design and firmware for battery-operated sensor nodes.",
     experience: [
@@ -550,6 +559,10 @@ export const alumni: Array<I_alumni> = [
     initials: "DS",
     year: "2023",
     education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
+    thesis: [
+      "S1 Thesis: \"LoRa-Based Soil Moisture Monitoring System for Precision Agriculture\"",
+      "Deployed a 12-node LoRa network on a local farm with a web dashboard.",
+    ],
     expertise:
       "End-to-end IoT systems with LoRa backhaul for agricultural monitoring.",
     experience: [
@@ -568,6 +581,10 @@ export const alumni: Array<I_alumni> = [
     initials: "EW",
     year: "2022",
     education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
+    thesis: [
+      "S1 Thesis: \"6-DoF Object Pose Estimation for Robotic Grasping Using RGB-D Fusion\"",
+      "Trained a pose estimation model and integrated it with a UR5 robotic arm.",
+    ],
     expertise: "Object detection and pose estimation for robotic manipulation.",
     experience: [
       "Computer Vision Alumni, B401 Robotics Laboratory (2018 – 2022)",
@@ -585,6 +602,10 @@ export const alumni: Array<I_alumni> = [
     initials: "FH",
     year: "2022",
     education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
+    thesis: [
+      "S1 Thesis: \"Energy-Aware Mesh Routing Protocol for Wireless Sensor Networks\"",
+      "Simulated and validated the protocol on a 20-node physical testbed.",
+    ],
     expertise:
       "Mesh networking protocols and energy-aware routing for field deployments.",
     experience: [
@@ -603,6 +624,10 @@ export const alumni: Array<I_alumni> = [
     initials: "GR",
     year: "2021",
     education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
+    thesis: [
+      "S1 Thesis: \"PLC-Based Automated Sorting System for Small-Scale Manufacturing\"",
+      "Designed and commissioned a conveyor sorting line using a Siemens S7-1200.",
+    ],
     expertise:
       "PLC programming and industrial control systems for factory automation.",
     experience: [

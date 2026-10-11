@@ -1,12 +1,12 @@
-import rdigImage from "../assets/img/practicum/Rdig.jpeg";
-import _20250926193050Image from "../assets/img/practicum/20250926_193050.jpg";
-import _20251020190750Image from "../assets/img/practicum/20251020_190750.jpg";
-import _20251020190803Image from "../assets/img/practicum/20251020_190803.jpg";
+import rdigImage from "../assets/webp/practicum/Rdig.webp";
+import _20250926193050Image from "../assets/webp/practicum/20250926_193050.webp";
+import _20251020190750Image from "../assets/webp/practicum/20251020_190750.webp";
+import _20251020190803Image from "../assets/webp/practicum/20251020_190803.webp";
 
 // The `images` array on each practicum accepts either:
 //   1. External URL strings (shown below), or
-//   2. Locally imported assets from `src/assets/img/`, e.g.:
-//        import someImage from "../assets/img/some-image.webp";
+//   2. Locally imported assets from `src/assets/webp/`, e.g.:
+//        import someImage from "../assets/webp/some-image.webp";
 //        images: [someImage, "https://example.com/photo.jpg"],
 // The bundler resolves local imports to hashed URL strings at build time, so
 // the array type stays `readonly string[]` regardless of source. Use

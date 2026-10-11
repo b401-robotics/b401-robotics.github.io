@@ -7,10 +7,16 @@ interface PersonModalProps {
     specialty?: string;
     education?: string[];
     expertise?: string;
+    thesis?: string[];
+    experience?: string[];
+    achievements?: string[];
     contact?: string;
   };
   educationLabel: string;
   researchLabel: string;
+  thesisLabel?: string;
+  experienceLabel?: string;
+  achievementsLabel?: string;
   contactLabel?: string;
   showResearchHeader?: boolean;
   onClose: () => void;
@@ -20,6 +26,9 @@ export function PersonModal({
   person,
   educationLabel,
   researchLabel,
+  thesisLabel,
+  experienceLabel,
+  achievementsLabel,
   contactLabel,
   showResearchHeader = true,
   onClose,
@@ -94,6 +103,25 @@ export function PersonModal({
               </div>
             )}
 
+            {person.thesis && person.thesis.length > 0 && (
+              <div>
+                <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider mb-3">
+                  {thesisLabel}
+                </h4>
+                <ul className="space-y-2">
+                  {person.thesis.map((item, i) => (
+                    <li
+                      key={i}
+                      className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
+                      <span className="leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {person.expertise && (
               <div>
                 {showResearchHeader && (
@@ -104,6 +132,44 @@ export function PersonModal({
                 <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
                   {person.expertise}
                 </p>
+              </div>
+            )}
+
+            {person.experience && person.experience.length > 0 && (
+              <div>
+                <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider mb-3">
+                  {experienceLabel}
+                </h4>
+                <ul className="space-y-2">
+                  {person.experience.map((exp, i) => (
+                    <li
+                      key={i}
+                      className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
+                      <span className="leading-relaxed">{exp}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {person.achievements && person.achievements.length > 0 && (
+              <div>
+                <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider mb-3">
+                  {achievementsLabel}
+                </h4>
+                <ul className="space-y-2">
+                  {person.achievements.map((ach, i) => (
+                    <li
+                      key={i}
+                      className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
+                      <span className="leading-relaxed">{ach}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
 

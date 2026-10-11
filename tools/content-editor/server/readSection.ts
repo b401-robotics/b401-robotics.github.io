@@ -39,13 +39,7 @@ function applyImportRefs(filePath: string, exportName: string, runtime: any): an
   if (importMap.size === 0) return runtime;
 
   // Find the target variable declaration by walking top-level statements.
-  let targetDecl = undefined as
-    | ReturnType<typeof sf.getVariableStatements>[number]["getDeclarations"] extends
-        () => infer D
-        ? D extends Array<infer V>
-          ? V
-          : never
-        : never;
+  let targetDecl: any = undefined;
   for (const stmt of sf.getVariableStatements()) {
     for (const d of stmt.getDeclarations()) {
       if (d.getName() === exportName) {

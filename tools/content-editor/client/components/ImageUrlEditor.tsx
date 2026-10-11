@@ -35,9 +35,18 @@ function resolvePreviewUrl(value: string): string {
   if (/^(https?:|data:|blob:)/i.test(value)) return value;
 
   const normalized = value.replace(/\\/g, "/");
-  const marker = normalized.lastIndexOf("assets/img/");
-  if (marker >= 0) {
-    const rel = normalized.slice(marker + "assets/img/".length);
+  const webpMarker = normalized.lastIndexOf("assets/webp/");
+  if (webpMarker >= 0) {
+    const rel = normalized.slice(webpMarker + "assets/webp/".length);
+    const filename = rel.split("/").pop() || "";
+    if (IMAGE_EXT_REGEX.test(filename)) {
+      return getAssetImagePreviewUrl(rel);
+    }
+  }
+
+  const imgMarker = normalized.lastIndexOf("assets/img/");
+  if (imgMarker >= 0) {
+    const rel = normalized.slice(imgMarker + "assets/img/".length);
     const filename = rel.split("/").pop() || "";
     if (IMAGE_EXT_REGEX.test(filename)) {
       return getAssetImagePreviewUrl(rel);
@@ -88,7 +97,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
     // Store the source-relative path (from a file in src/contents/ to the
     // asset). On save, the server promotes this to an `import` statement so
     // Vite can hash and cache-bust the asset.
-    onChange(`../assets/img/${relPath}`);
+    onChange(`../assets/webp/${relPath}`);
     setPickerOpen(false);
   };
 
@@ -123,7 +132,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
               disabled={disabled}
               value={strVal}
               onChange={(e) => onChange(e.target.value)}
-              placeholder="https://... or ../assets/img/..."
+              placeholder="https://... or ../assets/webp/..."
               className="w-full pl-8 pr-2.5 py-1.5 text-sm bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-zinc-100"
             />
           </div>
@@ -135,7 +144,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
               onClick={openPicker}
               className="flex items-center gap-1 px-2 py-1 text-[11px] font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 rounded-md transition disabled:opacity-50"
             >
-              <FolderOpen className="w-3 h-3" /> Browse assets
+              <FolderOpen className="w-3 h-3" /> Browse WebP assets
             </button>
             {strVal && (
               <button
@@ -164,7 +173,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
               <div className="flex items-center gap-2">
                 <ImageIcon className="w-4 h-4 text-blue-500" />
                 <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
-                  Pick image from src/assets/img
+                  Pick image from src/assets/webp
                 </h3>
               </div>
               <button
@@ -187,7 +196,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
                 </div>
               ) : images.length === 0 ? (
                 <div className="text-center py-12 text-xs text-zinc-400">
-                  No images found in <code>src/assets/img</code>.
+                  No images found in <code>src/assets/webp</code>. Convert raw images using the WebP tool in the toolbar.
                 </div>
               ) : (
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
@@ -196,6 +205,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
                     const isSelected =
                       strVal === rel ||
                       strVal.endsWith(`/${rel}`) ||
+                      strVal.endsWith(`assets/webp/${rel}`) ||
                       strVal.endsWith(`assets/img/${rel}`);
                     return (
                       <button
@@ -232,7 +242,7 @@ export const ImageUrlEditor: React.FC<ImageUrlEditorProps> = ({
 
             <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 text-[11px] text-zinc-400">
               Picked value is stored as{" "}
-              <code>../assets/img/&lt;relative-path&gt;</code> and promoted to an{" "}
+              <code>../assets/webp/&lt;relative-path&gt;</code> and promoted to an{" "}
               <code>import</code> on save, so Vite can hash and cache-bust it.
             </div>
           </div>

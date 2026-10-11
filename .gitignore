@@ -4,6 +4,8 @@ node_modules
 # output
 out
 dist
+tools/content-editor/dist/
+tools/content-editor/node_modules/
 *.tgz
 
 # code coverage
@@ -38,3 +40,10 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # venv
 venv/
+
+.claude/
+.gitnexus/
+
+# Research mode derived data — rebuildable, not source.
+converted/
+.index/

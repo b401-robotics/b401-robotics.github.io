@@ -5,6 +5,7 @@ import { Navbar } from "../components/Navbar";
 import { HomeSheets } from "../components/HomeSheets";
 import { PracticumsSection } from "../components/PracticumsSection";
 import { ProjectsSection } from "../components/ProjectsSection";
+import { ResearchSection } from "../components/ResearchSection";
 import { MembersSection } from "../components/MembersSection";
 import { EquipmentSection } from "../components/EquipmentSection";
 import { AchievementSection } from "../components/AchievementSection";
@@ -59,10 +60,9 @@ export function LandingPage() {
               >
                 {(!section || section === "home") && <HomeSheets />}
 
-                {/* Highlight tab — also serves the legacy /research path */}
-                {(section === "highlight" || section === "research") && (
-                  <HighlightPage />
-                )}
+                {section === "research" && <ResearchSection />}
+
+                {section === "highlight" && <HighlightPage />}
 
                 {section === "practicums" && <PracticumsSection />}
                 {section === "projects" && <ProjectsSection />}

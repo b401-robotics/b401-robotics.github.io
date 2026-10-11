@@ -8,24 +8,22 @@ import LogoDark from "../assets/logo/B401_white_cutout.png";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    );
+  });
   const t = translations.nav;
   const { section } = useParams<{ section?: string }>();
   const activeSection = section || "home";
 
   useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDarkMode);
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
-
-    // Check initial dark mode state
-    if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-      document.documentElement.classList.add("dark");
-      setIsDarkMode(true);
-    } else {
-      document.documentElement.classList.remove("dark");
-      setIsDarkMode(false);
-    }
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -45,6 +43,7 @@ export function Navbar() {
 
   const navLinks = [
     { label: "Home", path: "home" },
+    { label: t.research, path: "research" },
     { label: t.highlight, path: "highlight" },
     { label: t.facility, path: "equipment" },
     { label: t.practicums, path: "practicums" },

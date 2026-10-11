@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { translations } from "../contents/translations";
-import Ur5Image from "../assets/img/ur5.webp";
-import NrfImage from "../assets/img/nrf.webp";
-import DroneImage from "../assets/img/drone.webp";
+import Ur5Image from "../assets/webp/ur5.webp";
+import NrfImage from "../assets/webp/nrf.webp";
+import DroneImage from "../assets/webp/drone.webp";
 
 const BACKGROUNDS = [Ur5Image, NrfImage, DroneImage];
 const ROTATION_MS = 5000;

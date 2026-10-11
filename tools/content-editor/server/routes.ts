@@ -1,11 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
-import { discoverSections, getAssetsImgDir, listAssetImages } from "./discoverSections";
+import {
+  discoverSections,
+  getAssetsImgDir,
+  getAssetsWebpDir,
+  listAssetImages,
+} from "./discoverSections";
 import { readSection } from "./readSection";
 import { writeSection, generateSectionDiff } from "./writeSection";
 import { validateContent } from "./validate";
 import { scaffoldSection } from "./scaffold";
 import { addClient, removeClient, broadcast } from "./watcher";
+import { convertImages, getConversionStats } from "./convertImages";
 
 function json(data: any, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -52,12 +58,21 @@ function resolveAssetPath(relPath: string): string | null {
     return null;
   }
 
-  const baseDir = path.resolve(getAssetsImgDir());
-  const resolved = path.resolve(baseDir, normalized);
-  const rel = path.relative(baseDir, resolved);
-  if (rel.startsWith("..") || path.isAbsolute(rel)) return null;
+  // Look in src/assets/webp first
+  const webpBaseDir = path.resolve(getAssetsWebpDir());
+  const resolvedWebp = path.resolve(webpBaseDir, normalized);
+  const relWebp = path.relative(webpBaseDir, resolvedWebp);
+  if (!relWebp.startsWith("..") && !path.isAbsolute(relWebp) && fs.existsSync(resolvedWebp)) {
+    return resolvedWebp;
+  }
 
-  return resolved;
+  // Fallback to src/assets/img
+  const imgBaseDir = path.resolve(getAssetsImgDir());
+  const resolvedImg = path.resolve(imgBaseDir, normalized);
+  const relImg = path.relative(imgBaseDir, resolvedImg);
+  if (relImg.startsWith("..") || path.isAbsolute(relImg)) return null;
+
+  return resolvedImg;
 }
 
 export async function handleRequest(req: Request): Promise<Response> {
@@ -142,7 +157,24 @@ export async function handleRequest(req: Request): Promise<Response> {
 
     // GET /api/assets/images
     if (pathname === "/api/assets/images" && req.method === "GET") {
-      return json({ images: listAssetImages() });
+      return json({ images: listAssetImages("webp") });
+    }
+
+    // GET /api/assets/convert-stats
+    if (pathname === "/api/assets/convert-stats" && req.method === "GET") {
+      const stats = getConversionStats();
+      return json(stats);
+    }
+
+    // POST /api/assets/convert-webp
+    if (pathname === "/api/assets/convert-webp" && req.method === "POST") {
+      let body: any = {};
+      try {
+        body = await req.json();
+      } catch {}
+      const res = await convertImages(body);
+      broadcast("images_converted", { count: res.results.length });
+      return json(res);
     }
 
     // GET /api/assets/images/<relative-path>

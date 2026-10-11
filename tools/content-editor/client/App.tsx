@@ -17,6 +17,7 @@ import { ValidationPanel } from "./components/ValidationPanel";
 import { DiffView } from "./components/DiffView";
 import { PreviewPane } from "./components/PreviewPane";
 import { NewSectionDialog } from "./components/NewSectionDialog";
+import { ConvertImagesModal } from "./components/ConvertImagesModal";
 import { ToastProvider, useToast } from "./components/Toast";
 import { deepClone } from "./lib/format";
 
@@ -50,6 +51,7 @@ function EditorApp() {
 
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isNewSectionOpen, setIsNewSectionOpen] = useState(false);
+  const [isConvertModalOpen, setIsConvertModalOpen] = useState(false);
 
   // Theme
   const [darkMode, setDarkMode] = useState(() => {
@@ -205,6 +207,7 @@ function EditorApp() {
           onToggleValidate={handleRunValidation}
           onTogglePreview={() => setIsPreviewOpen(!isPreviewOpen)}
           onToggleDiff={() => setIsDiffOpen(!isDiffOpen)}
+          onToggleConvertImages={() => setIsConvertModalOpen(true)}
           canSave={isDirty}
           canDiscard={isDirty}
           canUndo={undoRedo.canUndo}
@@ -276,6 +279,14 @@ function EditorApp() {
         onSuccess={(newKey) => {
           refresh();
           setSelectedKey(newKey);
+        }}
+      />
+
+      <ConvertImagesModal
+        isOpen={isConvertModalOpen}
+        onClose={() => setIsConvertModalOpen(false)}
+        onConverted={() => {
+          showToast("success", "Images Converted", "WebP image directory refreshed.");
         }}
       />
     </div>

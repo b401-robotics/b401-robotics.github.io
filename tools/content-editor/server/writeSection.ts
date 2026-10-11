@@ -97,14 +97,25 @@ export async function computeUpdatedSource(
     if (!s) return null;
     if (/^(https?:|data:|blob:)/i.test(s)) return null;
 
-    const marker = "assets/img/";
-    const idx = s.replace(/\\/g, "/").lastIndexOf(marker);
-    if (idx < 0) return null;
+    const normalizedPath = s.replace(/\\/g, "/");
+    let marker = "";
+    let baseAssetDir = "";
 
-    const rel = s.replace(/\\/g, "/").slice(idx + marker.length);
+    if (normalizedPath.includes("assets/webp/")) {
+      marker = "assets/webp/";
+      baseAssetDir = "../assets/webp/";
+    } else if (normalizedPath.includes("assets/img/")) {
+      marker = "assets/img/";
+      baseAssetDir = "../assets/img/";
+    } else {
+      return null;
+    }
+
+    const idx = normalizedPath.lastIndexOf(marker);
+    const rel = normalizedPath.slice(idx + marker.length);
     if (!rel) return null;
 
-    const normalized = `../assets/img/${rel}`;
+    const normalized = `${baseAssetDir}${rel}`;
 
     const existing = pathToVar.get(normalized);
     if (existing) return existing;

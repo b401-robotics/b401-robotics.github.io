@@ -10,6 +10,7 @@ import {
   Sun,
   Moon,
   Loader2,
+  Sparkles,
 } from "lucide-react";
 
 interface ToolbarProps {
@@ -20,6 +21,7 @@ interface ToolbarProps {
   onToggleValidate: () => void;
   onTogglePreview: () => void;
   onToggleDiff: () => void;
+  onToggleConvertImages?: () => void;
   canSave: boolean;
   canDiscard: boolean;
   canUndo: boolean;
@@ -41,6 +43,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   onToggleValidate,
   onTogglePreview,
   onToggleDiff,
+  onToggleConvertImages,
   canSave,
   canDiscard,
   canUndo,
@@ -75,8 +78,19 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         </button>
       </div>
 
-      {/* Right controls: Diff, Preview, Validate, Discard, Save, Theme */}
+      {/* Right controls: WebP, Diff, Preview, Validate, Discard, Save, Theme */}
       <div className="flex items-center gap-2">
+        {onToggleConvertImages && (
+          <button
+            onClick={onToggleConvertImages}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+            title="Convert raw images to WebP"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+            <span className="hidden md:inline">WebP Tool</span>
+          </button>
+        )}
+
         <button
           onClick={onToggleDiff}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition ${

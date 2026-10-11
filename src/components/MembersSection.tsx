@@ -207,16 +207,20 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             role: selectedAssistant.role,
             education: selectedAssistant.education,
             expertise: selectedAssistant.expertise,
+            experience: selectedAssistant.experience,
+            achievements: selectedAssistant.achievements,
             contact: selectedAssistant.contact,
           }}
           educationLabel={t.modalEducationLabel}
           researchLabel={t.modalResearchLabel}
+          experienceLabel={t.modalExperienceLabel}
+          achievementsLabel={t.modalAchievementsLabel}
           contactLabel={t.modalContactLabel}
           onClose={() => setSelectedAssistant(null)}
         />
       )}
 
-      {/* Alumni Details Modal */}
+      {/* Alumni Details Modal — Research Interests removed, Thesis shown instead */}
       {selectedAlumni && (
         <PersonModal
           person={{
@@ -225,11 +229,16 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             image: selectedAlumni.image,
             role: selectedAlumni.role,
             education: selectedAlumni.education,
-            expertise: selectedAlumni.expertise,
+            thesis: selectedAlumni.thesis,
+            experience: selectedAlumni.experience,
+            achievements: selectedAlumni.achievements,
             contact: selectedAlumni.contact,
           }}
           educationLabel={t.modalEducationLabel}
           researchLabel={t.modalResearchLabel}
+          thesisLabel={t.modalThesisLabel}
+          experienceLabel={t.modalExperienceLabel}
+          achievementsLabel={t.modalAchievementsLabel}
           contactLabel={t.modalContactLabel}
           onClose={() => setSelectedAlumni(null)}
         />

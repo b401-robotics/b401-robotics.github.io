@@ -80,9 +80,22 @@ export async function fetchAssetsImages(): Promise<string[]> {
   return res.images;
 }
 
+export async function fetchConversionStats(): Promise<any> {
+  return request<any>("/assets/convert-stats");
+}
+
+export async function convertAssetsToWebp(options?: {
+  force?: boolean;
+}): Promise<any> {
+  return request<any>("/assets/convert-webp", {
+    method: "POST",
+    body: JSON.stringify(options || {}),
+  });
+}
+
 /**
  * Build a URL for the asset-image serving endpoint. Each path segment is
- * encoded individually so nested paths like "rooms/tw2-901.webp" keep their
+ * encoded individually so nested paths like "people/Navis.webp" keep their
  * slash separators intact.
  */
 export function getAssetImagePreviewUrl(relPath: string): string {

@@ -16,16 +16,25 @@ export function getAssetsImgDir(): string {
   return path.join(getProjectRoot(), "src/assets/img");
 }
 
+export function getAssetsWebpDir(): string {
+  return path.join(getProjectRoot(), "src/assets/webp");
+}
+
 const IMAGE_EXT_REGEX = /\.(png|jpe?g|gif|webp|svg|avif|bmp|ico)$/i;
 
 /**
- * Recursively list every image file under `src/assets/img`, including files
- * nested inside subfolders. Returned paths are POSIX-relative to
- * `src/assets/img` — e.g. "ur5.webp" or "rooms/tw2-901.webp".
+ * Recursively list every image file under `src/assets/webp`, including files
+ * nested inside subfolders. Falls back to `src/assets/img` if `src/assets/webp`
+ * does not exist yet or is empty.
+ * Returned paths are POSIX-relative — e.g. "ur5.webp" or "rooms/tw2-901.webp".
  */
-export function listAssetImages(): string[] {
-  const rootDir = getAssetsImgDir();
-  if (!fs.existsSync(rootDir)) return [];
+export function listAssetImages(preferredDir: "webp" | "img" = "webp"): string[] {
+  const webpDir = getAssetsWebpDir();
+  const imgDir = getAssetsImgDir();
+
+  const targetDir =
+    preferredDir === "webp" && fs.existsSync(webpDir) ? webpDir : imgDir;
+  if (!fs.existsSync(targetDir)) return [];
 
   const out: string[] = [];
 
@@ -47,7 +56,12 @@ export function listAssetImages(): string[] {
     }
   };
 
-  walk(rootDir, "");
+  walk(targetDir, "");
+  // If webpDir was chosen but it has no images yet, fallback to imgDir
+  if (out.length === 0 && targetDir === webpDir && fs.existsSync(imgDir)) {
+    walk(imgDir, "");
+  }
+
   out.sort((a, b) => a.localeCompare(b));
   return out;
 }
