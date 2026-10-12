@@ -6,19 +6,23 @@ export const aboutEN = {
   highlights: [
     {
       title: "Cutting Edge Research",
-      description: "We pursue fundamental and applied research in robotics, intelligent systems, and automation to solve real world engineering challenges.",
+      description:
+        "We pursue fundamental and applied research in robotics, intelligent systems, and automation to solve real world engineering challenges.",
     },
     {
       title: "Hands On Practicums",
-      description: "Students gain practical experience through structured practicums covering embedded systems, control theory, computer vision, and more.",
+      description:
+        "Students gain practical experience through structured practicums covering embedded systems, control theory, computer vision, and more.",
     },
     {
       title: "Collaborative Community",
-      description: "A thriving community of lecturers and students working together, sharing knowledge, and pushing the boundaries of what's possible.",
+      description:
+        "A thriving community of lecturers and students working together, sharing knowledge, and pushing the boundaries of what's possible.",
     },
     {
       title: "Modern Equipment",
-      description: "Access to state of the art robotics platforms, sensors, actuators, and computing infrastructure to support advanced projects.",
+      description:
+        "Access to state of the art robotics platforms, sensors, actuators, and computing infrastructure to support advanced projects.",
     },
   ],
 } as const;

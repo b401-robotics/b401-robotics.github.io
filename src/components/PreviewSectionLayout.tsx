@@ -9,6 +9,8 @@ interface PreviewSectionLayoutProps {
   ctaTo: string;
   ctaLabel: string;
   imagePosition: "left" | "right";
+  image?: string;
+  imageAlt?: string;
 }
 
 export function PreviewSectionLayout({
@@ -19,6 +21,8 @@ export function PreviewSectionLayout({
   ctaTo,
   ctaLabel,
   imagePosition,
+  image,
+  imageAlt,
 }: PreviewSectionLayoutProps) {
   return (
     <section id={id} className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col justify-center">
@@ -30,7 +34,7 @@ export function PreviewSectionLayout({
           style={{ animationDelay: "0.1s" }}
         >
           {/* Summary column */}
-          <div className="w-full lg:w-1/2">
+          <div className="w-full lg:w-5/12">
             <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-zinc-900 dark:text-zinc-100 mb-5 leading-tight">
               {heading} <span className="text-zinc-900 dark:text-zinc-100">{headingAccent}</span>
             </h2>
@@ -46,12 +50,21 @@ export function PreviewSectionLayout({
             </Link>
           </div>
 
-          {/* Image placeholder column (empty for now) */}
-          <div className="w-full lg:w-1/2 flex justify-center">
+          {/* Image column — expanded for a ~40% larger frame */}
+          <div className="w-full lg:w-7/12 flex justify-center">
             <div
-              className="aspect-square w-full max-w-md rounded-full bg-zinc-200/50 dark:bg-white/5 border border-zinc-300/60 dark:border-white/10"
-              aria-hidden="true"
-            />
+              className="aspect-[4/3] w-full max-w-2xl rounded-2xl bg-zinc-200/50 dark:bg-white/5 border border-zinc-300/60 dark:border-white/10 overflow-hidden flex items-center justify-center shadow-xl"
+              aria-hidden={!image}
+            >
+              {image ? (
+                <img
+                  src={image}
+                  alt={imageAlt || heading}
+                  className="w-full h-full object-cover rounded-2xl transition-transform duration-500 hover:scale-105"
+                  loading="lazy"
+                />
+              ) : null}
+            </div>
           </div>
         </div>
       </div>

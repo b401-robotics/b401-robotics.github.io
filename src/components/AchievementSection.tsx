@@ -6,23 +6,11 @@ export function AchievementSection() {
   return (
     <section
       id="achievements"
-      className="section-padding md:max-h-[calc(100vh-4.75rem)] flex flex-col"
+      className="section-padding flex flex-col pt-0"
     >
-      <div className="max-w-[85rem] w-full mx-auto flex flex-col md:flex-1 md:min-h-0">
-        {/* Header */}
-        <div className="mb-10 shrink-0 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <h2 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
-            {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
-          </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
-            {t.body}
-          </p>
-          <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
-        </div>
-
-        {/* Achievement grid — news-style, scrollable when it overflows */}
-        <div className="md:overflow-y-auto scrollbar-fade md:flex-1 md:min-h-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 pb-2 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+      <div className="max-w-[85rem] w-full mx-auto flex flex-col">
+        {/* Achievement grid — full view, no scroll container */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 pb-2 animate-fade-in" style={{ animationDelay: "0.2s" }}>
             {t.items.map((item) => (
               <article key={item.title} className="flex flex-col">
                 {/* Image on top */}
@@ -48,14 +36,30 @@ export function AchievementSection() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
+                <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-4">
                   {item.description}
                 </p>
+
+                {/* Team members */}
+                {"members" in item && Array.isArray(item.members) && item.members.length > 0 ? (
+                  <div className="mt-auto pt-2 flex flex-wrap items-center gap-1.5">
+                    <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mr-1">
+                      Member:
+                    </span>
+                    {item.members.map((member: string) => (
+                      <span
+                        key={member}
+                        className="inline-flex items-center text-xs px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-white/10 text-zinc-700 dark:text-zinc-300"
+                      >
+                        {member}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
               </article>
             ))}
           </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 }

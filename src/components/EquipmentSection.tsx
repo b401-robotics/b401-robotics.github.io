@@ -21,6 +21,8 @@ export function EquipmentSection({ preview = false }: EquipmentSectionProps = {}
         ctaTo="/equipment"
         ctaLabel={t.viewAll}
         imagePosition="right"
+        image={t.image}
+        imageAlt={t.heading}
       />
     );
   }
@@ -70,7 +72,8 @@ interface LabRoomProps {
     readonly code: string;
     readonly name: string;
     readonly description: string;
-    readonly image: string;
+    readonly image?: string;
+    readonly images?: readonly string[];
     readonly facilities: readonly Facility[];
   };
   facilitiesLabel: string;
@@ -79,20 +82,67 @@ interface LabRoomProps {
 
 function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
   const [selected, setSelected] = useState<Facility | null>(null);
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const images: readonly string[] =
+    room.images && room.images.length > 0
+      ? room.images
+      : room.image
+      ? [room.image]
+      : [];
+  const imgCount = images.length;
 
   return (
     <div className="min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-10 lg:px-14 py-16 animate-fade-in" style={{ animationDelay: "0.2s" }}>
       <div className="max-w-[85rem] w-full mx-auto flex flex-col lg:flex-row gap-10 lg:gap-14 items-stretch">
         {/* Image — height matches the right column (header top edge to list bottom edge) */}
         <div className="w-full lg:w-1/2 flex">
-          <div className="w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden flex-1 min-h-[280px] lg:min-h-0">
-            {room.image ? (
-              <img
-                src={room.image}
-                alt={room.name}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
+          <div className="group relative w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden flex-1 min-h-[280px] lg:min-h-0">
+            {imgCount > 0 ? (
+              <>
+                <img
+                  src={images[imgIndex % imgCount]}
+                  alt={room.name}
+                  className="w-full h-full object-cover transition-opacity duration-300"
+                  loading="lazy"
+                />
+                {imgCount > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => setImgIndex((prev) => (prev - 1 + imgCount) % imgCount)}
+                      aria-label="Previous image"
+                      className="absolute top-1/2 left-3 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                        <path d="M15 6l-6 6 6 6" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setImgIndex((prev) => (prev + 1) % imgCount)}
+                      aria-label="Next image"
+                      className="absolute top-1/2 right-3 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
+                    </button>
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-xs">
+                      {images.map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => setImgIndex(i)}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            i === (imgIndex % imgCount) ? "bg-white w-4" : "bg-white/50 hover:bg-white/75"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </>
             ) : null}
           </div>
         </div>

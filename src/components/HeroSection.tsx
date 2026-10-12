@@ -5,20 +5,21 @@ import Ur5Image from "../assets/webp/ur5.webp";
 import NrfImage from "../assets/webp/nrf.webp";
 import DroneImage from "../assets/webp/drone.webp";
 
-const BACKGROUNDS = [Ur5Image, NrfImage, DroneImage];
 const ROTATION_MS = 5000;
 const FADE_MS = 2000;
 
 export function HeroSection() {
   const t = translations.hero;
+  const backgrounds: readonly string[] = t.images ?? [Ur5Image, NrfImage, DroneImage];
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
+    if (backgrounds.length <= 1) return;
     const id = setInterval(() => {
-      setBgIndex((prev) => (prev + 1) % BACKGROUNDS.length);
+      setBgIndex((prev) => (prev + 1) % backgrounds.length);
     }, ROTATION_MS);
     return () => clearInterval(id);
-  }, []);
+  }, [backgrounds.length]);
 
   return (
     <section
@@ -27,7 +28,7 @@ export function HeroSection() {
     >
       {/* Rotating background images with crossfade — height matches the
           previous 85vh hero frame, independent of the section's min-height. */}
-      {BACKGROUNDS.map((src, idx) => (
+      {backgrounds.map((src, idx) => (
         <div
           key={src}
           className={`absolute top-0 left-0 right-0 h-full md:h-[85vh] bg-cover bg-center bg-no-repeat transition-opacity ease-in-out ${

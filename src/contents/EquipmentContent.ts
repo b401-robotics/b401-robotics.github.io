@@ -18,6 +18,8 @@ import alf01471Image from "../assets/webp/facility/ALF01471.webp";
 import alf01434Image from "../assets/webp/facility/ALF01434.webp";
 import alf01460Image from "../assets/webp/facility/ALF01460.webp";
 import alf01450Image from "../assets/webp/facility/ALF01450.webp";
+import alf01476Image from "../assets/webp/facility/ALF01476.webp";
+import alf01480Image from "../assets/webp/facility/ALF01480.webp";
 
 export const equipmentEN = {
   sectionLabel: "Facilities",
@@ -27,13 +29,14 @@ export const equipmentEN = {
   facilitiesLabel: "Facilities in this room",
   clickForMoreInfo: "Click for more info",
   viewAll: "View All Equipment",
+  image: alf01475Image,
   labRooms: [
     {
       code: "TW2-901",
       name: "TW2-901 Laboratorium",
       description:
         "The main research floor. This room houses our collaborative robot arms, mobile robot platforms, and the vision and compute hardware that drives them. Most of the lab's ongoing research projects are run here, and it is also where student final projects and thesis experiments are set up.",
-      image: alf01475Image,
+      images: [alf01476Image, alf01480Image, alf01475Image],
       facilities: [
         {
           name: "UR5e Collaborative Robot Arm",
@@ -101,7 +104,7 @@ export const equipmentEN = {
       name: "B401 Laboratorium",
       description:
         "The automation and electronics room. Equipped for hardware bring up, PCB work, and pneumatic control, this room supports the practicum sessions as well as hands on development of the lab's embedded and automation projects.",
-      image: "",
+      images: [],
       facilities: [
         {
           name: "DJI Matrice 300 RTK Drone",
@@ -145,7 +148,7 @@ export const equipmentEN = {
       name: "A108 Laboratorium",
       description:
         "The computing and networking room. Focused on software, wireless systems, and embedded development, this room is where most of our IoT and wireless sensor network work takes place, along with general software development and simulation.",
-      image: "",
+      images: [],
       facilities: [
         {
           name: "Desktop Workstations",

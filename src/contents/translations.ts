@@ -11,12 +11,14 @@ import { equipmentEN } from "./EquipmentContent";
 import { contactEN } from "./ContactContent";
 import { footerEN } from "./FooterContent";
 import { achievementsEN } from "./AchievementContent";
+import { thesisEN } from "./ThesisContent";
 
 export const translations = {
   nav: navEN,
   hero: heroEN,
   about: aboutEN,
   research: researchEN,
+  thesis: thesisEN,
   highlight: highlightEN,
   activity: activityEN,
   practicums: practicumsEN,

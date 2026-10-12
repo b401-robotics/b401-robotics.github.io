@@ -21,6 +21,7 @@ export const practicumsEN = {
   listHeading: "List of our practicum",
   registerLabel: "Register",
   registerUrl: "https://ceits.id/praktikum/pendaftaran",
+  image: rdigImage,
   items: [
     {
       code: "P01",

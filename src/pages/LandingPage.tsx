@@ -12,6 +12,7 @@ import { AchievementSection } from "../components/AchievementSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "../components/Footer";
 import { HighlightPage } from "./HighlightPage";
+import { ResearchPage } from "./ResearchPage";
 import { motion, AnimatePresence } from "framer-motion";
 
 let isFirstLoad = true;
@@ -60,7 +61,7 @@ export function LandingPage() {
               >
                 {(!section || section === "home") && <HomeSheets />}
 
-                {section === "research" && <ResearchSection />}
+                {section === "research" && <ResearchPage />}
 
                 {section === "highlight" && <HighlightPage />}
 

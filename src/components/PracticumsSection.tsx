@@ -20,7 +20,9 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
         body={t.body}
         ctaTo="/practicums"
         ctaLabel={t.viewAll}
-        imagePosition="right"
+        imagePosition="left"
+        image={t.image}
+        imageAlt={t.heading}
       />
     );
   }
@@ -110,7 +112,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
             </h3>
 
             <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-4">
-              {selected.description || selected.summary}
+              {selected.description}
             </p>
 
             {selected.topics.length > 0 && (

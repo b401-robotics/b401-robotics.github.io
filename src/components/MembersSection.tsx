@@ -24,7 +24,9 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
         body={t.body}
         ctaTo="/members"
         ctaLabel={t.viewAll}
-        imagePosition="left"
+        imagePosition="right"
+        image={t.image}
+        imageAlt={t.heading}
       />
     );
   }

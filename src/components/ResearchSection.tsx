@@ -1,8 +1,30 @@
 import { translations } from "../contents/translations";
+import { PreviewSectionLayout } from "./PreviewSectionLayout";
 
-export function ResearchSection() {
+interface ResearchSectionProps {
+  preview?: boolean;
+}
+
+export function ResearchSection({ preview = false }: ResearchSectionProps = {}) {
   const r = translations.research;
   const p = translations.projects;
+
+  if (preview) {
+    return (
+      <PreviewSectionLayout
+        id="research"
+        sectionLabel={r.sectionLabel}
+        heading={r.heading}
+        headingAccent={r.headingAccent}
+        body={r.body}
+        ctaTo="/research"
+        ctaLabel={r.viewAll}
+        imagePosition="right"
+        image={r.image}
+        imageAlt={r.heading}
+      />
+    );
+  }
 
   const getStatusLabel = (status: string) => {
     switch (status) {

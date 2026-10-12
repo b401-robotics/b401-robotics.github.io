@@ -14,6 +14,8 @@ export function HighlightSection() {
       ctaTo="/highlight"
       ctaLabel={t.viewAll}
       imagePosition="left"
+      image={t.image}
+      imageAlt={t.heading}
     />
   );
 }
