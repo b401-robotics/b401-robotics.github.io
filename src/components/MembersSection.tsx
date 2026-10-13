@@ -71,7 +71,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
                     />
                   ) : (
                     <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-white font-display font-bold text-3xl md:text-4xl">
-                      {lecturer.initials}
+                      {(lecturer as I_lecturers).initials}
                     </div>
                   )}
                 </div>
@@ -152,7 +152,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
                 style={{ animationDelay: `${0.1 + idx * 0.05}s` }}
               >
                 <div className="aspect-[4/5] w-full bg-zinc-200 relative overflow-hidden">
-                  {person.image ? (
+                  {"image" in person && person.image ? (
                     <img
                       src={person.image}
                       alt={person.name}

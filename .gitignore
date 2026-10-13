@@ -47,3 +47,8 @@ venv/
 # Research mode derived data — rebuildable, not source.
 converted/
 .index/
+
+# Cloudflare Worker local secrets and caches
+.dev.vars*
+.wrangler/
+**/.wrangler/

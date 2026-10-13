@@ -39,7 +39,7 @@ export interface I_lecturers {
   role: string;
   specialty: string;
   initials: string;
-  education?: string[];
+  education?: readonly string[];
   expertise?: string;
   image?: string;
 }
@@ -137,11 +137,11 @@ export interface I_alumni {
   role: string;
   initials: string;
   year?: string;
-  education?: string[];
+  education?: readonly string[];
   expertise?: string;
-  thesis?: string[];
-  experience?: string[];
-  achievements?: string[];
+  thesis?: readonly string[];
+  experience?: readonly string[];
+  achievements?: readonly string[];
   contact?: string;
   image?: string;
 }
@@ -150,10 +150,10 @@ export interface I_assistant {
   name: string;
   role: string;
   initials: string;
-  education?: string[];
+  education?: readonly string[];
   expertise?: string;
-  experience?: string[];
-  achievements?: string[];
+  experience?: readonly string[];
+  achievements?: readonly string[];
   contact?: string;
   image?: string;
 }

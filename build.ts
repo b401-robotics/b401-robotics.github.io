@@ -146,6 +146,9 @@ const result = await Bun.build({
   publicPath: "/",
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
+    __CHATBOT_API_URL__: JSON.stringify(
+      process.env.VITE_CHATBOT_API_URL || "https://b401-chatbot.b431.workers.dev/api/chat"
+    ),
   },
   ...cliConfig,
 });

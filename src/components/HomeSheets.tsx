@@ -5,6 +5,7 @@ import { ResearchSection } from "./ResearchSection";
 import { EquipmentSection } from "./EquipmentSection";
 import { PracticumsSection } from "./PracticumsSection";
 import { MembersSection } from "./MembersSection";
+import { ChatbotSection } from "./ChatbotSection";
 
 export function HomeSheets() {
   return (
@@ -16,6 +17,7 @@ export function HomeSheets() {
       <EquipmentSection preview />
       <PracticumsSection preview />
       <MembersSection preview />
+      <ChatbotSection />
     </div>
   );
 }

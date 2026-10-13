@@ -1,0 +1,8 @@
+{
+  "name": "b401-chatbot",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-03-01",
+  "vars": {
+    "MAX_PROMPT_LENGTH": "500"
+  }
+}

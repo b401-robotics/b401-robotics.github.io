@@ -5,11 +5,11 @@ interface PersonModalProps {
     image?: string;
     role: string;
     specialty?: string;
-    education?: string[];
+    education?: readonly string[];
     expertise?: string;
-    thesis?: string[];
-    experience?: string[];
-    achievements?: string[];
+    thesis?: readonly string[];
+    experience?: readonly string[];
+    achievements?: readonly string[];
     contact?: string;
   };
   educationLabel: string;
