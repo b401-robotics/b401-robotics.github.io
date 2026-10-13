@@ -26,7 +26,6 @@ export function ProjectsSection() {
           <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
             {t.body}
           </p>
-          <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
         </div>
 
         {/* Project grid — news-style, scrollable when it overflows */}

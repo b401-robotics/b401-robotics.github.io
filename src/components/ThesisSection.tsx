@@ -3,14 +3,7 @@ import { translations } from "../contents/translations";
 
 export function ThesisSection() {
   const t = translations.thesis;
-  const [expandedTitles, setExpandedTitles] = useState<Record<string, boolean>>({});
-
-  const toggleDetails = (title: string) => {
-    setExpandedTitles((prev) => ({
-      ...prev,
-      [title]: !prev[title],
-    }));
-  };
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section
@@ -19,7 +12,7 @@ export function ThesisSection() {
     >
       <div className="max-w-[85rem] w-full mx-auto flex flex-col">
         {/* Header */}
-        <div className="mb-10 shrink-0 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
+        <div className="mb-8 md:mb-10 shrink-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
           <div className="text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400 mb-2">
             {t.sectionLabel}
           </div>
@@ -29,70 +22,103 @@ export function ThesisSection() {
           <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
             {t.body}
           </p>
-          <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
         </div>
 
-        {/* Thesis list */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          {t.items.map((item) => {
-            const isExpanded = !!expandedTitles[item.title];
+        {/* Thesis archive — hairline-divided rows with expandable abstracts */}
+        <ul
+          className="list-none m-0 p-0 border-t border-zinc-200 dark:border-white/10 animate-fade-in"
+          style={{ animationDelay: "0.2s" }}
+        >
+          {t.items.map((item, i) => {
+            const open = openIndex === i;
+            const abstractId = `thesis-abstract-${i}`;
 
             return (
-              <article
+              <li
                 key={item.title}
-                className="border border-zinc-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 sm:p-7 flex flex-col justify-between"
+                className="relative border-b border-zinc-200 dark:border-white/10"
               >
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                      Author
-                    </span>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">•</span>
-                    <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
-                      {item.author}
-                    </span>
-                  </div>
+                <article
+                  className={`group relative transition-colors duration-300 ${
+                    open
+                      ? "bg-zinc-900/[0.03] dark:bg-white/[0.04]"
+                      : "hover:bg-zinc-900/[0.02] dark:hover:bg-white/[0.03]"
+                  }`}
+                >
+                  <h3 className="m-0">
+                    <button
+                      type="button"
+                      onClick={() => setOpenIndex(open ? null : i)}
+                      aria-expanded={open}
+                      aria-controls={abstractId}
+                      className="w-full text-left bg-transparent cursor-pointer grid grid-cols-[1fr_auto] items-start gap-4 md:gap-6 py-6 md:py-8 px-1"
+                    >
+                      {/* Title + author */}
+                      <span className="min-w-0">
+                        <span className="block font-display font-bold text-lg md:text-2xl text-zinc-900 dark:text-zinc-100 leading-snug">
+                          {item.title}
+                        </span>
+                        <span className="mt-2.5 flex items-center gap-2.5 text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">
+                          <span
+                            aria-hidden="true"
+                            className="inline-block h-px w-5 shrink-0 bg-zinc-400/70 dark:bg-zinc-500/70"
+                          />
+                          {item.author}
+                          {item.year && (
+                            <>
+                              <span aria-hidden="true" className="text-zinc-300 dark:text-zinc-600">•</span>
+                              <span className="tabular-nums">{item.year}</span>
+                            </>
+                          )}
+                        </span>
+                      </span>
 
-                  <h3 className="font-display font-bold text-lg sm:text-xl text-zinc-900 dark:text-zinc-100 mb-3 leading-snug">
-                    {item.title}
+                      {/* Toggle indicator */}
+                      <span
+                        aria-hidden="true"
+                        className={`mt-0.5 shrink-0 grid place-items-center size-8 border font-display font-light text-xl leading-none transition-all duration-300 ${
+                          open
+                            ? "rotate-45 border-zinc-900 dark:border-zinc-100 text-zinc-900 dark:text-zinc-100"
+                            : "border-zinc-300 dark:border-white/15 text-zinc-500 dark:text-zinc-400"
+                        }`}
+                      >
+                        +
+                      </span>
+                    </button>
                   </h3>
 
-                  {isExpanded && (
-                    <div className="mt-3 pt-3 border-t border-zinc-100 dark:border-white/5 animate-fade-in">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1.5">
-                        Abstract
-                      </p>
-                      <p className="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed">
-                        {item.abstract}
-                      </p>
-                    </div>
-                  )}
-                </div>
+                  {/* Animated underline at the bottom of the thesis area on hover (when not open) */}
+                  <span
+                    className={`absolute bottom-0 left-1 right-1 h-0.5 origin-left rounded-full bg-zinc-900 dark:bg-zinc-100 transition-transform duration-300 ease-out ${
+                      open ? "scale-x-0" : "scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
 
-                <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={() => toggleDetails(item.title)}
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-600 hover:text-amber-500 dark:text-amber-400 dark:hover:text-amber-300 transition-colors focus:outline-none"
+                  {/* Collapsible abstract */}
+                  <div
+                    id={abstractId}
+                    className={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out ${
+                      open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
                   >
-                    <span>{isExpanded ? "Hide Details" : "Details"}</span>
-                    <svg
-                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                        isExpanded ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                </div>
-              </article>
+                    <div className="overflow-hidden">
+                      <div className="px-1 pb-7 md:pb-9">
+                        <div className="max-w-3xl border-l-2 border-zinc-900 dark:border-zinc-100 bg-white dark:bg-white/[0.05] px-5 md:px-6 py-5">
+                          <p className="m-0 mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-400 dark:text-zinc-500">
+                            Abstract
+                          </p>
+                          <p className="m-0 text-zinc-600 dark:text-zinc-300 text-sm md:text-[0.95rem] leading-relaxed">
+                            {item.abstract}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </section>
   );
