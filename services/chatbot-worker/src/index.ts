@@ -73,11 +73,19 @@ app.post("/api/chat", async (c) => {
     // 2. In-Worker Vector Similarity Search
     const relevantChunks = searchRelevantChunks(prompt, 3);
 
-    // 3. Multi-Provider Generation (CodeCraft prioritized, Gemini fallback)
-    let result = await askCodeCraft(prompt, relevantChunks, c.env?.CODECRAFT_API_KEY);
+    // 3. Multi-Provider Generation (Gemini prioritized, CodeCraft fallback)
+    let result = await askGemini(prompt, relevantChunks, c.env?.GEMINI_API_KEY);
 
     if (!result) {
-      result = await askGemini(prompt, relevantChunks, c.env?.GEMINI_API_KEY);
+      result = await askCodeCraft(prompt, relevantChunks, c.env?.CODECRAFT_API_KEY);
+    }
+
+    if (!result) {
+      result = {
+        answer:
+          "All AI services are temporarily busy. Please try again in a few moments.",
+        modelUsed: "service-fallback",
+      };
     }
 
     return c.json({

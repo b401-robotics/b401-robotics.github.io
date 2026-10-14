@@ -22,14 +22,10 @@ export async function askGemini(
   prompt: string,
   contextChunks: KnowledgeChunk[],
   apiKey?: string
-): Promise<{ answer: string; modelUsed: string }> {
-  // Graceful fallback if API key is not yet configured
-  if (!apiKey) {
-    const preview = contextChunks.map((c) => `• **${c.title}** (${c.category})`).join("\n");
-    return {
-      answer: `*(Demo / Local Mode - GEMINI_API_KEY not configured)*\n\nI received your question: "${prompt}"\n\nRelevant lab sections identified:\n${preview}\n\nPlease configure \`GEMINI_API_KEY\` in Cloudflare Workers to enable live Gemini answers.`,
-      modelUsed: "mock-local",
-    };
+): Promise<{ answer: string; modelUsed: string } | null> {
+  const trimmedKey = apiKey?.trim();
+  if (!trimmedKey) {
+    return null;
   }
 
   const contextText = contextChunks
@@ -93,9 +89,6 @@ export async function askGemini(
     }
   }
 
-  return {
-    answer:
-      "All Gemini models are temporarily busy or reached their quota limit. Please try again in a few moments.",
-    modelUsed: "temporary-fallback",
-  };
+  console.warn("All Gemini models failed or timed out, falling back to CodeCraft.");
+  return null;
 }
