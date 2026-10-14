@@ -8,7 +8,7 @@ const MODEL_CANDIDATES = [
   "gemini-2.5-flash-lite",
 ];
 
-const SYSTEM_INSTRUCTION = `You are the virtual AI assistant for the B401 Robotics & Intelligent Systems Laboratory (Laboratorium Robotika dan Sistem Cerdas), Department of Computer Engineering, Institut Teknologi Sepuluh Nopember (ITS), Surabaya.
+export const SYSTEM_INSTRUCTION = `You are the virtual AI assistant for the B401 Robotics & Intelligent Systems Laboratory (Laboratorium Robotika dan Sistem Cerdas), Department of Computer Engineering, Institut Teknologi Sepuluh Nopember (ITS), Surabaya.
 
 Strict Guidelines:
 1. Scope: Only answer questions directly related to B401 Lab (research, members, lecturers, lab assistants, equipment, facilities, student theses, practicums, achievements, and projects).

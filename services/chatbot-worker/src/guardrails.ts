@@ -16,16 +16,22 @@ const INJECTION_PATTERNS = [
 
 export async function validateWithJevGuardrails(
   prompt: string,
-  typesafeApiKey?: string
+  typesafeApiKey?: string,
 ): Promise<GuardrailResult> {
   const trimmed = prompt.trim();
 
   // 1. Client & Server Basic Input Constraints
   if (!trimmed) {
-    return { passed: false, reason: "Please only ask topics related to this Laboratory." };
+    return {
+      passed: false,
+      reason: "Please only ask topics related to this Laboratory.",
+    };
   }
   if (trimmed.length > 500) {
-    return { passed: false, reason: "Prompt exceeds maximum limit of 500 characters." };
+    return {
+      passed: false,
+      reason: "Prompt exceeds maximum limit of 500 characters.",
+    };
   }
 
   // 2. Local heuristic quick-screen
@@ -33,7 +39,7 @@ export async function validateWithJevGuardrails(
     if (pattern.test(trimmed)) {
       return {
         passed: false,
-        reason: "Stop doing prompt injection.",
+        reason: "Stop doing prompt injection attacks.",
       };
     }
   }
@@ -52,7 +58,8 @@ export async function validateWithJevGuardrails(
         },
         body: JSON.stringify({
           input: trimmed,
-          context: "B401 Robotics and Intelligent Systems Laboratory portfolio website Q&A",
+          context:
+            "B401 Robotics and Intelligent Systems Laboratory portfolio website Q&A",
         }),
         signal: controller.signal,
       });
@@ -71,7 +78,7 @@ export async function validateWithJevGuardrails(
         if (data.is_injection || data.is_jailbreak) {
           return {
             passed: false,
-            reason: "Stop doing prompt injection.",
+            reason: "Stop doing prompt injection attacks.",
           };
         }
 
@@ -82,7 +89,9 @@ export async function validateWithJevGuardrails(
           };
         }
       } else {
-        console.warn(`TypeSafe API responded with HTTP ${res.status}, continuing to local guardrails`);
+        console.warn(
+          `TypeSafe API responded with HTTP ${res.status}, continuing to local guardrails`,
+        );
       }
     } catch (err) {
       console.warn("TypeSafe Jev check skipped/timed out:", err);

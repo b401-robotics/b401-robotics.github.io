@@ -2,9 +2,11 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { validateWithJevGuardrails } from "./guardrails";
 import { searchRelevantChunks } from "./vectorSearch";
+import { askCodeCraft } from "./codecraft";
 import { askGemini } from "./gemini";
 
 type Bindings = {
+  CODECRAFT_API_KEY?: string;
   GEMINI_API_KEY?: string;
   TYPESAFE_API_KEY?: string;
   MAX_PROMPT_LENGTH?: string;
@@ -71,8 +73,12 @@ app.post("/api/chat", async (c) => {
     // 2. In-Worker Vector Similarity Search
     const relevantChunks = searchRelevantChunks(prompt, 3);
 
-    // 3. Google AI Studio Gemini API with multi-model failover
-    const result = await askGemini(prompt, relevantChunks, c.env?.GEMINI_API_KEY);
+    // 3. Multi-Provider Generation (CodeCraft prioritized, Gemini fallback)
+    let result = await askCodeCraft(prompt, relevantChunks, c.env?.CODECRAFT_API_KEY);
+
+    if (!result) {
+      result = await askGemini(prompt, relevantChunks, c.env?.GEMINI_API_KEY);
+    }
 
     return c.json({
       answer: result.answer,
