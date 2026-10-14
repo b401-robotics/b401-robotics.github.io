@@ -39,15 +39,17 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
     >
       <div className="max-w-[85rem] w-full mx-auto">
         {/* Header */}
-        <div className="mb-8 md:mb-10 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-zinc-900 dark:text-zinc-100 mb-3">
-            {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
-          </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
+        <header className="section-header animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div>
+            <p className="kicker mb-3">{t.sectionLabel}</p>
+            <h2 className="section-heading text-4xl md:text-6xl">
+              {t.heading} <span className="text-zinc-400 dark:text-zinc-600">{t.headingAccent}</span>
+            </h2>
+          </div>
+          <p className="max-w-sm font-mono text-xs uppercase leading-relaxed tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
             {t.body}
           </p>
-          <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
-        </div>
+        </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 lg:gap-10 items-start">
           {/* Left: seamless practicum list */}
@@ -88,7 +90,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
 
                   {/* Active indicator bar */}
                   <div
-                    className={`w-[3px] self-stretch rounded-full transition-all duration-300 ${
+                    className={`w-[3px] self-stretch transition-all duration-300 ${
                       isActive
                         ? "bg-zinc-900 dark:bg-zinc-100"
                         : "bg-transparent group-hover:bg-zinc-300 dark:group-hover:bg-white/20"
@@ -107,7 +109,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
             {/* Image carousel — auto-advances every 5s, or manually via the arrows */}
             <ImageCarousel images={images} alt={selected.title} />
 
-            <h3 className="font-display font-bold text-xl md:text-2xl text-zinc-900 dark:text-zinc-100 mb-2 leading-tight">
+            <h3 className="font-display font-bold text-xl md:text-2xl tracking-tight text-zinc-900 dark:text-zinc-100 mb-2 leading-tight">
               {selected.title}
             </h3>
 
@@ -121,7 +123,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
                   const label = topic.label;
                   const url = "url" in topic ? topic.url : undefined;
                   const baseClass =
-                    "px-2.5 py-1 border text-xs transition-colors duration-200";
+                    "px-2.5 py-1 border font-mono text-[11px] uppercase tracking-[0.16em] transition-colors duration-200";
 
                   return url ? (
                     <a
@@ -150,7 +152,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
                 href={t.registerUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 dark:hover:shadow-white/10 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-zinc-100 focus:ring-offset-2 transition-all duration-300 group"
+                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-all duration-300 group dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:focus:ring-zinc-100"
               >
                 {t.registerLabel}
                 <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -189,7 +191,7 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
   if (count === 0) return null;
 
   return (
-    <div className="group relative aspect-video w-full mb-4 bg-zinc-200/60 dark:bg-white/5 overflow-hidden">
+    <div className="corner-frame group relative aspect-video w-full mb-4">
       {/* object-contain keeps the whole image inside the frame — nothing
           is cropped and nothing overflows the placeholder bounds. */}
       <img
@@ -208,7 +210,7 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
             type="button"
             onClick={() => setIndex((prev) => (prev - 1 + count) % count)}
             aria-label="Previous image"
-            className="absolute top-1/2 left-3 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
+            className="absolute top-1/2 left-3 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
           >
             <svg
               width="18"
@@ -228,7 +230,7 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
             type="button"
             onClick={() => setIndex((prev) => (prev + 1) % count)}
             aria-label="Next image"
-            className="absolute top-1/2 right-3 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
+            className="absolute top-1/2 right-3 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
           >
             <svg
               width="18"

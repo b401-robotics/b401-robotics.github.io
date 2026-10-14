@@ -8,6 +8,107 @@ interface MembersSectionProps {
   preview?: boolean;
 }
 
+// Small L-shaped tick — one at each corner of the frame. The signature of
+// the "blueprint" treatment.
+function CornerTicks() {
+  const base = "pointer-events-none absolute h-3 w-3 border-zinc-400 dark:border-zinc-500";
+  return (
+    <>
+      <span className={`${base} left-0 top-0 border-l border-t`} />
+      <span className={`${base} right-0 top-0 border-r border-t`} />
+      <span className={`${base} bottom-0 left-0 border-b border-l`} />
+      <span className={`${base} bottom-0 right-0 border-b border-r`} />
+    </>
+  );
+}
+
+interface PersonCardProps {
+  name: string;
+  role: string;
+  image?: string;
+  initials: string;
+  year?: string;
+  delay: number;
+  onClick: () => void;
+}
+
+function PersonCard({ name, role, image, initials, year, delay, onClick }: PersonCardProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex w-full flex-col text-left animate-fade-in focus:outline-none"
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <div className="relative aspect-[4/5] w-full bg-zinc-200 dark:bg-zinc-900">
+        <CornerTicks />
+        <div className="absolute inset-2 overflow-hidden">
+          {image ? (
+            <img
+              src={image}
+              alt={name}
+              loading="lazy"
+              className="absolute inset-0 block h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-zinc-800 font-display text-4xl font-bold text-white">
+              {initials}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-4 w-full">
+        <span className="block h-px w-6 bg-zinc-300 transition-all duration-300 group-hover:w-full group-hover:bg-zinc-900 dark:bg-zinc-700 dark:group-hover:bg-zinc-100" />
+        <p className="mt-3 font-display text-base font-semibold leading-snug tracking-tight text-zinc-900 dark:text-zinc-100">
+          {name}
+        </p>
+        <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
+          {role}
+        </p>
+        {year && (
+          <p className="mt-0.5 font-mono text-[11px] tabular-nums text-zinc-400 dark:text-zinc-500">
+            {year}
+          </p>
+        )}
+      </div>
+    </button>
+  );
+}
+
+interface GroupProps {
+  numeral: string;
+  label: string;
+  count: number;
+  children: React.ReactNode;
+}
+
+function Group({ numeral, label, count, children }: GroupProps) {
+  return (
+    <div className="relative">
+      <div className="relative mb-12 flex items-end gap-5">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none -mb-6 select-none font-display text-[6rem] font-bold leading-none text-zinc-200/70 md:text-[8rem] dark:text-white/5"
+        >
+          {numeral}
+        </span>
+        <div className="relative z-10 pb-1">
+          <h3 className="font-display text-2xl font-bold tracking-tight text-zinc-900 md:text-3xl dark:text-zinc-100">
+            {label}
+          </h3>
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.16em] text-zinc-400 dark:text-zinc-500">
+            {count} people
+          </p>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function MembersSection({ preview = false }: MembersSectionProps = {}) {
   const t = translations.members;
   const [selectedLecturer, setSelectedLecturer] = useState<I_lecturers | null>(null);
@@ -33,155 +134,63 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
 
   return (
     <section id="members" className="section-padding relative">
-      <div className="max-w-[85rem] w-full mx-auto">
+      <div className="mx-auto w-full max-w-[85rem]">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <h2 className="font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-zinc-100 mb-5">
-            {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
+        <header className="section-header">
+          <h2 className="section-heading max-w-2xl text-4xl md:text-6xl">
+            {t.heading} <span className="text-zinc-400 dark:text-zinc-600">{t.headingAccent}</span>
           </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-lg max-w-2xl mx-auto">{t.body}</p>
-        </div>
+          <p className="max-w-sm font-mono text-xs uppercase leading-relaxed tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+            {t.body}
+          </p>
+        </header>
 
-        {/* ============================================================ */}
-        {/* Section 1 — Lecturers & Supervisors                           */}
-        {/* ============================================================ */}
-        <div className="mb-20">
-          <div className="mb-8">
-            <h3 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
-              {t.lecturersLabel}
-            </h3>
-            <div className="h-px w-full bg-zinc-200 dark:bg-white/10" />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <div className="space-y-28">
+          <Group numeral="I" label={t.lecturersLabel} count={t.lecturers.length}>
             {t.lecturers.map((lecturer, idx) => (
-              <div
+              <PersonCard
                 key={lecturer.name}
+                name={lecturer.name}
+                role={lecturer.role}
+                image={lecturer.image}
+                initials={lecturer.initials}
+                delay={0.05 * idx}
                 onClick={() => setSelectedLecturer(lecturer)}
-                className="card-glass rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 hover:border-zinc-300 hover:ring-2 hover:ring-zinc-300/50 transition-all duration-300 flex flex-col animate-fade-in cursor-pointer group shadow-sm hover:shadow-md"
-                style={{ animationDelay: `${0.2 + idx * 0.05}s` }}
-              >
-                <div className="aspect-[4/5] w-full bg-zinc-200 relative overflow-hidden">
-                  {lecturer.image ? (
-                    <img
-                      src={lecturer.image}
-                      alt={lecturer.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-white font-display font-bold text-3xl md:text-4xl">
-                      {(lecturer as I_lecturers).initials}
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-3 flex-1 flex flex-col justify-between">
-                  <div>
-                    <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-xs leading-snug">{lecturer.name}</p>
-                    <p className="text-zinc-500 text-xs mt-0.5">{lecturer.role}</p>
-                  </div>
-                </div>
-              </div>
+              />
             ))}
-          </div>
-        </div>
+          </Group>
 
-        {/* ============================================================ */}
-        {/* Section 2 — Active Lab Members                                */}
-        {/* ============================================================ */}
-        <div className="mb-20">
-          <div className="mb-8">
-            <h3 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
-              {t.activeMembersLabel}
-            </h3>
-            <div className="h-px w-full bg-zinc-200 dark:bg-white/10" />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <Group numeral="II" label={t.activeMembersLabel} count={t.assistants.length}>
             {t.assistants.map((assistant, idx) => (
-              <div
+              <PersonCard
                 key={idx}
+                name={assistant.name}
+                role={assistant.role}
+                image={assistant.image}
+                initials={assistant.initials}
+                delay={0.03 * idx}
                 onClick={() => setSelectedAssistant(assistant)}
-                className="card-glass rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 hover:border-zinc-300 hover:ring-2 hover:ring-zinc-300/50 transition-all duration-300 flex flex-col animate-fade-in cursor-pointer group shadow-sm hover:shadow-md"
-                style={{ animationDelay: `${0.2 + idx * 0.05}s` }}
-              >
-                <div className="aspect-[4/5] w-full bg-zinc-200 relative overflow-hidden">
-                  {assistant.image ? (
-                    <img
-                      src={assistant.image}
-                      alt={assistant.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-white font-display font-bold text-3xl md:text-4xl">
-                      {assistant.initials}
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-3 flex-1 flex flex-col justify-between">
-                  <div>
-                    <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-xs leading-snug">{assistant.name}</p>
-                    <p className="text-zinc-500 text-xs mt-0.5">{assistant.role}</p>
-                  </div>
-                </div>
-              </div>
+              />
             ))}
-          </div>
-        </div>
+          </Group>
 
-        {/* ============================================================ */}
-        {/* Section 3 — Lab Alumni                                        */}
-        {/* ============================================================ */}
-        <div>
-          <div className="mb-8">
-            <h3 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
-              {t.alumniLabel}
-            </h3>
-            <div className="h-px w-full bg-zinc-200 dark:bg-white/10" />
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <Group numeral="III" label={t.alumniLabel} count={t.alumni.length}>
             {t.alumni.map((person, idx) => (
-              <div
+              <PersonCard
                 key={idx}
+                name={person.name}
+                role={person.role}
+                image={"image" in person ? person.image : undefined}
+                initials={person.initials}
+                year={person.year}
+                delay={0.05 * idx}
                 onClick={() => setSelectedAlumni(person)}
-                className="card-glass rounded-2xl overflow-hidden border border-zinc-200 dark:border-white/10 hover:border-zinc-300 hover:ring-2 hover:ring-zinc-300/50 transition-all duration-300 flex flex-col animate-fade-in cursor-pointer group shadow-sm hover:shadow-md"
-                style={{ animationDelay: `${0.1 + idx * 0.05}s` }}
-              >
-                <div className="aspect-[4/5] w-full bg-zinc-200 relative overflow-hidden">
-                  {"image" in person && person.image ? (
-                    <img
-                      src={person.image}
-                      alt={person.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-white font-display font-bold text-3xl md:text-4xl">
-                      {person.initials}
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-3 flex-1 flex flex-col justify-between">
-                  <div>
-                    <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-xs leading-snug">{person.name}</p>
-                    <p className="text-zinc-500 text-xs mt-0.5">{person.role}</p>
-                    {person.year && (
-                      <p className="text-zinc-400 text-xs mt-0.5">{person.year}</p>
-                    )}
-                  </div>
-                </div>
-              </div>
+              />
             ))}
-          </div>
+          </Group>
         </div>
       </div>
 
-      {/* Lecturer Details Modal */}
       {selectedLecturer && (
         <PersonModal
           person={{
@@ -199,7 +208,6 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
         />
       )}
 
-      {/* Active Member Details Modal */}
       {selectedAssistant && (
         <PersonModal
           person={{
@@ -222,7 +230,6 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
         />
       )}
 
-      {/* Alumni Details Modal — Research Interests removed, Thesis shown instead */}
       {selectedAlumni && (
         <PersonModal
           person={{

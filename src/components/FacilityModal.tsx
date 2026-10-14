@@ -21,11 +21,11 @@ export function FacilityModal({ facility, onClose }: FacilityModalProps) {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-zinc-200 dark:border-white/10">
+      <div className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-zinc-900 overflow-hidden flex flex-col border border-zinc-200 dark:border-white/10">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/30 text-white backdrop-blur-sm transition-colors"
+          className="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center bg-black/20 hover:bg-black/30 text-white backdrop-blur-sm transition-colors"
           aria-label="Close"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -50,7 +50,7 @@ export function FacilityModal({ facility, onClose }: FacilityModalProps) {
 
         {/* Info */}
         <div className="p-6 sm:p-8 overflow-y-auto scrollbar-hide">
-          <p className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-500 dark:text-zinc-400 mb-2">
+          <p className="kicker mb-2">
             {facility.category}
           </p>
           <h3 className="font-display font-bold text-xl md:text-2xl lg:text-3xl text-zinc-900 dark:text-zinc-100 leading-tight mb-4">

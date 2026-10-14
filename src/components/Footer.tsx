@@ -63,13 +63,13 @@ export function Footer() {
               <img
                 src={LogoLight}
                 alt="B401 Logo"
-                className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300 dark:hidden"
+                className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300 dark:hidden"
                 loading="lazy"
               />
               <img
                 src={LogoDark}
                 alt="B401 Logo"
-                className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300 hidden dark:block"
+                className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300 hidden dark:block"
                 loading="lazy"
               />
               <span className="font-display font-semibold text-zinc-900 dark:text-zinc-100 text-sm leading-tight whitespace-pre-line group-hover:text-zinc-700 dark:group-hover:text-zinc-300 transition-colors">
@@ -104,7 +104,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
-                  className="w-9 h-9 rounded-full bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-white/20 hover:-translate-y-0.5 transition-all duration-200"
+                  className="w-9 h-9 bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-white/20 hover:-translate-y-0.5 transition-all duration-200"
                 >
                   {social.icon}
                 </a>

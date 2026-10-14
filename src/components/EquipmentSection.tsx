@@ -32,16 +32,20 @@ export function EquipmentSection({ preview = false }: EquipmentSectionProps = {}
       {/* ============================================================ */}
       {/* Header                                                        */}
       {/* ============================================================ */}
-      <div className="px-6 md:px-10 lg:px-14 pt-12 pb-10 md:pt-16 md:pb-16 animate-fade-in">
+      <div className="px-6 md:px-10 lg:px-14 pt-10 pb-4 md:pt-12 md:pb-6 animate-fade-in">
         <div className="max-w-[85rem] w-full mx-auto">
-          <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-zinc-900 dark:text-zinc-100 mb-3 leading-tight">
-            {t.heading}{" "}
-            <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
-          </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
-            {t.body}
-          </p>
-          <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
+          <header className="section-header">
+            <div>
+              <p className="kicker mb-3">{t.sectionLabel}</p>
+              <h2 className="section-heading text-4xl md:text-6xl">
+                {t.heading}{" "}
+                <span className="text-zinc-400 dark:text-zinc-600">{t.headingAccent}</span>
+              </h2>
+            </div>
+            <p className="max-w-sm font-mono text-xs uppercase leading-relaxed tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+              {t.body}
+            </p>
+          </header>
         </div>
       </div>
 
@@ -93,11 +97,11 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
   const imgCount = images.length;
 
   return (
-    <div className="min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-10 lg:px-14 py-16 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+    <div className="flex px-6 md:px-10 lg:px-14 py-8 animate-fade-in" style={{ animationDelay: "0.2s" }}>
       <div className="max-w-[85rem] w-full mx-auto flex flex-col lg:flex-row gap-10 lg:gap-14 items-stretch">
         {/* Image — height matches the right column (header top edge to list bottom edge) */}
         <div className="w-full lg:w-1/2 flex">
-          <div className="group relative w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden flex-1 min-h-[280px] lg:min-h-0">
+          <div className="corner-frame group relative w-full overflow-hidden flex-1 min-h-[280px] lg:min-h-0">
             {imgCount > 0 ? (
               <>
                 <img
@@ -112,7 +116,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
                       type="button"
                       onClick={() => setImgIndex((prev) => (prev - 1 + imgCount) % imgCount)}
                       aria-label="Previous image"
-                      className="absolute top-1/2 left-3 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
+                      className="absolute top-1/2 left-3 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
                     >
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                         <path d="M15 6l-6 6 6 6" />
@@ -122,7 +126,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
                       type="button"
                       onClick={() => setImgIndex((prev) => (prev + 1) % imgCount)}
                       aria-label="Next image"
-                      className="absolute top-1/2 right-3 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
+                      className="absolute top-1/2 right-3 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
                     >
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                         <path d="M9 18l6-6-6-6" />
@@ -149,10 +153,10 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
 
         {/* Info + facilities */}
         <div className="w-full lg:w-1/2 flex flex-col">
-          <p className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-500 dark:text-zinc-400 mb-3">
+          <p className="kicker mb-3">
             {room.code}
           </p>
-          <h3 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-5 leading-tight">
+          <h3 className="section-heading mb-5 text-2xl md:text-3xl">
             {room.name}
           </h3>
           <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-8">
@@ -161,7 +165,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
 
           {/* Facility list — scrollbar always visible */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.15em] text-zinc-500 dark:text-zinc-400 mb-1">
+            <h4 className="kicker mb-1">
               {facilitiesLabel}
             </h4>
             <div className="flex flex-col md:max-h-[320px] md:overflow-y-auto scrollbar-fade">
@@ -191,10 +195,10 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
                     <div className="text-sm text-zinc-900 dark:text-zinc-100 leading-snug">
                       {f.name}
                     </div>
-                    <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 flex items-center gap-2">
-                      <span>{f.category}</span>
-                      {/* Click-for-more-info — italic text, appears on hover */}
-                      <span className="italic text-zinc-500 dark:text-zinc-400 text-xs whitespace-nowrap opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pointer-events-none">
+                    <div className="mt-0.5 flex items-center gap-2">
+                      <span className="kicker">{f.category}</span>
+                      {/* Click-for-more-info — appears on hover */}
+                      <span className="kicker whitespace-nowrap opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pointer-events-none">
                         {clickForMoreInfo}
                       </span>
                     </div>

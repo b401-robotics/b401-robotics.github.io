@@ -50,15 +50,17 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
           className="mb-10 shrink-0 animate-fade-in relative"
           style={{ animationDelay: "0.1s" }}
         >
-          <p className="text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400 mb-3">
-            {r.sectionLabel}
-          </p>
-          <h2 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
-            {r.heading} <span className="text-zinc-900 dark:text-zinc-100">{r.headingAccent}</span>
-          </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
-            {r.body}
-          </p>
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="kicker mb-3">{r.sectionLabel}</p>
+              <h2 className="section-heading text-4xl md:text-6xl">
+                {r.heading} <span className="text-zinc-400 dark:text-zinc-600">{r.headingAccent}</span>
+              </h2>
+            </div>
+            <p className="max-w-2xl text-base leading-relaxed text-zinc-600 md:text-lg dark:text-zinc-300">
+              {r.body}
+            </p>
+          </div>
           <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
         </div>
 
@@ -74,13 +76,13 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
                 key={area.title}
                 className="border border-zinc-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 flex flex-col"
               >
-                <span className="text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400 mb-2">
+                <span className="kicker mb-2">
                   {area.tag}
                 </span>
-                <h3 className="font-display font-semibold text-lg text-zinc-900 dark:text-zinc-100 mb-2 leading-snug">
+                <h3 className="font-display font-bold text-xl md:text-2xl tracking-tight text-zinc-900 dark:text-zinc-100 mb-2 leading-snug">
                   {area.title}
                 </h3>
-                <p className="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed">
+                <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
                   {area.description}
                 </p>
               </div>
@@ -90,10 +92,10 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
           {/* Lab Work Projects Showcase */}
           <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <div className="flex items-baseline justify-between mb-6">
-              <h3 className="font-display font-bold text-xl md:text-2xl text-zinc-900 dark:text-zinc-100">
-                {p.heading} <span className="text-zinc-900 dark:text-zinc-100">{p.headingAccent}</span>
+              <h3 className="font-display font-bold text-xl md:text-2xl tracking-tight text-zinc-900 dark:text-zinc-100">
+                {p.heading} <span className="text-zinc-400 dark:text-zinc-600">{p.headingAccent}</span>
               </h3>
-              <span className="text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">
+              <span className="kicker">
                 {p.sectionLabel}
               </span>
             </div>
@@ -103,22 +105,22 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 pb-2">
               {p.items.map((project) => (
-                <article key={project.title} className="flex flex-col">
-                  <div className="aspect-[16/10] w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden mb-4">
+                <article key={project.title} className="group flex flex-col">
+                  <div className="corner-frame aspect-[16/10] w-full mb-5">
                     {project.image ? (
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                         loading="lazy"
                       />
                     ) : null}
                   </div>
-                  <div className="text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400 mb-3">
+                  <div className="kicker mb-3">
                     {p.sectionLabel} <span className="text-zinc-400 dark:text-zinc-500">•</span>{" "}
                     {getStatusLabel(project.status)}
                   </div>
-                  <h4 className="font-display font-bold text-lg md:text-xl text-zinc-900 dark:text-zinc-100 mb-2 leading-snug">
+                  <h4 className="font-display font-bold text-lg md:text-xl tracking-tight text-zinc-900 dark:text-zinc-100 mb-2 leading-snug">
                     {project.title}
                   </h4>
                   <p className="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed mb-4">
@@ -128,7 +130,7 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2.5 py-1 border border-zinc-300 dark:border-white/15 text-zinc-600 dark:text-zinc-300 text-xs"
+                        className="px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.16em] border border-zinc-300 dark:border-white/15 text-zinc-500 dark:text-zinc-400"
                       >
                         {tag}
                       </span>

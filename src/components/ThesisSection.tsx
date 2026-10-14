@@ -13,11 +13,11 @@ export function ThesisSection() {
       <div className="max-w-[85rem] w-full mx-auto flex flex-col">
         {/* Header */}
         <div className="mb-8 md:mb-10 shrink-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400 mb-2">
+          <div className="kicker mb-2">
             {t.sectionLabel}
           </div>
-          <h2 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
-            {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
+          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight text-zinc-900 md:text-3xl dark:text-zinc-100">
+            {t.heading} {t.headingAccent}
           </h2>
           <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
             {t.body}
@@ -58,7 +58,7 @@ export function ThesisSection() {
                         <span className="block font-display font-bold text-lg md:text-2xl text-zinc-900 dark:text-zinc-100 leading-snug">
                           {item.title}
                         </span>
-                        <span className="mt-2.5 flex items-center gap-2.5 text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">
+                        <span className="kicker mt-2.5 flex items-center gap-2.5">
                           <span
                             aria-hidden="true"
                             className="inline-block h-px w-5 shrink-0 bg-zinc-400/70 dark:bg-zinc-500/70"
@@ -104,10 +104,10 @@ export function ThesisSection() {
                     <div className="overflow-hidden">
                       <div className="px-1 pb-7 md:pb-9">
                         <div className="max-w-3xl border-l-2 border-zinc-900 dark:border-zinc-100 bg-white dark:bg-white/[0.05] px-5 md:px-6 py-5">
-                          <p className="m-0 mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-zinc-400 dark:text-zinc-500">
+                          <p className="kicker m-0 mb-2">
                             Abstract
                           </p>
-                          <p className="m-0 text-zinc-600 dark:text-zinc-300 text-sm md:text-[0.95rem] leading-relaxed">
+                          <p className="m-0 text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
                             {item.abstract}
                           </p>
                         </div>

@@ -64,12 +64,12 @@ export function Navbar() {
           <img
             src={LogoLight}
             alt="B401 Logo"
-            className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] transition-all duration-300 dark:hidden"
+            className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] transition-all duration-300 dark:hidden"
           />
           <img
             src={LogoDark}
             alt="B401 Logo"
-            className="w-10 h-10 object-contain rounded-xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] transition-all duration-300 hidden dark:block"
+            className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] transition-all duration-300 hidden dark:block"
           />
           <span className="font-display font-semibold text-zinc-900 dark:text-zinc-100 text-sm hidden sm:block leading-tight whitespace-pre-line">
             {t.labName}
@@ -122,7 +122,7 @@ export function Navbar() {
                   <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                 </svg>
               ) : (
-                <svg className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-zinc-900" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 4.22a1 1 0 011.415 1.415l-.708.708a1 1 0 01-1.414-1.414l.707-.708zM17 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zm-4.22 4.22a1 1 0 01-1.415 1.415l-.708-.708a1 1 0 011.414-1.414l.707.708zM10 17a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zm-4.22-4.22a1 1 0 01-1.415-1.415l.708-.708a1 1 0 011.414 1.414l-.707.708zM3 10a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zM5.78 5.78a1 1 0 011.414-1.414l.708.708a1 1 0 01-1.415 1.415l-.708-.708zM10 5a5 5 0 100 10 5 5 0 000-10z" clipRule="evenodd" />
                 </svg>
               )}
@@ -149,7 +149,7 @@ export function Navbar() {
                   <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                 </svg>
               ) : (
-                <svg className="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-zinc-900" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 4.22a1 1 0 011.415 1.415l-.708.708a1 1 0 01-1.414-1.414l.707-.708zM17 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zm-4.22 4.22a1 1 0 01-1.415 1.415l-.708-.708a1 1 0 011.414-1.414l.707.708zM10 17a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zm-4.22-4.22a1 1 0 01-1.415-1.415l.708-.708a1 1 0 011.414 1.414l-.707.708zM3 10a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zM5.78 5.78a1 1 0 011.414-1.414l.708.708a1 1 0 01-1.415 1.415l-.708-.708zM10 5a5 5 0 100 10 5 5 0 000-10z" clipRule="evenodd" />
                 </svg>
               )}

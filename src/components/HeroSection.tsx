@@ -57,12 +57,13 @@ export function HeroSection() {
           className="max-w-4xl mt-[35vh] md:mt-[370px]"
         >
           {/* Kicker */}
-          <p className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-white/80 mb-8">
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/75 mb-4">
             {t.kicker}
           </p>
+          <span aria-hidden="true" className="block h-px w-12 bg-white/40 mb-8" />
 
           {/* Slogan */}
-          <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-white">
+          <h1 className="font-display font-bold tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-white">
             {t.slogan}
           </h1>
         </motion.div>

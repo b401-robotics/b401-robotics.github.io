@@ -20,8 +20,8 @@ export function ProjectsSection() {
       <div className="max-w-[85rem] w-full mx-auto flex flex-col md:flex-1 md:min-h-0">
         {/* Header */}
         <div className="mb-10 shrink-0 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <h2 className="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-zinc-100 mb-3">
-            {t.heading} <span className="text-zinc-900 dark:text-zinc-100">{t.headingAccent}</span>
+          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight text-zinc-900 md:text-3xl dark:text-zinc-100">
+            {t.heading} {t.headingAccent}
           </h2>
           <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
             {t.body}
@@ -32,26 +32,26 @@ export function ProjectsSection() {
         <div className="md:overflow-y-auto scrollbar-fade md:flex-1 md:min-h-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 pb-2 animate-fade-in" style={{ animationDelay: "0.2s" }}>
             {t.items.map((project) => (
-              <article key={project.title} className="flex flex-col">
+              <article key={project.title} className="group flex flex-col">
                 {/* Image on top */}
-                <div className="aspect-[16/10] w-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden mb-4">
+                <div className="corner-frame aspect-[16/10] w-full mb-5">
                   {project.image ? (
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                       loading="lazy"
                     />
                   ) : null}
                 </div>
 
                 {/* Metadata line */}
-                <div className="text-xs font-medium uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400 mb-3">
+                <div className="kicker mb-3">
                   {t.sectionLabel} <span className="text-zinc-400 dark:text-zinc-500">•</span> {getStatusLabel(project.status)}
                 </div>
 
                 {/* Title */}
-                <h3 className="font-display font-bold text-xl md:text-2xl text-zinc-900 dark:text-zinc-100 mb-3 leading-snug">
+                <h3 className="font-display font-bold text-xl md:text-2xl tracking-tight text-zinc-900 dark:text-zinc-100 mb-3 leading-snug">
                   {project.title}
                 </h3>
 
@@ -65,7 +65,7 @@ export function ProjectsSection() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 border border-zinc-300 dark:border-white/15 text-zinc-600 dark:text-zinc-300 text-xs"
+                      className="px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.16em] border border-zinc-300 dark:border-white/15 text-zinc-500 dark:text-zinc-400"
                     >
                       {tag}
                     </span>

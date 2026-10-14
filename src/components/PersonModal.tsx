@@ -45,11 +45,11 @@ export function PersonModal({
       />
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-3xl max-h-[90vh] bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-zinc-200 dark:border-white/10">
+      <div className="relative w-full max-w-3xl max-h-[90vh] bg-white dark:bg-zinc-900 overflow-hidden flex flex-col md:flex-row border border-zinc-200 dark:border-white/10">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/10 hover:bg-black/20 text-zinc-800 dark:text-zinc-100 transition-colors"
+          className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/10 hover:bg-black/20 text-zinc-800 dark:text-zinc-100 transition-colors"
           aria-label="Close"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -9,12 +9,17 @@ export function AboutSection() {
   return (
     <section id="about" className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col">
       <div className="max-w-[85rem] w-full mx-auto mt-16 md:mt-28 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-        <div className="text-center">
-          <h2 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl text-zinc-900 dark:text-zinc-100 mb-10">
+        <header className="mb-14 flex flex-col gap-4 border-b border-zinc-200 pb-10 md:flex-row md:items-end md:justify-between dark:border-white/10">
+          <h2 className="section-heading max-w-2xl text-4xl md:text-6xl">
             {tAbout.heading}{" "}
-            <span className="text-zinc-900 dark:text-zinc-100">{tAbout.headingAccent}</span>
+            <span className="text-zinc-400 dark:text-zinc-600">{tAbout.headingAccent}</span>
           </h2>
+          <p className="max-w-sm font-mono text-xs uppercase leading-relaxed tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+            {tAbout.body}
+          </p>
+        </header>
 
+        <div className="text-center">
           <div className="flex items-center justify-center gap-4 md:gap-6 mb-10">
             <img
               src={LogoLight}
@@ -32,10 +37,6 @@ export function AboutSection() {
               {tNav.labName}
             </span>
           </div>
-
-          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg leading-relaxed max-w-3xl mx-auto">
-            {tAbout.body}
-          </p>
         </div>
       </div>
     </section>

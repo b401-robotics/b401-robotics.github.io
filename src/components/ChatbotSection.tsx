@@ -89,19 +89,21 @@ export function ChatbotSection() {
     <section id="chatbot" className="section-padding relative border-t border-zinc-200 dark:border-white/10">
       <div className="max-w-4xl w-full mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-10 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400 mb-4">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            AI Lab Assistant
+        <header className="mb-10 flex flex-col gap-4 border-b border-zinc-200 pb-8 animate-fade-in md:flex-row md:items-end md:justify-between dark:border-white/10">
+          <div>
+            <p className="kicker mb-3 flex items-center gap-2">
+              <span aria-hidden="true" className="h-1.5 w-1.5 animate-pulse rounded-full bg-zinc-900 dark:bg-zinc-100" />
+              AI Lab Assistant
+            </p>
+            <h2 className="section-heading text-4xl md:text-6xl">
+              Ask About B401 Robotics Lab
+            </h2>
           </div>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-zinc-900 dark:text-zinc-100 mb-3">
-            Ask About B401 Robotics Lab
-          </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-base max-w-xl mx-auto">
+          <p className="max-w-sm text-sm leading-relaxed text-zinc-600 md:text-base dark:text-zinc-300">
             Get instant answers on our research, facilities, equipment, team, and practicums.
             Queries are guarded for lab relevance and processed without saving history.
           </p>
-        </div>
+        </header>
 
         {/* Suggestion Chips */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
@@ -115,7 +117,7 @@ export function ChatbotSection() {
                 void handleSubmit(q);
               }}
               disabled={loading}
-              className="text-xs px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 border border-zinc-300/60 dark:border-zinc-700/60 transition-colors disabled:opacity-50 text-left"
+              className="border border-zinc-300 px-3 py-1.5 text-left text-xs text-zinc-600 transition-colors hover:border-zinc-900 hover:text-zinc-900 disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
             >
               {q}
             </button>
@@ -123,7 +125,7 @@ export function ChatbotSection() {
         </div>
 
         {/* Prompt Input Box */}
-        <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-300/80 dark:border-zinc-800 shadow-sm p-4 mb-8">
+        <div className="mb-8 border border-zinc-300 bg-white p-4 dark:border-white/10 dark:bg-white/[0.04]">
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -140,8 +142,6 @@ export function ChatbotSection() {
               className={`text-xs ${
                 isOverLimit
                   ? "text-red-500 font-bold"
-                  : characterCount > 450
-                  ? "text-amber-500"
                   : "text-zinc-400 dark:text-zinc-500"
               }`}
             >
@@ -162,7 +162,7 @@ export function ChatbotSection() {
                 type="button"
                 onClick={() => void handleSubmit()}
                 disabled={!canSubmit}
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2 font-mono text-xs uppercase tracking-[0.16em] text-white transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
               >
                 {loading ? (
                   <>
@@ -201,7 +201,7 @@ export function ChatbotSection() {
 
         {/* Error Banner */}
         {error && (
-          <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-300 text-sm mb-6 flex items-start justify-between">
+          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-300 text-sm mb-6 flex items-start justify-between">
             <div>
               <p className="font-semibold mb-1">Could not complete request</p>
               <p>{error}</p>
@@ -218,10 +218,10 @@ export function ChatbotSection() {
 
         {/* Current Q&A Result */}
         {result && (
-          <div className="bg-zinc-50 dark:bg-zinc-900/90 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-6 shadow-sm">
+          <div className="border border-zinc-200 bg-white p-6 dark:border-white/10 dark:bg-white/[0.04]">
             {lastQuestion && (
               <div className="mb-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
-                <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block mb-1">
+                <span className="kicker block mb-1">
                   Question
                 </span>
                 <p className="text-zinc-900 dark:text-zinc-100 font-medium text-base">
@@ -232,7 +232,7 @@ export function ChatbotSection() {
 
             <div>
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-red-600 dark:text-red-400">
+                <span className="kicker">
                   {result.flagged ? "Notice" : "Assistant Response"}
                 </span>
               </div>
@@ -252,9 +252,9 @@ export function ChatbotSection() {
                     {result.sources.map((s) => (
                       <span
                         key={s.id}
-                        className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md bg-zinc-200/60 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                        className="inline-flex items-center gap-1.5 border border-zinc-300 px-2.5 py-1 text-[11px] text-zinc-600 dark:border-white/15 dark:text-zinc-300"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-zinc-900 dark:bg-zinc-100" />
                         {s.title}
                       </span>
                     ))}
