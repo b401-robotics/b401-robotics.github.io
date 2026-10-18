@@ -16,8 +16,8 @@ export function ThesisSection() {
           <div className="kicker mb-2">
             {t.sectionLabel}
           </div>
-          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight text-zinc-900 md:text-3xl dark:text-zinc-100">
-            {t.heading} {t.headingAccent}
+          <h2 className="section-heading mb-3 text-4xl md:text-6xl">
+            {t.heading} <span className="text-zinc-400 dark:text-zinc-600">{t.headingAccent}</span>
           </h2>
           <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
             {t.body}
@@ -76,7 +76,7 @@ export function ThesisSection() {
                       {/* Toggle indicator */}
                       <span
                         aria-hidden="true"
-                        className={`mt-0.5 shrink-0 grid place-items-center size-8 border font-display font-light text-xl leading-none transition-all duration-300 ${
+                        className={`mt-0.5 shrink-0 grid place-items-center size-8 border font-display font-light text-xl leading-none transition-[transform,color,border-color] duration-300 ${
                           open
                             ? "rotate-45 border-zinc-900 dark:border-zinc-100 text-zinc-900 dark:text-zinc-100"
                             : "border-zinc-300 dark:border-white/15 text-zinc-500 dark:text-zinc-400"

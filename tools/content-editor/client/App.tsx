@@ -8,6 +8,7 @@ import {
   saveSectionData,
   fetchSectionDiff,
   validateProject,
+  syncChatbotKnowledge,
 } from "./api";
 import type { ValidationReport } from "../server/types";
 import { Sidebar } from "./components/Sidebar";
@@ -52,6 +53,7 @@ function EditorApp() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isNewSectionOpen, setIsNewSectionOpen] = useState(false);
   const [isConvertModalOpen, setIsConvertModalOpen] = useState(false);
+  const [isSyncingKnowledge, setIsSyncingKnowledge] = useState(false);
 
   // Theme
   const [darkMode, setDarkMode] = useState(() => {
@@ -162,6 +164,23 @@ function EditorApp() {
     }
   };
 
+  // Chatbot knowledge sync
+  const handleSyncChatbotKnowledge = async () => {
+    setIsSyncingKnowledge(true);
+    try {
+      const res = await syncChatbotKnowledge();
+      showToast(
+        "success",
+        "AI Knowledge Synced",
+        `Indexed ${res.stats.chunksCount} chunks & ${res.stats.vocabCount} vocabulary tokens.`
+      );
+    } catch (err: any) {
+      showToast("error", "Failed to sync AI knowledge", err.message);
+    } finally {
+      setIsSyncingKnowledge(false);
+    }
+  };
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -208,6 +227,8 @@ function EditorApp() {
           onTogglePreview={() => setIsPreviewOpen(!isPreviewOpen)}
           onToggleDiff={() => setIsDiffOpen(!isDiffOpen)}
           onToggleConvertImages={() => setIsConvertModalOpen(true)}
+          onSyncChatbotKnowledge={handleSyncChatbotKnowledge}
+          isSyncingKnowledge={isSyncingKnowledge}
           canSave={isDirty}
           canDiscard={isDirty}
           canUndo={undoRedo.canUndo}

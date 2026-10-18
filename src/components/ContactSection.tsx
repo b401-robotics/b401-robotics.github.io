@@ -73,7 +73,7 @@ export function ContactSection(_props: ContactSectionProps = {}) {
                     id="contact-name"
                     type="text"
                     placeholder={t.namePlaceholder}
-                    className="w-full px-4 py-3 bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-900 dark:text-zinc-100 placeholder-zinc-500 dark:placeholder-zinc-500 text-sm focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-100 transition-colors duration-200"
+                    className="w-full px-4 py-3 bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 text-sm focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-100 transition-colors duration-200"
                   />
                 </div>
                 <div>
@@ -113,7 +113,7 @@ export function ContactSection(_props: ContactSectionProps = {}) {
               <button
                 id="contact-submit-btn"
                 type="submit"
-                className="w-full py-3.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-mono text-xs uppercase tracking-[0.16em] hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-all duration-300 hover:-translate-y-0.5"
+                className="w-full py-3.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-mono text-xs uppercase tracking-[0.16em] hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-[opacity,transform] duration-300 hover:-translate-y-0.5"
               >
                 {t.sendBtn}
               </button>

@@ -11,6 +11,7 @@ import {
   Moon,
   Loader2,
   Sparkles,
+  Bot,
 } from "lucide-react";
 
 interface ToolbarProps {
@@ -22,6 +23,8 @@ interface ToolbarProps {
   onTogglePreview: () => void;
   onToggleDiff: () => void;
   onToggleConvertImages?: () => void;
+  onSyncChatbotKnowledge?: () => void;
+  isSyncingKnowledge?: boolean;
   canSave: boolean;
   canDiscard: boolean;
   canUndo: boolean;
@@ -44,6 +47,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   onTogglePreview,
   onToggleDiff,
   onToggleConvertImages,
+  onSyncChatbotKnowledge,
+  isSyncingKnowledge,
   canSave,
   canDiscard,
   canUndo,
@@ -88,6 +93,22 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           >
             <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
             <span className="hidden md:inline">WebP Tool</span>
+          </button>
+        )}
+
+        {onSyncChatbotKnowledge && (
+          <button
+            onClick={onSyncChatbotKnowledge}
+            disabled={isSyncingKnowledge}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition disabled:opacity-40"
+            title="Sync all site content to AI chatbot knowledge vector base"
+          >
+            {isSyncingKnowledge ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-purple-500" />
+            ) : (
+              <Bot className="w-3.5 h-3.5 text-purple-500" />
+            )}
+            <span className="hidden md:inline">Sync AI</span>
           </button>
         )}
 

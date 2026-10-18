@@ -93,6 +93,15 @@ export async function convertAssetsToWebp(options?: {
   });
 }
 
+export async function syncChatbotKnowledge(): Promise<{
+  success: boolean;
+  stats: { chunksCount: number; vocabCount: number; outputPath: string };
+}> {
+  return request("/chatbot/sync-knowledge", {
+    method: "POST",
+  });
+}
+
 /**
  * Build a URL for the asset-image serving endpoint. Each path segment is
  * encoded individually so nested paths like "people/Navis.webp" keep their

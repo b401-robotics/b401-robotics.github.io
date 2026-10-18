@@ -61,7 +61,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
                   key={p.code}
                   type="button"
                   onClick={() => setSelectedCode(p.code)}
-                  className={`group relative text-left w-full flex items-start gap-3 py-4 transition-all duration-200 focus:outline-none animate-fade-in ${
+                  className={`group relative text-left w-full flex items-start gap-3 py-4 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 animate-fade-in ${
                     idx !== 0 ? "border-t border-zinc-200/70 dark:border-white/10" : ""
                   }`}
                   style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
@@ -90,7 +90,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
 
                   {/* Active indicator bar */}
                   <div
-                    className={`w-[3px] self-stretch transition-all duration-300 ${
+                    className={`w-[3px] self-stretch transition-colors duration-300 {
                       isActive
                         ? "bg-zinc-900 dark:bg-zinc-100"
                         : "bg-transparent group-hover:bg-zinc-300 dark:group-hover:bg-white/20"
@@ -152,7 +152,7 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
                 href={t.registerUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-all duration-300 group dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:focus:ring-zinc-100"
+                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-opacity duration-300 group dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:focus:ring-zinc-100"
               >
                 {t.registerLabel}
                 <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -210,7 +210,7 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
             type="button"
             onClick={() => setIndex((prev) => (prev - 1 + count) % count)}
             aria-label="Previous image"
-            className="absolute top-1/2 left-3 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
+            className="absolute top-1/2 left-3 -translate-y-1/2 w-11 h-11 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
           >
             <svg
               width="18"
@@ -230,7 +230,7 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
             type="button"
             onClick={() => setIndex((prev) => (prev + 1) % count)}
             aria-label="Next image"
-            className="absolute top-1/2 right-3 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
+            className="absolute top-1/2 right-3 -translate-y-1/2 w-11 h-11 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
           >
             <svg
               width="18"

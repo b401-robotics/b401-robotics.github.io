@@ -81,7 +81,7 @@ export function Footer() {
 
           {/* Column 2 — Find Us: address */}
           <div>
-            <h4 className="font-display font-semibold text-zinc-700 dark:text-zinc-300 text-sm uppercase tracking-wider mb-4">
+            <h4 className="kicker mb-4">
               {t.findUsLabel}
             </h4>
             <address className="not-italic text-zinc-500 text-sm space-y-1 leading-relaxed">
@@ -93,7 +93,7 @@ export function Footer() {
 
           {/* Column 3 — Contact Us: socials */}
           <div>
-            <h4 className="font-display font-semibold text-zinc-700 dark:text-zinc-300 text-sm uppercase tracking-wider mb-4">
+            <h4 className="kicker mb-4">
               {t.contactLabel}
             </h4>
             <div className="flex items-center gap-3 flex-wrap">
@@ -104,7 +104,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
-                  className="w-9 h-9 bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-white/20 hover:-translate-y-0.5 transition-all duration-200"
+                  className="w-11 h-11 bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-white/20 hover:-translate-y-0.5 transition-all duration-200"
                 >
                   {social.icon}
                 </a>

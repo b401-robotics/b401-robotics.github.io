@@ -18,12 +18,16 @@ export function broadcast(event: string, data: any): void {
   const message = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
   const encoded = encoder.encode(message);
 
+  const deadClients: ClientController[] = [];
   for (const client of clients) {
     try {
       client.enqueue(encoded);
     } catch {
-      clients.delete(client);
+      deadClients.push(client);
     }
+  }
+  for (const dead of deadClients) {
+    clients.delete(dead);
   }
 }
 

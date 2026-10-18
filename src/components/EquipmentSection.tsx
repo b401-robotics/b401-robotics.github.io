@@ -116,7 +116,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
                       type="button"
                       onClick={() => setImgIndex((prev) => (prev - 1 + imgCount) % imgCount)}
                       aria-label="Previous image"
-                      className="absolute top-1/2 left-3 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
+                      className="absolute top-1/2 left-3 -translate-y-1/2 w-11 h-11 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
                     >
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                         <path d="M15 6l-6 6 6 6" />
@@ -126,7 +126,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
                       type="button"
                       onClick={() => setImgIndex((prev) => (prev + 1) % imgCount)}
                       aria-label="Next image"
-                      className="absolute top-1/2 right-3 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
+                      className="absolute top-1/2 right-3 -translate-y-1/2 w-11 h-11 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none opacity-0 group-hover:opacity-100"
                     >
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                         <path d="M9 18l6-6-6-6" />
@@ -174,7 +174,7 @@ function LabRoom({ room, facilitiesLabel, clickForMoreInfo }: LabRoomProps) {
                   key={f.name}
                   type="button"
                   onClick={() => setSelected(f)}
-                  className={`group relative flex items-center gap-4 py-3 text-left w-full transition-colors duration-200 focus:outline-none ${
+                  className={`group relative flex items-center gap-4 py-3 text-left w-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${
                     i !== 0 ? "border-t border-zinc-200/70 dark:border-white/10" : ""
                   }`}
                 >

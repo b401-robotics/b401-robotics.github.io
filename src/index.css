@@ -77,6 +77,36 @@
     @apply bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 shadow-lg shadow-zinc-900/5 dark:shadow-black/40 backdrop-blur-xl;
   }
 
+  /* ---- Semantic color tokens (roles, not raw zinc) ----
+     These map the existing zinc palette to named roles so a palette change
+     is a one-line edit here instead of a repo-wide find/replace. */
+  .surface {
+    @apply border border-zinc-200 bg-white dark:border-white/10 dark:bg-white/[0.04];
+  }
+  .surface-raised {
+    @apply border border-zinc-200 bg-white dark:border-white/10 dark:bg-zinc-900;
+  }
+  .fg {
+    @apply text-zinc-900 dark:text-zinc-100;
+  }
+  .fg-muted {
+    @apply text-zinc-600 dark:text-zinc-300;
+  }
+  .fg-meta {
+    @apply text-zinc-500 dark:text-zinc-400;
+  }
+  .border-hairline {
+    @apply border-zinc-200 dark:border-white/10;
+  }
+  /* Status roles — the only non-zinc semantics. Error stays a functional
+     signal, never decoration. */
+  .text-danger {
+    @apply text-red-600 dark:text-red-400;
+  }
+  .surface-danger {
+    @apply border border-red-200 bg-red-50 text-red-700 dark:border-red-900/50 dark:bg-red-950/30 dark:text-red-300;
+  }
+
   /* ---- Blueprint editorial primitives (see design.md) ---- */
 
   /* Mono uppercase metadata label — section eyebrows, counts, roles. */
@@ -182,8 +212,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  /* Keep opacity/color/state feedback; drop spatial movement and long
+     decorative motion. Entrance fades stay but become near-instant and
+     non-translating so state changes remain legible. */
+  .animate-fade-in,
+  .animate-slide-up {
     animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+  .animate-float,
+  .animate-pulse-glow {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }

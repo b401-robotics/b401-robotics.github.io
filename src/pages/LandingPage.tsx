@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useParams, Navigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "../components/Navbar";
@@ -15,27 +15,27 @@ import { HighlightPage } from "./HighlightPage";
 import { ResearchPage } from "./ResearchPage";
 import { motion, AnimatePresence } from "framer-motion";
 
-let isFirstLoad = true;
-const isReload =
-  typeof performance !== "undefined" &&
-  performance.getEntriesByType("navigation").length > 0 &&
-  (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming)
-    .type === "reload";
-
 export function LandingPage() {
   const { section } = useParams<{ section?: string }>();
   const location = useLocation();
+  const isFirstLoadRef = useRef(true);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
 
+  const isReload =
+    typeof performance !== "undefined" &&
+    performance.getEntriesByType("navigation").length > 0 &&
+    (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming)
+      .type === "reload";
+
   // Redirect to home if it's the very first load and the user reloaded on a section
-  if (isFirstLoad && isReload && section) {
-    isFirstLoad = false;
+  if (isFirstLoadRef.current && isReload && section) {
+    isFirstLoadRef.current = false;
     return <Navigate to="/" replace />;
   }
-  isFirstLoad = false;
+  isFirstLoadRef.current = false;
 
   return (
     <>
@@ -50,7 +50,7 @@ export function LandingPage() {
       <div className="min-h-screen bg-slate-100 dark:bg-zinc-950 transition-colors duration-500 relative overflow-hidden">
         <div className="relative z-10 flex flex-col min-h-screen">
           <Navbar />
-          <main className="flex-1 pt-[4.75rem]">
+          <main className="flex-1 pt-[4.5rem]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={section || "home"}

@@ -37,7 +37,7 @@ function PersonCard({ name, role, image, initials, year, delay, onClick }: Perso
     <button
       type="button"
       onClick={onClick}
-      className="group flex w-full flex-col text-left animate-fade-in focus:outline-none"
+      className="group flex w-full flex-col text-left animate-fade-in focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:focus-visible:ring-zinc-100"
       style={{ animationDelay: `${delay}s` }}
     >
       <div className="relative aspect-[4/5] w-full bg-zinc-200 dark:bg-zinc-900">
@@ -59,7 +59,7 @@ function PersonCard({ name, role, image, initials, year, delay, onClick }: Perso
       </div>
 
       <div className="mt-4 w-full">
-        <span className="block h-px w-6 bg-zinc-300 transition-all duration-300 group-hover:w-full group-hover:bg-zinc-900 dark:bg-zinc-700 dark:group-hover:bg-zinc-100" />
+        <span className="block h-px w-6 bg-zinc-300 transition-[width,background-color] duration-300 group-hover:w-full group-hover:bg-zinc-900 dark:bg-zinc-700 dark:group-hover:bg-zinc-100" />
         <p className="mt-3 font-display text-base font-semibold leading-snug tracking-tight text-zinc-900 dark:text-zinc-100">
           {name}
         </p>

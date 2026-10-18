@@ -3,7 +3,6 @@ import { heroEN } from "./HeroContent";
 import { aboutEN } from "./AboutContent";
 import { researchEN } from "./ResearchContent";
 import { highlightEN } from "./HighlightContent";
-import { activityEN } from "./ActivityContent";
 import { practicumsEN } from "./PracticumsContent";
 import { projectsEN } from "./ProjectsContent";
 import { membersEN } from "./MembersContent";
@@ -20,7 +19,6 @@ export const translations = {
   research: researchEN,
   thesis: thesisEN,
   highlight: highlightEN,
-  activity: activityEN,
   practicums: practicumsEN,
   projects: projectsEN,
   members: membersEN,

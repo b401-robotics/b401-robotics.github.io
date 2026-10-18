@@ -20,8 +20,8 @@ export function ProjectsSection() {
       <div className="max-w-[85rem] w-full mx-auto flex flex-col md:flex-1 md:min-h-0">
         {/* Header */}
         <div className="mb-10 shrink-0 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
-          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight text-zinc-900 md:text-3xl dark:text-zinc-100">
-            {t.heading} {t.headingAccent}
+          <h2 className="section-heading mb-3 text-4xl md:text-6xl">
+            {t.heading} <span className="text-zinc-400 dark:text-zinc-600">{t.headingAccent}</span>
           </h2>
           <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
             {t.body}

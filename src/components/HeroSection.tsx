@@ -21,6 +21,15 @@ export function HeroSection() {
     return () => clearInterval(id);
   }, [backgrounds.length]);
 
+  // Warm the next background so the crossfade never flashes a blank frame.
+  useEffect(() => {
+    if (backgrounds.length <= 1) return;
+    const next = backgrounds[(bgIndex + 1) % backgrounds.length];
+    if (!next) return;
+    const img = new Image();
+    img.src = next;
+  }, [bgIndex, backgrounds]);
+
   return (
     <section
       id="hero"

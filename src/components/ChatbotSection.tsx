@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 interface ChatSource {
   id: string;
@@ -12,6 +12,184 @@ interface ChatResponse {
   model?: string;
   flagged?: boolean;
   error?: string;
+}
+
+function renderInlineMarkdown(text: string): ReactNode[] {
+  // Regex tokenizes markdown links [text](url), bold/italic combinations (***text***, **text**, *text*), code `code`
+  const tokenRegex = /(\[[^\]]+\]\([^)]+\)|\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
+  const parts = text.split(tokenRegex);
+
+  return parts.map((part, idx) => {
+    if (!part) return null;
+
+    // Link: [label](url)
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      const [, label, url] = linkMatch;
+      return (
+        <a
+          key={idx}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-zinc-900 dark:text-zinc-100 underline decoration-zinc-400 hover:decoration-zinc-900 dark:hover:decoration-zinc-100 font-medium break-all"
+        >
+          {label}
+        </a>
+      );
+    }
+
+    // Bold + Italic: ***text***
+    if (part.startsWith("***") && part.endsWith("***") && part.length >= 6) {
+      return (
+        <strong key={idx} className="font-semibold italic text-zinc-900 dark:text-zinc-100">
+          {part.slice(3, -3)}
+        </strong>
+      );
+    }
+
+    // Bold: **text**
+    if (part.startsWith("**") && part.endsWith("**") && part.length >= 4) {
+      return (
+        <strong key={idx} className="font-semibold text-zinc-900 dark:text-zinc-100">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+
+    // Italic: *text*
+    if (part.startsWith("*") && part.endsWith("*") && part.length >= 2) {
+      return (
+        <em key={idx} className="italic text-zinc-800 dark:text-zinc-200">
+          {part.slice(1, -1)}
+        </em>
+      );
+    }
+
+    // Inline Code: `code`
+    if (part.startsWith("`") && part.endsWith("`") && part.length >= 2) {
+      return (
+        <code
+          key={idx}
+          className="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono text-[0.88em] border border-zinc-200 dark:border-zinc-700"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+
+    return <span key={idx}>{part}</span>;
+  });
+}
+
+function MarkdownRenderer({ content }: { content: string }) {
+  const lines = content.split("\n");
+  const elements: ReactNode[] = [];
+
+  let currentList: { ordered: boolean; items: ReactNode[] } | null = null;
+
+  function flushList() {
+    if (currentList) {
+      const { ordered, items } = currentList;
+      const ListTag = ordered ? "ol" : "ul";
+      elements.push(
+        <ListTag
+          key={`list-${elements.length}`}
+          className={`space-y-1.5 pl-5 my-2 ${
+            ordered
+              ? "list-decimal marker:text-zinc-500 dark:marker:text-zinc-400"
+              : "list-disc marker:text-zinc-500 dark:marker:text-zinc-400"
+          }`}
+        >
+          {items.map((item, i) => (
+            <li key={i} className="pl-1">
+              {item}
+            </li>
+          ))}
+        </ListTag>
+      );
+      currentList = null;
+    }
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const rawLine = lines[i] ?? "";
+    const trimmed = rawLine.trim();
+
+    if (!trimmed) {
+      flushList();
+      continue;
+    }
+
+    // Header 1-4: # Heading
+    const headerMatch = trimmed.match(/^(#{1,4})\s+(.+)$/);
+    if (headerMatch) {
+      flushList();
+      const level = headerMatch[1]!.length;
+      const text = headerMatch[2]!;
+      const inline = renderInlineMarkdown(text);
+      if (level === 1) {
+        elements.push(
+          <h3 key={i} className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-4 mb-2">
+            {inline}
+          </h3>
+        );
+      } else if (level === 2) {
+        elements.push(
+          <h4 key={i} className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mt-3 mb-1.5">
+            {inline}
+          </h4>
+        );
+      } else {
+        elements.push(
+          <h5 key={i} className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mt-2 mb-1">
+            {inline}
+          </h5>
+        );
+      }
+      continue;
+    }
+
+    // Unordered List: * or -
+    const bulletMatch = rawLine.match(/^(\s*)([-*])\s+(.+)$/);
+    if (bulletMatch) {
+      const text = bulletMatch[3]!;
+      const inline = renderInlineMarkdown(text);
+      if (!currentList || currentList.ordered) {
+        flushList();
+        currentList = { ordered: false, items: [inline] };
+      } else {
+        currentList.items.push(inline);
+      }
+      continue;
+    }
+
+    // Ordered List: 1. or 2.
+    const orderedMatch = rawLine.match(/^(\s*)(\d+)\.\s+(.+)$/);
+    if (orderedMatch) {
+      const text = orderedMatch[3]!;
+      const inline = renderInlineMarkdown(text);
+      if (!currentList || !currentList.ordered) {
+        flushList();
+        currentList = { ordered: true, items: [inline] };
+      } else {
+        currentList.items.push(inline);
+      }
+      continue;
+    }
+
+    // Regular Paragraph
+    flushList();
+    elements.push(
+      <p key={i} className="text-zinc-800 dark:text-zinc-200">
+        {renderInlineMarkdown(trimmed)}
+      </p>
+    );
+  }
+
+  flushList();
+
+  return <div className="space-y-2">{elements}</div>;
 }
 
 const SUGGESTED_QUESTIONS = [
@@ -134,14 +312,14 @@ export function ChatbotSection() {
             rows={3}
             maxLength={600}
             disabled={loading}
-            className="w-full resize-none bg-transparent text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 text-sm md:text-base focus:outline-none"
+            className="w-full resize-none bg-transparent text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 text-sm md:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/40 dark:focus-visible:ring-zinc-100/40"
           />
 
           <div className="flex items-center justify-between pt-3 border-t border-zinc-100 dark:border-zinc-800">
             <span
               className={`text-xs ${
                 isOverLimit
-                  ? "text-red-500 font-bold"
+                  ? "text-danger font-bold"
                   : "text-zinc-400 dark:text-zinc-500"
               }`}
             >
@@ -162,7 +340,7 @@ export function ChatbotSection() {
                 type="button"
                 onClick={() => void handleSubmit()}
                 disabled={!canSubmit}
-                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2 font-mono text-xs uppercase tracking-[0.16em] text-white transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
+                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2 font-mono text-xs uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
               >
                 {loading ? (
                   <>
@@ -201,7 +379,7 @@ export function ChatbotSection() {
 
         {/* Error Banner */}
         {error && (
-          <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-300 text-sm mb-6 flex items-start justify-between">
+          <div className="surface-danger p-4 text-sm mb-6 flex items-start justify-between">
             <div>
               <p className="font-semibold mb-1">Could not complete request</p>
               <p>{error}</p>
@@ -209,7 +387,7 @@ export function ChatbotSection() {
             <button
               type="button"
               onClick={() => setError(null)}
-              className="text-red-500 hover:text-red-700 dark:hover:text-red-200 text-xs ml-4"
+              className="text-danger hover:opacity-80 text-xs ml-4"
             >
               Dismiss
             </button>
@@ -238,8 +416,8 @@ export function ChatbotSection() {
               </div>
 
               {/* Formatted Answer Body */}
-              <div className="text-zinc-800 dark:text-zinc-200 text-sm md:text-base leading-relaxed whitespace-pre-line space-y-2">
-                {result.answer}
+              <div className="text-zinc-800 dark:text-zinc-200 text-sm md:text-base leading-relaxed">
+                <MarkdownRenderer content={result.answer} />
               </div>
 
               {/* Source Badges */}

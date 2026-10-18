@@ -12,6 +12,7 @@ import { validateContent } from "./validate";
 import { scaffoldSection } from "./scaffold";
 import { addClient, removeClient, broadcast } from "./watcher";
 import { convertImages, getConversionStats } from "./convertImages";
+import { generateKnowledgeBase } from "./syncKnowledge";
 
 function json(data: any, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -258,7 +259,23 @@ export async function handleRequest(req: Request): Promise<Response> {
       const sectionKey = decodeURIComponent(sectionMatch[1]!);
       const body = await req.json();
       const res = await writeSection(sectionKey, body.value);
+
+      // Auto-sync chatbot knowledge base whenever content changes
+      if (res.changed) {
+        try {
+          await generateKnowledgeBase();
+        } catch (syncErr) {
+          console.error("[Sync Knowledge Error]", syncErr);
+        }
+      }
+
       return json(res);
+    }
+
+    // POST /api/chatbot/sync-knowledge
+    if (pathname === "/api/chatbot/sync-knowledge" && req.method === "POST") {
+      const stats = await generateKnowledgeBase();
+      return json({ success: true, stats });
     }
 
     return json({ error: "Endpoint not found" }, 404);

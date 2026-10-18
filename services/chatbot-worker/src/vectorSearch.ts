@@ -35,33 +35,39 @@ function tokenize(text: string): string[] {
 export function searchRelevantChunks(query: string, topK: number = 3): KnowledgeChunk[] {
   const tokens = tokenize(query);
 
-  const qVec = new Array(kb.vocabulary.length).fill(0);
-  let matched = 0;
+  const queryTerms = new Map<number, number>();
   for (const t of tokens) {
     const pos = vocabIndex.get(t);
     if (pos !== undefined) {
-      qVec[pos] += 1;
-      matched++;
+      queryTerms.set(pos, (queryTerms.get(pos) || 0) + 1);
     }
   }
 
   // If no specific vocab words match, return general lab chunks
-  if (matched === 0) {
+  if (queryTerms.size === 0) {
     return kb.chunks.slice(0, topK);
   }
 
-  // Normalize query vector
-  const mag = Math.sqrt(qVec.reduce((sum, v) => sum + v * v, 0)) || 1;
-  const normQ = qVec.map((v) => v / mag);
+  // Normalize query vector magnitude
+  let sumSq = 0;
+  for (const count of queryTerms.values()) {
+    sumSq += count * count;
+  }
+  const mag = Math.sqrt(sumSq) || 1;
 
-  // Compute cosine similarity (chunks are already unit-normalized)
+  // Normalized sparse query entries: [vocabIndex, normalizedWeight]
+  const sparseQuery: Array<[number, number]> = [];
+  for (const [pos, count] of queryTerms.entries()) {
+    sparseQuery.push([pos, count / mag]);
+  }
+
+  // Compute cosine similarity using sparse dot product (chunks are already unit-normalized)
   const scored = kb.chunks.map((chunk) => {
     let score = 0;
     if (chunk.embedding) {
-      for (let i = 0; i < normQ.length; i++) {
-        const qVal = normQ[i];
-        const cVal = chunk.embedding[i];
-        if (qVal !== undefined && cVal !== undefined && qVal > 0 && cVal > 0) {
+      for (const [pos, qVal] of sparseQuery) {
+        const cVal = chunk.embedding[pos];
+        if (cVal !== undefined && cVal > 0) {
           score += qVal * cVal;
         }
       }

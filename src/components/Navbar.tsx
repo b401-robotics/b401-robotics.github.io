@@ -6,8 +6,8 @@ import LogoLight from "../assets/logo/B401_transparent.png";
 import LogoDark from "../assets/logo/B401_white_cutout.png";
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [offsetY, setOffsetY] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return (
       localStorage.theme === "dark" ||
@@ -22,10 +22,37 @@ export function Navbar() {
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDarkMode);
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+
+    let lastScrollY = window.scrollY;
+    const maxOffset = 70; // full navbar height
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY;
+
+      if (menuOpen) {
+        setOffsetY(0);
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      if (currentScrollY <= 20) {
+        setOffsetY(0);
+      } else {
+        // delta > 0 (scroll down) -> pushes navbar up towards -maxOffset
+        // delta < 0 (scroll up) -> pulls navbar down towards 0 by exact scroll distance
+        setOffsetY((prev) => {
+          const next = prev - delta;
+          return Math.min(0, Math.max(-maxOffset, next));
+        });
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [menuOpen]);
 
   const toggleDarkMode = () => {
     setIsDarkMode((prev) => {
@@ -50,12 +77,15 @@ export function Navbar() {
     { label: t.members, path: "members" },
   ];
 
+  const isFullyHidden = offsetY <= -70;
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-4 ${
-        scrolled
-          ? "bg-white dark:bg-zinc-900 shadow-sm dark:shadow-black/20"
-          : "bg-transparent"
+      style={{
+        transform: `translateY(${offsetY}px)`,
+      }}
+      className={`fixed top-0 left-0 right-0 z-50 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 py-3 md:py-4 will-change-transform shadow-sm dark:shadow-black/20 ${
+        isFullyHidden ? "pointer-events-none" : ""
       }`}
     >
       <nav className="w-full nav-edge-px flex items-center justify-between">
@@ -178,7 +208,7 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden bg-white/95 dark:bg-zinc-900/95 backdrop-blur-lg border-t border-zinc-200 dark:border-zinc-800"
+            className="md:hidden overflow-hidden bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800"
           >
             <div className="px-6 py-4 flex flex-col gap-1">
               {navLinks.map((link) => {

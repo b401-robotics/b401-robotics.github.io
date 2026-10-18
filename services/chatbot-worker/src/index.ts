@@ -14,11 +14,25 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-// Enable CORS
+// Enable CORS - restrict to lab domain and local dev ports
+function isAllowedOrigin(origin: string | undefined): boolean {
+  if (!origin) return true;
+  if (origin === "https://b401-robotics.github.io") return true;
+  try {
+    const url = new URL(origin);
+    if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+  return false;
+}
+
 app.use(
   "*",
   cors({
-    origin: "*",
+    origin: (origin) => (isAllowedOrigin(origin) ? origin : ""),
     allowMethods: ["GET", "POST", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   })
