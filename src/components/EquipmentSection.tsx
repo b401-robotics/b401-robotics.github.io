@@ -28,7 +28,7 @@ export function EquipmentSection({ preview = false }: EquipmentSectionProps = {}
   }
 
   return (
-    <section id="equipment" className="relative">
+    <section id="equipment" className="relative pb-16 md:pb-24 lg:pb-32">
       {/* ============================================================ */}
       {/* Header                                                        */}
       {/* ============================================================ */}

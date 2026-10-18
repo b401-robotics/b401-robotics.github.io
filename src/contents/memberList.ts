@@ -13,7 +13,6 @@
 // When `image` is omitted or empty, the card and modal fall back to
 // rendering the person's `initials` on a dark placeholder.
 import nrfImage from "../assets/webp/nrf.webp";
-import droneImage from "../assets/webp/drone.webp";
 import nrfImage2 from "../assets/webp/people/NRF.webp";
 import na70Image from "../assets/webp/people/Na70.webp";
 import senimanImage from "../assets/webp/Seniman.webp";
@@ -705,147 +704,11 @@ export const assistants: Array<I_assistant> = [
   },
 ];
 
-// Placeholder alumni list — replace the names, roles, and years with the
-// real alumni data when available. Same image-source rules apply here.
-// `contact` uses the same dummy placeholder convention as the assistants.
-// `thesis`, `experience`, and `achievements` are dummy placeholder lists
-// rendered as vertical bullet lists inside the card info modal.
+// B401 Robotics Laboratory Alumni list based on undergraduate research.
+// `contact` uses student email (@student.its.ac.id).
+// `thesis`, `experience`, and `achievements` are rendered
+// as vertical bullet lists inside the card info modal.
 export const alumni: Array<I_alumni> = [
-  {
-    name: "Bagas Prakoso",
-    role: "Robotics Research Alumni",
-    initials: "BP",
-    year: "2024",
-    education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
-    thesis: [
-      "S1 Thesis: \"Vision-Based SLAM for Indoor Mobile Robots Using ORB-SLAM3\"",
-      "Developed and validated a monocular SLAM pipeline on the B401 TurtleBot platform.",
-    ],
-    expertise:
-      "Mobile robot navigation and SLAM. Now working on autonomous systems in industry.",
-    experience: [
-      "Robotics Research Alumni, B401 Robotics Laboratory (2020 – 2024)",
-      "Autonomous Systems Engineer, PT Teknologi Otomasi (2024 – Present)",
-      "Robotics Intern, PT Manufaktur Cerdas (2023)",
-    ],
-    achievements: [
-      "Best Thesis Award, Teknik Komputer ITS 2024",
-      "1st Place, Indonesian Robot Contest (KRI) 2023",
-      "Published paper at IEEE ICRS 2023",
-    ],
-    contact: "bagas.prakoso@example.com • @bagas.prakoso • linkedin.com/in/bagas-prakoso",
-    // Local asset from src/assets/img/ — resolved by the bundler to a URL.
-    image: droneImage,
-  },
-  {
-    name: "Citra Lestari",
-    role: "Embedded Systems Alumni",
-    initials: "CL",
-    year: "2023",
-    education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
-    thesis: [
-      "S1 Thesis: \"Energy-Efficient Duty Cycling for Battery-Powered Wireless Sensor Nodes\"",
-      "Achieved 40% power reduction on a custom STM32-based sensor node.",
-    ],
-    expertise:
-      "Low-power embedded design and firmware for battery-operated sensor nodes.",
-    experience: [
-      "Embedded Systems Alumni, B401 Robotics Laboratory (2019 – 2023)",
-      "Firmware Engineer, PT Elektronika Nusantara (2023 – Present)",
-    ],
-    achievements: [
-      "Best Final Project, Teknik Komputer ITS 2023",
-      "2nd Place, National Embedded Systems Competition 2022",
-    ],
-    contact: "citra.lestari@example.com • @citra.lestari • linkedin.com/in/citra-lestari",
-  },
-  {
-    name: "Dimas Saputra",
-    role: "IoT Research Alumni",
-    initials: "DS",
-    year: "2023",
-    education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
-    thesis: [
-      "S1 Thesis: \"LoRa-Based Soil Moisture Monitoring System for Precision Agriculture\"",
-      "Deployed a 12-node LoRa network on a local farm with a web dashboard.",
-    ],
-    expertise:
-      "End-to-end IoT systems with LoRa backhaul for agricultural monitoring.",
-    experience: [
-      "IoT Research Alumni, B401 Robotics Laboratory (2019 – 2023)",
-      "IoT Engineer, PT Sinar Digital (2023 – Present)",
-    ],
-    achievements: [
-      "1st Place, National IoT Innovation Challenge 2022",
-      "Dean\x27s List Award 2022",
-    ],
-    contact: "dimas.saputra@example.com • @dimas.saputra • linkedin.com/in/dimas-saputra",
-  },
-  {
-    name: "Eka Wijaya",
-    role: "Computer Vision Alumni",
-    initials: "EW",
-    year: "2022",
-    education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
-    thesis: [
-      "S1 Thesis: \"6-DoF Object Pose Estimation for Robotic Grasping Using RGB-D Fusion\"",
-      "Trained a pose estimation model and integrated it with a UR5 robotic arm.",
-    ],
-    expertise: "Object detection and pose estimation for robotic manipulation.",
-    experience: [
-      "Computer Vision Alumni, B401 Robotics Laboratory (2018 – 2022)",
-      "Computer Vision Engineer, PT Analitika Data (2022 – Present)",
-    ],
-    achievements: [
-      "Best Thesis Award, Teknik Komputer ITS 2022",
-      "Top 10, National AI Competition 2021",
-    ],
-    contact: "eka.wijaya@example.com • @eka.wijaya • linkedin.com/in/eka-wijaya",
-  },
-  {
-    name: "Fitri Handayani",
-    role: "Wireless Sensor Networks Alumni",
-    initials: "FH",
-    year: "2022",
-    education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
-    thesis: [
-      "S1 Thesis: \"Energy-Aware Mesh Routing Protocol for Wireless Sensor Networks\"",
-      "Simulated and validated the protocol on a 20-node physical testbed.",
-    ],
-    expertise:
-      "Mesh networking protocols and energy-aware routing for field deployments.",
-    experience: [
-      "Wireless Sensor Networks Alumni, B401 Robotics Laboratory (2018 – 2022)",
-      "Network Engineer, PT Telkom Indonesia (2022 – Present)",
-    ],
-    achievements: [
-      "1st Place, National Network Design Competition 2021",
-      "Outstanding Student Award 2021",
-    ],
-    contact: "fitri.handayani@example.com • @fitri.handayani • linkedin.com/in/fitri-handayani",
-  },
-  {
-    name: "Gilang Ramadhan",
-    role: "Automation Alumni",
-    initials: "GR",
-    year: "2021",
-    education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
-    thesis: [
-      "S1 Thesis: \"PLC-Based Automated Sorting System for Small-Scale Manufacturing\"",
-      "Designed and commissioned a conveyor sorting line using a Siemens S7-1200.",
-    ],
-    expertise:
-      "PLC programming and industrial control systems for factory automation.",
-    experience: [
-      "Automation Alumni, B401 Robotics Laboratory (2017 – 2021)",
-      "Automation Engineer, PT Manufaktur Cerdas (2021 – Present)",
-    ],
-    achievements: [
-      "Best Final Project, Teknik Komputer ITS 2021",
-      "2nd Place, National Automation Competition 2020",
-    ],
-    contact: "gilang.ramadhan@example.com • @gilang.ramadhan • linkedin.com/in/gilang-ramadhan",
-  },
   {
     name: "Itqan Fikri Assagaf",
     role: "Robotics & Intelligent Systems Alumni",
@@ -887,49 +750,6 @@ export const alumni: Array<I_alumni> = [
       "Laboratorium Robotika dan Sistem Cerdas",
     ],
     contact: "5024201020@student.its.ac.id",
-  },
-  {
-    name: "Arshad Tareeq Buchori",
-    role: "Robotics Manipulator Alumni",
-    initials: "AT",
-    year: "2024",
-    education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
-    thesis: [
-      "S1 Thesis: \"Pengendali Robot Lengan Menggunakan Wearable Device\"",
-      "Dosen Pembimbing: Laboratorium Robotika dan Sistem Cerdas FTEIC ITS",
-    ],
-    expertise: "Wearable Device Controller, Robotic Arm Manipulation, and Embedded Sensors.",
-    experience: [
-      "Researcher, B401 Robotics Laboratory (2020 – 2024)",
-      "Departemen Teknik Komputer FTEIC ITS",
-    ],
-    achievements: [
-      "Published Undergraduate Thesis, Teknik Komputer ITS 2024",
-      "Laboratorium Robotika dan Sistem Cerdas",
-    ],
-    contact: "arshad.tareeq@example.com",
-  },
-  {
-    name: "I Putu Haris Setiadi Ekatama",
-    role: "Mobile Robotics & Assistive Systems Alumni",
-    initials: "PH",
-    year: "2024",
-    education: ["S1: Teknik Komputer, Institut Teknologi Sepuluh Nopember"],
-    thesis: [
-      "S1 Thesis: \"Perancangan Sistem Kontrol Motor Kursi Roda Secara Nirkabel Berbasis ESP32\"",
-      "Research: \"Kalibrasi Kamera Omnivision pada Mobile Robot Menggunakan Machine Learning\"",
-      "Dosen Pembimbing: Muhtadin, S.T., M.T.",
-    ],
-    expertise: "Omnidirectional Vision, Machine Learning Calibration, ESP32 Motor Control.",
-    experience: [
-      "Researcher, B401 Robotics Laboratory (2020 – 2024)",
-      "Departemen Teknik Komputer FTEIC ITS",
-    ],
-    achievements: [
-      "Published Undergraduate Thesis & Research, Teknik Komputer ITS 2024",
-      "Laboratorium Robotika dan Sistem Cerdas",
-    ],
-    contact: "haris.ekatama@example.com",
   },
   {
     name: "Faris Rafi Pramana",

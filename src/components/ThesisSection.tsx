@@ -16,10 +16,10 @@ export function ThesisSection() {
           <div className="kicker mb-2">
             {t.sectionLabel}
           </div>
-          <h2 className="section-heading mb-3 text-4xl md:text-6xl">
-            {t.heading} <span className="text-zinc-400 dark:text-zinc-600">{t.headingAccent}</span>
+          <h2 className="section-heading mb-3 text-2xl md:text-3xl">
+            {t.heading} {t.headingAccent}
           </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg max-w-2xl leading-relaxed">
+          <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base max-w-2xl leading-relaxed">
             {t.body}
           </p>
         </div>
