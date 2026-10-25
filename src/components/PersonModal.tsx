@@ -1,3 +1,5 @@
+import { useDialog } from "../hooks/useDialog";
+
 interface PersonModalProps {
   person: {
     name: string;
@@ -33,8 +35,14 @@ export function PersonModal({
   showResearchHeader = true,
   onClose,
 }: PersonModalProps) {
+  const modalRef = useDialog<HTMLDivElement>(onClose);
+
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="person-modal-title"
+      ref={modalRef}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-fade-in"
       style={{ animationDuration: "0.15s", animationDelay: "0s" }}
     >
@@ -49,8 +57,8 @@ export function PersonModal({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center bg-black/10 hover:bg-black/20 text-zinc-800 dark:text-zinc-100 transition-colors"
-          aria-label="Close"
+          className="absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center bg-black/10 hover:bg-black/20 text-zinc-800 dark:text-zinc-100 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+          aria-label="Close dialog"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
@@ -63,8 +71,11 @@ export function PersonModal({
             <img
               src={person.image}
               alt={person.name}
+              width={480}
+              height={640}
               className="w-full h-full object-cover object-top"
               loading="lazy"
+              decoding="async"
             />
           ) : (
             <div className="w-full h-full min-h-[250px] bg-zinc-800 flex items-center justify-center text-white font-display font-bold text-7xl">
@@ -75,10 +86,10 @@ export function PersonModal({
 
         {/* Info Area */}
         <div className="flex-1 p-6 sm:p-8 overflow-y-auto">
-          <h3 className="font-display font-bold text-xl md:text-2xl text-zinc-900 dark:text-zinc-100 leading-tight mb-2">
+          <h3 id="person-modal-title" className="font-display font-bold text-xl md:text-2xl text-zinc-900 dark:text-zinc-100 leading-tight mb-2">
             {person.name}
           </h3>
-          <p className="text-zinc-500 font-medium text-sm mb-6 pb-6 border-b border-zinc-200 dark:border-white/10">
+          <p className="fg-muted font-medium text-sm mb-6 pb-6 border-b border-zinc-200 dark:border-white/10">
             {person.role}
             {person.specialty ? ` • ${person.specialty}` : ""}
           </p>
@@ -93,7 +104,7 @@ export function PersonModal({
                   {person.education.map((edu, i) => (
                     <li
                       key={i}
-                      className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                      className="text-sm fg-muted flex items-start gap-2.5"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
                       <span className="leading-relaxed">{edu}</span>
@@ -112,7 +123,7 @@ export function PersonModal({
                   {person.thesis.map((item, i) => (
                     <li
                       key={i}
-                      className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                      className="text-sm fg-muted flex items-start gap-2.5"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
                       <span className="leading-relaxed">{item}</span>
@@ -129,7 +140,7 @@ export function PersonModal({
                     {researchLabel}
                   </h4>
                 )}
-                <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p className="text-sm fg-muted leading-relaxed">
                   {person.expertise}
                 </p>
               </div>
@@ -144,7 +155,7 @@ export function PersonModal({
                   {person.experience.map((exp, i) => (
                     <li
                       key={i}
-                      className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                      className="text-sm fg-muted flex items-start gap-2.5"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
                       <span className="leading-relaxed">{exp}</span>
@@ -163,7 +174,7 @@ export function PersonModal({
                   {person.achievements.map((ach, i) => (
                     <li
                       key={i}
-                      className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                      className="text-sm fg-muted flex items-start gap-2.5"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
                       <span className="leading-relaxed">{ach}</span>
@@ -186,7 +197,7 @@ export function PersonModal({
                     .map((item, i) => (
                       <li
                         key={i}
-                        className="text-sm text-zinc-600 dark:text-zinc-300 flex items-start gap-2.5"
+                        className="text-sm fg-muted flex items-start gap-2.5"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
                         <span className="leading-relaxed break-words">{item}</span>

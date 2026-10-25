@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { translations } from "../contents/translations";
 import { PreviewSectionLayout } from "./PreviewSectionLayout";
 
@@ -42,9 +43,9 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
   return (
     <section
       id="research"
-      className="section-padding md:max-h-[calc(100vh-4.75rem)] flex flex-col"
+      className="section-padding flex flex-col"
     >
-      <div className="max-w-[85rem] w-full mx-auto flex flex-col md:flex-1 md:min-h-0">
+      <div className="max-w-[85rem] w-full mx-auto">
         {/* Research Focus Header */}
         <div
           className="mb-10 shrink-0 animate-fade-in relative"
@@ -52,9 +53,8 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
         >
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="kicker mb-3">{r.sectionLabel}</p>
               <h2 className="section-heading text-4xl md:text-6xl">
-                {r.heading} <span className="text-zinc-400 dark:text-zinc-600">{r.headingAccent}</span>
+                {r.heading} <span className="fg-muted">{r.headingAccent}</span>
               </h2>
             </div>
             <p className="max-w-2xl text-base leading-relaxed text-zinc-600 md:text-lg dark:text-zinc-300">
@@ -64,8 +64,8 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
           <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
         </div>
 
-        {/* Scrollable content */}
-        <div className="md:overflow-y-auto scrollbar-fade md:flex-1 md:min-h-0">
+        {/* Content */}
+        <div>
           {/* Research Areas Grid */}
           <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14 animate-fade-in"
@@ -82,7 +82,7 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
                 <h3 className="font-display font-bold text-xl md:text-2xl tracking-tight text-zinc-900 dark:text-zinc-100 mb-2 leading-snug">
                   {area.title}
                 </h3>
-                <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
+                <p className="fg-muted text-sm md:text-base leading-relaxed">
                   {area.description}
                 </p>
               </div>
@@ -93,13 +93,13 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
           <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <div className="flex items-baseline justify-between mb-6">
               <h3 className="font-display font-bold text-xl md:text-2xl tracking-tight text-zinc-900 dark:text-zinc-100">
-                {p.heading} <span className="text-zinc-400 dark:text-zinc-600">{p.headingAccent}</span>
+                {p.heading} <span className="fg-muted">{p.headingAccent}</span>
               </h3>
               <span className="kicker">
                 {p.sectionLabel}
               </span>
             </div>
-            <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed max-w-2xl mb-8">
+            <p className="fg-muted text-sm md:text-base leading-relaxed max-w-2xl mb-8">
               {p.body}
             </p>
 
@@ -111,26 +111,29 @@ export function ResearchSection({ preview = false }: ResearchSectionProps = {}) 
                       <img
                         src={project.image}
                         alt={project.title}
+                        width={640}
+                        height={400}
                         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                         loading="lazy"
+                        decoding="async"
                       />
                     ) : null}
                   </div>
                   <div className="kicker mb-3">
-                    {p.sectionLabel} <span className="text-zinc-400 dark:text-zinc-500">•</span>{" "}
+                    {p.sectionLabel} <span className="fg-meta">•</span>{" "}
                     {getStatusLabel(project.status)}
                   </div>
                   <h4 className="font-display font-bold text-lg md:text-xl tracking-tight text-zinc-900 dark:text-zinc-100 mb-2 leading-snug">
                     {project.title}
                   </h4>
-                  <p className="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed mb-4">
+                  <p className="fg-muted text-sm leading-relaxed mb-4">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.16em] border border-zinc-300 dark:border-white/15 text-zinc-500 dark:text-zinc-400"
+                        className="px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.16em] border border-zinc-300 dark:border-white/15 fg-muted"
                       >
                         {tag}
                       </span>

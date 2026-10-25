@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { translations } from "../contents/translations";
 import Ur5Image from "../assets/webp/ur5.webp";
 import NrfImage from "../assets/webp/nrf.webp";
@@ -10,16 +10,17 @@ const FADE_MS = 2000;
 
 export function HeroSection() {
   const t = translations.hero;
+  const reduceMotion = useReducedMotion();
   const backgrounds: readonly string[] = t.images ?? [Ur5Image, NrfImage, DroneImage];
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
-    if (backgrounds.length <= 1) return;
+    if (backgrounds.length <= 1 || reduceMotion) return;
     const id = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % backgrounds.length);
     }, ROTATION_MS);
     return () => clearInterval(id);
-  }, [backgrounds.length]);
+  }, [backgrounds.length, reduceMotion]);
 
   // Warm the next background so the crossfade never flashes a blank frame.
   useEffect(() => {
@@ -33,7 +34,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-10 lg:px-14 overflow-hidden"
+      className="relative min-h-[calc(100vh-4.75rem)] flex items-center px-6 md:px-10 lg:px-14 pb-12 md:pb-16 overflow-hidden"
     >
       {/* Rotating background images with crossfade — height matches the
           previous 85vh hero frame, independent of the section's min-height. */}
@@ -60,12 +61,12 @@ export function HeroSection() {
       {/* Content wrapper — aligned to the same max-width as every other section */}
       <div className="relative z-10 max-w-[85rem] w-full mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="max-w-4xl mt-[35vh] md:mt-[370px]"
         >
-          {/* Kicker */}
+          {/* Kicker — sanctioned exception, home hero only */}
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/75 mb-4">
             {t.kicker}
           </p>

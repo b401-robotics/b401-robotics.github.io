@@ -15,14 +15,15 @@ interface ChatResponse {
 }
 
 function renderInlineMarkdown(text: string): ReactNode[] {
-  // Regex tokenizes markdown links [text](url), bold/italic combinations (***text***, **text**, *text*), code `code`
-  const tokenRegex = /(\[[^\]]+\]\([^)]+\)|\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
+  // Regex tokenizes markdown links [text](url), raw direct links (https?://...), bold/italic combinations (***text***, **text**, *text*), code `code`
+  const tokenRegex =
+    /(\[[^\]]+\]\([^)]+\)|https?:\/\/[^\s<>)"]+|\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
   const parts = text.split(tokenRegex);
 
   return parts.map((part, idx) => {
     if (!part) return null;
 
-    // Link: [label](url)
+    // Markdown Link: [label](url)
     const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     if (linkMatch) {
       const [, label, url] = linkMatch;
@@ -35,6 +36,21 @@ function renderInlineMarkdown(text: string): ReactNode[] {
           className="text-zinc-900 dark:text-zinc-100 underline decoration-zinc-400 hover:decoration-zinc-900 dark:hover:decoration-zinc-100 font-medium break-all"
         >
           {label}
+        </a>
+      );
+    }
+
+    // Direct URL Link: https://... or http://...
+    if (/^https?:\/\//i.test(part)) {
+      return (
+        <a
+          key={idx}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-zinc-900 dark:text-zinc-100 underline decoration-zinc-400 hover:decoration-zinc-900 dark:hover:decoration-zinc-100 font-medium break-all"
+        >
+          {part}
         </a>
       );
     }
@@ -112,6 +128,19 @@ function MarkdownRenderer({ content }: { content: string }) {
     }
   }
 
+  function parseTableCells(rowText: string): string[] {
+    // Strip leading and trailing '|'
+    const trimmed = rowText.trim().replace(/^\||\|$/g, "");
+    return trimmed.split("|").map((c) => c.trim());
+  }
+
+  function isTableDelimiter(rowText: string): boolean {
+    const trimmed = rowText.trim();
+    if (!trimmed.includes("-")) return false;
+    // Format like |---|---| or |:---|---:|
+    return /^\|?(\s*:?-+:?\s*\|)+\s*:?-+:?\s*\|?$/.test(trimmed);
+  }
+
   for (let i = 0; i < lines.length; i++) {
     const rawLine = lines[i] ?? "";
     const trimmed = rawLine.trim();
@@ -119,6 +148,76 @@ function MarkdownRenderer({ content }: { content: string }) {
     if (!trimmed) {
       flushList();
       continue;
+    }
+
+    // Markdown Table: Detect lines starting with '|'
+    if (trimmed.startsWith("|") && trimmed.endsWith("|") && trimmed.length > 2) {
+      flushList();
+
+      const tableRows: string[] = [];
+      let j = i;
+      while (j < lines.length) {
+        const lineJ = (lines[j] ?? "").trim();
+        if (lineJ.startsWith("|") && lineJ.endsWith("|") && lineJ.length > 2) {
+          tableRows.push(lineJ);
+          j++;
+        } else if (!lineJ && j + 1 < lines.length && (lines[j + 1] ?? "").trim().startsWith("|")) {
+          // Skip occasional blank line inside table
+          j++;
+        } else {
+          break;
+        }
+      }
+
+      if (tableRows.length >= 2 && isTableDelimiter(tableRows[1]!)) {
+        const headerCells = parseTableCells(tableRows[0]!);
+        const bodyRows = tableRows.slice(2).filter((r) => !isTableDelimiter(r));
+
+        elements.push(
+          <div
+            key={`table-${i}`}
+            className="my-3 overflow-x-auto border border-zinc-200 dark:border-white/10 bg-zinc-50/50 dark:bg-white/[0.02]"
+          >
+            <table className="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-white/5">
+                  {headerCells.map((h, hIdx) => (
+                    <th
+                      key={hIdx}
+                      className="px-3.5 py-2.5 font-semibold text-zinc-900 dark:text-zinc-100 tracking-tight"
+                    >
+                      {renderInlineMarkdown(h)}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-200 dark:divide-white/10">
+                {bodyRows.map((row, rIdx) => {
+                  const cells = parseTableCells(row);
+                  return (
+                    <tr
+                      key={rIdx}
+                      className="transition-colors hover:bg-zinc-100/50 dark:hover:bg-white/[0.04]"
+                    >
+                      {cells.map((c, cIdx) => (
+                        <td
+                          key={cIdx}
+                          className="px-3.5 py-2.5 text-zinc-800 dark:text-zinc-200 align-top"
+                        >
+                          {renderInlineMarkdown(c)}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        );
+
+        i = j - 1;
+        continue;
+      }
     }
 
     // Header 1-4: # Heading
@@ -269,10 +368,6 @@ export function ChatbotSection() {
         {/* Header */}
         <header className="mb-10 flex flex-col gap-4 border-b border-zinc-200 pb-8 animate-fade-in md:flex-row md:items-end md:justify-between dark:border-white/10">
           <div>
-            <p className="kicker mb-3 flex items-center gap-2">
-              <span aria-hidden="true" className="h-1.5 w-1.5 animate-pulse rounded-full bg-zinc-900 dark:bg-zinc-100" />
-              AI Lab Assistant
-            </p>
             <h2 className="section-heading text-4xl md:text-6xl">
               Ask About B401 Robotics Lab
             </h2>
@@ -285,7 +380,7 @@ export function ChatbotSection() {
 
         {/* Suggestion Chips */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-          <span className="text-xs text-zinc-500 dark:text-zinc-400 mr-1">Suggestions:</span>
+          <span className="text-xs fg-muted mr-1">Suggestions:</span>
           {SUGGESTED_QUESTIONS.map((q) => (
             <button
               key={q}
@@ -295,7 +390,7 @@ export function ChatbotSection() {
                 void handleSubmit(q);
               }}
               disabled={loading}
-              className="border border-zinc-300 px-3 py-1.5 text-left text-xs text-zinc-600 transition-colors hover:border-zinc-900 hover:text-zinc-900 disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+              className="border border-zinc-300 px-3.5 py-2 min-h-[44px] flex items-center text-left text-xs text-zinc-600 transition-colors hover:border-zinc-900 hover:text-zinc-900 disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
             >
               {q}
             </button>
@@ -305,6 +400,8 @@ export function ChatbotSection() {
         {/* Prompt Input Box */}
         <div className="mb-8 border border-zinc-300 bg-white p-4 dark:border-white/10 dark:bg-white/[0.04]">
           <textarea
+            id="chatbot-prompt-input"
+            aria-label="Ask a question about B401 Robotics Laboratory"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -320,7 +417,7 @@ export function ChatbotSection() {
               className={`text-xs ${
                 isOverLimit
                   ? "text-danger font-bold"
-                  : "text-zinc-400 dark:text-zinc-500"
+                  : "fg-meta"
               }`}
             >
               {characterCount}/500 chars
@@ -331,7 +428,7 @@ export function ChatbotSection() {
                 <button
                   type="button"
                   onClick={() => setPrompt("")}
-                  className="px-3 py-1.5 text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
+                  className="px-3 py-2 min-h-[44px] flex items-center text-xs fg-muted hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
                 >
                   Clear
                 </button>
@@ -340,7 +437,8 @@ export function ChatbotSection() {
                 type="button"
                 onClick={() => void handleSubmit()}
                 disabled={!canSubmit}
-                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2 font-mono text-xs uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
+                aria-busy={loading}
+                className="inline-flex items-center justify-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2.5 min-h-[44px] font-mono text-xs uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
               >
                 {loading ? (
                   <>
@@ -379,7 +477,7 @@ export function ChatbotSection() {
 
         {/* Error Banner */}
         {error && (
-          <div className="surface-danger p-4 text-sm mb-6 flex items-start justify-between">
+          <div role="alert" className="surface-danger p-4 text-sm mb-6 flex items-start justify-between">
             <div>
               <p className="font-semibold mb-1">Could not complete request</p>
               <p>{error}</p>
@@ -387,7 +485,8 @@ export function ChatbotSection() {
             <button
               type="button"
               onClick={() => setError(null)}
-              className="text-danger hover:opacity-80 text-xs ml-4"
+              className="text-danger hover:opacity-80 text-xs ml-4 min-h-[44px] min-w-[44px] inline-flex items-center justify-center -mr-2"
+              aria-label="Dismiss error"
             >
               Dismiss
             </button>
@@ -395,6 +494,7 @@ export function ChatbotSection() {
         )}
 
         {/* Current Q&A Result */}
+        <div aria-live="polite" aria-atomic="false">
         {result && (
           <div className="border border-zinc-200 bg-white p-6 dark:border-white/10 dark:bg-white/[0.04]">
             {lastQuestion && (
@@ -423,7 +523,7 @@ export function ChatbotSection() {
               {/* Source Badges */}
               {result.sources && result.sources.length > 0 && (
                 <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
-                  <span className="text-xs text-zinc-500 dark:text-zinc-400 block mb-2">
+                  <span className="text-xs fg-muted block mb-2">
                     Verified Knowledge Sources:
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -442,6 +542,7 @@ export function ChatbotSection() {
             </div>
           </div>
         )}
+        </div>
       </div>
     </section>
   );

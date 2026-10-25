@@ -3,6 +3,21 @@ import _20250926193050Image from "../assets/webp/practicum/20250926_193050.webp"
 import _20251020190750Image from "../assets/webp/practicum/20251020_190750.webp";
 import _20251020190803Image from "../assets/webp/practicum/20251020_190803.webp";
 
+// Workshop Telematika PDFs
+import telematikaGuidebook from "../assets/pdf/workshoptelematika/guidebook.pdf";
+import telematikaModul1 from "../assets/pdf/workshoptelematika/Modul 1.pdf";
+import telematikaModul2 from "../assets/pdf/workshoptelematika/Modul 2.pdf";
+import telematikaModul3 from "../assets/pdf/workshoptelematika/Modul 3.pdf";
+import telematikaModul4 from "../assets/pdf/workshoptelematika/Modul 4.pdf";
+
+// Digital Circuit PDFs
+import digitalCircuitGuidebook from "../assets/pdf/digitalcircuit/Guidebook Praktikum Rangkaian Digital Gasal 2026_2027.pdf";
+import digitalCircuitModul1 from "../assets/pdf/digitalcircuit/Modul 1.pdf";
+import digitalCircuitModul2 from "../assets/pdf/digitalcircuit/modul 2.pdf";
+import digitalCircuitModul3 from "../assets/pdf/digitalcircuit/Modul 3.pdf";
+import digitalCircuitModul4 from "../assets/pdf/digitalcircuit/Modul 4.pdf";
+import digitalCircuitModul5 from "../assets/pdf/digitalcircuit/Modul 5.pdf";
+
 // The `images` array on each practicum accepts either:
 //   1. External URL strings (shown below), or
 //   2. Locally imported assets from `src/assets/webp/`, e.g.:
@@ -34,22 +49,23 @@ export const practicumsEN = {
         "Introduces students to the fundamentals of telematics, from reading and drawing schematics through to laying out a printed circuit board. Students also get hands on with 3D enclosure design in Fusion 360 before writing their first firmware for the ESP8266 development board.",
       sessions: "4",
       level: "",
+      guidebookUrl: telematikaGuidebook,
       topics: [
         {
           label: "Telematic Basics",
-          url: "https://b401-robotics.github.io/modul-workshop-telematika/P1.pdf",
+          url: telematikaModul1,
         },
         {
           label: "Schematic and PCB Design Basics",
-          url: "https://b401-robotics.github.io/modul-workshop-telematika/P2.pdf",
+          url: telematikaModul2,
         },
         {
           label: "3D Design Fusion 360 Basics",
-          url: "https://b401-robotics.github.io/modul-workshop-telematika/P3.pdf",
+          url: telematikaModul3,
         },
         {
           label: "ESP8266 Development Board",
-          url: "https://b401-robotics.github.io/modul-workshop-telematika/P4.pdf",
+          url: telematikaModul4,
         },
       ],
     },
@@ -68,26 +84,27 @@ export const practicumsEN = {
         "Builds a solid grounding in digital logic design. Students work through decoders, multiplexers, and demultiplexers, learn to simplify Boolean expressions with Karnaugh maps, and finish by implementing sequential circuits such as registers and synchronous and asynchronous counters.",
       sessions: "5",
       level: "",
+      guidebookUrl: digitalCircuitGuidebook,
       topics: [
         {
           label: "Dasar Rangkaian Digital",
-          url: "https://drive.google.com/file/d/1c6oJ_MBw8AyEQRKVE_oYLuJ80ElkOYI0/view",
+          url: digitalCircuitModul1,
         },
         {
           label: "Decoder, Demux, dan Mux",
-          url: "https://drive.google.com/file/d/1yUubh5EB3dNeRap2PpEHH5uczceIEywC/view",
+          url: digitalCircuitModul2,
         },
         {
           label: "Karnough Map",
-          url: "https://drive.google.com/file/d/1eUIJqrdeyzwCrgwEnu0CaRmAmFVwJYKO/view",
+          url: digitalCircuitModul3,
         },
         {
           label: "Rangkaian Sequential",
-          url: "https://drive.google.com/file/d/12TgRQAlvIZ-bSLmpTPcq0IeNOEu9LRjL/view",
+          url: digitalCircuitModul4,
         },
         {
           label: "Register and Counter",
-          url: "https://drive.google.com/file/d/1S8-QqSwMwINfl79DC5JyAf5YzeXg5oUN/view?usp=drive_link",
+          url: digitalCircuitModul5,
         },
       ],
     },

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { translations } from "../contents/translations";
 import LogoLight from "../assets/logo/B401_transparent.png";
-import LogoDark from "../assets/logo/B401_white_cutout.png";
 
 const SOCIALS = [
   {
@@ -58,25 +57,22 @@ export function Footer() {
             <Link
               to="/"
               onClick={() => window.scrollTo(0, 0)}
-              className="flex items-center gap-3 mb-4 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-zinc-500/20 rounded-lg"
+              className="flex items-center gap-3 mb-4 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-zinc-500/20 rounded-none"
             >
               <img
                 src={LogoLight}
-                alt="B401 Logo"
-                className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300 dark:hidden"
+                alt="B401 Robotics logo"
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain dark:invert transition-[filter] duration-300"
                 loading="lazy"
-              />
-              <img
-                src={LogoDark}
-                alt="B401 Logo"
-                className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] transition-all duration-300 hidden dark:block"
-                loading="lazy"
+                decoding="async"
               />
               <span className="font-display font-semibold text-zinc-900 dark:text-zinc-100 text-sm leading-tight whitespace-pre-line group-hover:text-zinc-700 dark:group-hover:text-zinc-300 transition-colors">
                 {t.labName}
               </span>
             </Link>
-            <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">{t.tagline}</p>
+            <p className="fg-muted text-sm leading-relaxed max-w-xs">{t.tagline}</p>
           </div>
 
           {/* Column 2 — Find Us: address */}
@@ -84,7 +80,7 @@ export function Footer() {
             <h4 className="kicker mb-4">
               {t.findUsLabel}
             </h4>
-            <address className="not-italic text-zinc-500 text-sm space-y-1 leading-relaxed">
+            <address className="not-italic fg-muted text-sm space-y-1 leading-relaxed">
               {t.addressLines.map((line) => (
                 <p key={line}>{line}</p>
               ))}
@@ -104,7 +100,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.name}
-                  className="w-11 h-11 bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-white/20 hover:-translate-y-0.5 transition-all duration-200"
+                  className="w-11 h-11 bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 flex items-center justify-center fg-muted hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-white/20 hover:-translate-y-0.5 transition-all duration-200"
                 >
                   {social.icon}
                 </a>
@@ -116,7 +112,7 @@ export function Footer() {
                 href="https://www.its.ac.id/komputer/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-100 text-sm transition-colors duration-200"
+                className="fg-muted hover:text-zinc-700 dark:hover:text-zinc-100 text-sm transition-colors duration-200"
               >
                 its.ac.id/komputer ↗
               </a>
@@ -126,7 +122,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-zinc-200 dark:border-white/10 pt-8 flex flex-col items-center justify-center">
-          <p className="text-zinc-600 dark:text-zinc-300 text-sm">
+          <p className="fg-muted text-sm">
             © {year} {t.copyright}
           </p>
         </div>

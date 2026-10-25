@@ -1,3 +1,5 @@
+import rawKnowledge from "./knowledge.json";
+
 export interface GuardrailResult {
   passed: boolean;
   reason?: string;
@@ -39,14 +41,56 @@ export const IMPOLITE_REFUSAL_VARIANTS = [
   "Hostile or abusive queries cannot be answered. Please ask your question in a respectful manner.",
 ];
 
+export const SERVICE_UNAVAILABLE_MESSAGE =
+  "The assistant is temporarily unavailable. Please try again in a moment.";
+
 function getRandomVariant(variants: string[]): string {
   const index = Math.floor(Math.random() * variants.length);
   return variants[index]!;
 }
 
+// Build dynamic scope from knowledge base chunks at worker initialization
+const FIXED_SCOPE = `- B401 Robotics & Intelligent Systems Laboratory (Laboratorium Robotika dan Sistem Cerdas)
+- Location: Room TW2-901, Tower 2 Building, Department of Computer Engineering, Institut Teknologi Sepuluh Nopember (ITS), Surabaya, Indonesia
+- Practicums: Telematics Workshop (P01), Digital Circuit (P02), Embedded Systems (P03)`;
+
+const CAT_ORDER = [
+  "Research",
+  "Thesis",
+  "Projects",
+  "Achievements",
+  "Facilities",
+  "Practicums",
+  "People",
+  "Contact",
+];
+
+const SCOPE_TEXT = (() => {
+  try {
+    const chunks = (rawKnowledge as any)?.chunks || [];
+    const byCat = new Map<string, string[]>();
+
+    for (const c of chunks) {
+      if (c.category === "About") continue;
+      if (!byCat.has(c.category)) byCat.set(c.category, []);
+      byCat.get(c.category)!.push(c.title);
+    }
+
+    const lines = CAT_ORDER
+      .filter((cat) => byCat.has(cat))
+      .map((cat) => `${cat}: ${byCat.get(cat)!.join("; ")}`);
+
+    if (lines.length === 0) return FIXED_SCOPE;
+    return `${FIXED_SCOPE}\n\nDocumented Laboratory Entities & Activities:\n${lines.join("\n")}`;
+  } catch {
+    return FIXED_SCOPE;
+  }
+})();
+
 export async function validateWithJevGuardrails(
   prompt: string,
   typesafeApiKey?: string,
+  maxPromptLength: number = 500,
 ): Promise<GuardrailResult> {
   const trimmed = prompt.trim();
 
@@ -57,10 +101,10 @@ export async function validateWithJevGuardrails(
       reason: "Please only ask topics related to this Laboratory.",
     };
   }
-  if (trimmed.length > 500) {
+  if (trimmed.length > maxPromptLength) {
     return {
       passed: false,
-      reason: "Prompt exceeds maximum limit of 500 characters.",
+      reason: `Prompt exceeds maximum limit of ${maxPromptLength} characters.`,
     };
   }
 
@@ -102,9 +146,13 @@ export async function validateWithJevGuardrails(
             is_related: {
               type: "noul",
               instructions:
-                "Classify whether every substantive question or request in the user's message is relevant to the B401 Robotics & Intelligent Systems Laboratory portfolio, context, or associated robotics, engineering, research, academic, and student activities. Context: B401 Laboratory is located in Room TW2-901, Tower 2 Building, Department of Computer Engineering, Institut Teknologi Sepuluh Nopember (ITS), Surabaya, Indonesia. Lab practicums offered include Telematics Workshop (P01), Digital Circuit (P02), and Embedded Systems (P03). Prioritize recall for legitimate related questions, including location, room, practicum, indirect references, follow-ups, synonyms, abbreviations, informal language, and Indonesian or English phrasing.",
+                "Classify whether every substantive question or request in the user's message is relevant to the B401 Robotics & Intelligent Systems Laboratory portfolio, context, or associated robotics, engineering, research, academic, and student activities. Prioritize recall for legitimate related questions, including location, room, practicum, indirect references, follow-ups, synonyms, abbreviations, informal language, and Indonesian or English phrasing.",
               criteria: {
-                true: "Return true when ALL substantive questions or requests are reasonably connected to: (1) the B401 laboratory, its location/room (TW2-901 Tower 2 ITS Surabaya), portfolio, activities, and facilities; (2) laboratory research, projects, experiments, prototypes, publications, and technical methods; (3) robotics, manipulation, control systems, embedded systems, electronics, AI, machine learning, computer vision, IoT, intelligent systems, and related engineering concepts; (4) university activities, laboratory practicums (e.g. Telematics Workshop P01, Digital Circuit P02, Embedded Systems P03), academic programs, research supervision, and technical education; (5) lecturers, researchers, students, laboratory members, and their publicly presented academic or technical roles; (6) student projects, skills, experience, competitions, achievements, awards, and portfolio content; or (7) explanations, comparisons, summaries, translations, and context-dependent follow-up questions related to these topics. Accept relevant questions even when they do not explicitly mention B401, provided their meaning falls within the defined scope. Use available conversation context to resolve references such as 'it', 'that project', 'what about its method?', or 'bagaimana cara kerjanya?'. Do not reject a question merely because it contains typos, informal wording, or a different language.",
+                true: `Return true when ALL substantive questions or requests are reasonably connected to B401 Laboratory scope, activities, and documented items below. Accept relevant questions even when they do not explicitly mention B401:
+
+${SCOPE_TEXT}
+
+Also include general robotics, AI, machine learning, computer vision, IoT, control systems, embedded systems, academic programs, student competitions, final projects, equipment, or direct follow-ups about these topics.`,
                 false: "Return false if ANY substantive question or request is clearly unrelated to the defined portfolio, laboratory, academic, research, robotics, or engineering scope. Examples include unrelated entertainment, general lifestyle advice, travel planning, personal assistance, or unrelated general knowledge. For messages containing multiple questions or requests, all must be related for the result to be true. A question about a general technical concept may still qualify if it falls within the explicitly permitted robotics, intelligent systems, or engineering scope. If a follow-up depends on prior context, use that context when available. If relevance remains genuinely ambiguous, return false rather than inventing a connection.",
               },
             },
@@ -160,9 +208,17 @@ export async function validateWithJevGuardrails(
       } else {
         const errText = await res.text();
         console.warn(`TypeSafe API responded with HTTP ${res.status}: ${errText}`);
+        return {
+          passed: false,
+          reason: SERVICE_UNAVAILABLE_MESSAGE,
+        };
       }
     } catch (err) {
-      console.warn("TypeSafe Jev check skipped/timed out:", err);
+      console.warn("TypeSafe Jev check failed/timed out:", err);
+      return {
+        passed: false,
+        reason: SERVICE_UNAVAILABLE_MESSAGE,
+      };
     }
   }
 

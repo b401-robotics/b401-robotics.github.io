@@ -13,13 +13,10 @@ export function ThesisSection() {
       <div className="max-w-[85rem] w-full mx-auto flex flex-col">
         {/* Header */}
         <div className="mb-8 md:mb-10 shrink-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="kicker mb-2">
-            {t.sectionLabel}
-          </div>
           <h2 className="section-heading mb-3 text-2xl md:text-3xl">
             {t.heading} {t.headingAccent}
           </h2>
-          <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base max-w-2xl leading-relaxed">
+          <p className="fg-muted text-sm md:text-base max-w-2xl leading-relaxed">
             {t.body}
           </p>
         </div>
@@ -76,10 +73,10 @@ export function ThesisSection() {
                       {/* Toggle indicator */}
                       <span
                         aria-hidden="true"
-                        className={`mt-0.5 shrink-0 grid place-items-center size-8 border font-display font-light text-xl leading-none transition-[transform,color,border-color] duration-300 ${
+                        className={`mt-0.5 shrink-0 grid place-items-center size-8 border font-display font-normal text-xl leading-none transition-[transform,color,border-color] duration-300 ${
                           open
                             ? "rotate-45 border-zinc-900 dark:border-zinc-100 text-zinc-900 dark:text-zinc-100"
-                            : "border-zinc-300 dark:border-white/15 text-zinc-500 dark:text-zinc-400"
+                            : "border-zinc-300 dark:border-white/15 fg-muted"
                         }`}
                       >
                         +
@@ -107,7 +104,7 @@ export function ThesisSection() {
                           <p className="kicker m-0 mb-2">
                             Abstract
                           </p>
-                          <p className="m-0 text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
+                          <p className="m-0 fg-muted text-sm md:text-base leading-relaxed">
                             {item.abstract}
                           </p>
                         </div>

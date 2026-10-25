@@ -5,7 +5,9 @@ export function HighlightPage() {
   return (
     <>
       <HighlightHero />
-      <AchievementSection />
+      <div className="-mt-12 md:-mt-16">
+        <AchievementSection />
+      </div>
     </>
   );
 }

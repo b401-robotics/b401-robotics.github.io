@@ -2,11 +2,11 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { validateWithJevGuardrails } from "./guardrails";
 import { searchRelevantChunks } from "./vectorSearch";
-import { askCodeCraft } from "./codecraft";
+import { askRelayer } from "./relayer";
 import { askGemini } from "./gemini";
 
 type Bindings = {
-  CODECRAFT_API_KEY?: string;
+  RELAYER_API_KEY?: string;
   GEMINI_API_KEY?: string;
   TYPESAFE_API_KEY?: string;
   MAX_PROMPT_LENGTH?: string;
@@ -74,7 +74,7 @@ app.post("/api/chat", async (c) => {
     }
 
     // 1. Guardrail inspection (TypeSafe Jev + Local heuristics)
-    const guardrail = await validateWithJevGuardrails(prompt, c.env?.TYPESAFE_API_KEY);
+    const guardrail = await validateWithJevGuardrails(prompt, c.env?.TYPESAFE_API_KEY, maxLen);
     if (!guardrail.passed) {
       return c.json({
         answer:
@@ -84,14 +84,14 @@ app.post("/api/chat", async (c) => {
       });
     }
 
-    // 2. In-Worker Vector Similarity Search
-    const relevantChunks = searchRelevantChunks(prompt, 3);
+    // 2. In-Worker Vector Similarity Search (Gemini Embedding with offline fallback)
+    const relevantChunks = await searchRelevantChunks(prompt, 6, c.env?.GEMINI_API_KEY);
 
-    // 3. Multi-Provider Generation (Gemini prioritized, CodeCraft fallback)
+    // 3. Multi-Provider Generation (Gemini prioritized, Relayer fallback)
     let result = await askGemini(prompt, relevantChunks, c.env?.GEMINI_API_KEY);
 
     if (!result) {
-      result = await askCodeCraft(prompt, relevantChunks, c.env?.CODECRAFT_API_KEY);
+      result = await askRelayer(prompt, relevantChunks, c.env?.RELAYER_API_KEY);
     }
 
     if (!result) {

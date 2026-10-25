@@ -20,8 +20,11 @@ export function AchievementSection() {
                       <img
                         src={item.image}
                         alt={item.title}
+                        width={640}
+                        height={400}
                         className="absolute inset-0 block h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                         loading="lazy"
+                        decoding="async"
                       />
                     ) : null}
                   </div>
@@ -29,7 +32,7 @@ export function AchievementSection() {
 
                 {/* Metadata line */}
                 <div className="kicker mb-3">
-                  {t.sectionLabel} <span className="text-zinc-400 dark:text-zinc-500">•</span> {item.year}
+                  {t.sectionLabel} <span className="fg-meta">•</span> {item.year}
                 </div>
 
                 {/* Title */}
@@ -38,7 +41,7 @@ export function AchievementSection() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-4">
+                <p className="fg-muted text-sm md:text-base leading-relaxed mb-4">
                   {item.description}
                 </p>
 

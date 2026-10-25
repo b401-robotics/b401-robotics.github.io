@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T00:00:00.000Z",
+  "title": "Design System: B401 Robotics Laboratory",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Obsidian Zinc",
+        "canonical": "#18181b",
+        "tonalRamp": ["#09090b", "#18181b", "#27272a", "#3f3f46", "#71717a", "#a1a1aa", "#e4e4e7", "#f4f4f5"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Blueprint Slate Ground",
+        "canonical": "#f1f5f9",
+        "tonalRamp": ["#020617", "#0f172a", "#1e293b", "#334155", "#64748b", "#94a3b8", "#cbd5e1", "#f8fafc"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Architectural Surface",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#000000", "#18181b", "#27272a", "#52525b", "#a1a1aa", "#d4d4d8", "#f4f4f5", "#ffffff"]
+      },
+      "border-hairline": {
+        "role": "neutral",
+        "displayName": "Hairline Border",
+        "canonical": "#e4e4e7",
+        "tonalRamp": ["#18181b", "#27272a", "#3f3f46", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7", "#fafafa"]
+      },
+      "danger": {
+        "role": "danger",
+        "displayName": "Signal Danger",
+        "canonical": "#dc2626",
+        "tonalRamp": ["#450a0a", "#7f1d1d", "#991b1b", "#b91c1c", "#dc2626", "#ef4444", "#f87171", "#fef2f2"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero slogans and primary banners (Poppins bold)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles and facility room identifiers (Poppins bold)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Project and member card titles (Poppins semi-bold)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Narrative paragraphs, abstracts, and documentation (DM Sans)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Monospace uppercase kickers, dates, and metadata tags."
+      }
+    },
+    "shadows": [
+      {
+        "name": "flat-resting",
+        "value": "none",
+        "purpose": "Default state for resting cards and surfaces."
+      },
+      {
+        "name": "structural-overlay",
+        "value": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
+        "purpose": "Used on floating modals and fixed navigation header."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-standard",
+        "value": "cubic-bezier(0, 0, 0.2, 1)",
+        "purpose": "Standard easing for hover micro-lifts and fades."
+      },
+      {
+        "name": "fade-in",
+        "value": "fade-in 1s ease-out both",
+        "purpose": "Entrance animation for content sections."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1536px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary CTA Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-contrast action trigger with sharp rectangular edges and micro-lift hover.",
+      "html": "<button class=\"ds-btn-primary\">EXPLORE TESTBEDS <span class=\"ds-btn-arrow\">→</span></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 12px; background: #18181b; color: #ffffff; border: 1px solid #18181b; padding: 12px 24px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; border-radius: 0; transition: transform 0.2s ease, opacity 0.2s ease; } .ds-btn-primary:hover { opacity: 0.9; transform: translateY(-2px); } .ds-btn-primary:focus-visible { outline: 2px solid #18181b; outline-offset: 2px; } .ds-btn-arrow { transition: transform 0.2s ease; } .ds-btn-primary:hover .ds-btn-arrow { transform: translateX(4px); }"
+    },
+    {
+      "name": "Corner Frame Specimen Card",
+      "kind": "card",
+      "refersTo": "card-specimen",
+      "description": "Photographic container framed by opposing L-shaped mechanical corner ticks.",
+      "html": "<div class=\"ds-corner-frame\"><div class=\"ds-corner-content\">UR5e Collaborative Manipulator</div></div>",
+      "css": ".ds-corner-frame { position: relative; background: #e4e4e7; padding: 8px; border-radius: 0; } .ds-corner-frame::before, .ds-corner-frame::after { content: ''; position: absolute; width: 12px; height: 12px; pointer-events: none; border-color: #a1a1aa; } .ds-corner-frame::before { left: 0; top: 0; border-left: 1px solid #a1a1aa; border-top: 1px solid #a1a1aa; } .ds-corner-frame::after { right: 0; bottom: 0; border-right: 1px solid #a1a1aa; border-bottom: 1px solid #a1a1aa; } .ds-corner-content { width: 100%; aspect-ratio: 16/10; background: #ffffff; display: flex; align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif; font-size: 14px; color: #52525b; }"
+    },
+    {
+      "name": "Kicker Eyebrow",
+      "kind": "custom",
+      "refersTo": "kicker",
+      "description": "Uppercase monospace metadata label identifying category or taxonomy.",
+      "html": "<p class=\"ds-kicker\">RESEARCH // PHYSICAL AI</p>",
+      "css": ".ds-kicker { font-family: ui-monospace, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: #71717a; margin: 0; }"
+    },
+    {
+      "name": "Section Header Split",
+      "kind": "custom",
+      "refersTo": "section-header",
+      "description": "Asymmetric layout: kicker and bold display title on left, narrative on right, sealed by a 1px hairline.",
+      "html": "<header class=\"ds-section-header\"><div><p class=\"ds-kicker\">LABORATORY OVERVIEW</p><h2 class=\"ds-heading\">Robotics & Intelligent Systems</h2></div><p class=\"ds-narrative\">Conducting research in autonomous mobile robotics, physical AI, and multi-agent coordination.</p></header>",
+      "css": ".ds-section-header { display: flex; flex-direction: column; gap: 16px; border-bottom: 1px solid #e4e4e7; padding-bottom: 24px; margin-bottom: 32px; } @media (min-width: 768px) { .ds-section-header { flex-direction: row; align-items: flex-end; justify-content: space-between; } } .ds-kicker { font-family: ui-monospace, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: #71717a; margin: 0 0 8px 0; } .ds-heading { font-family: 'Poppins', sans-serif; font-size: 32px; font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; color: #18181b; margin: 0; } .ds-narrative { font-family: 'DM Sans', sans-serif; font-size: 15px; color: #52525b; line-height: 1.6; max-width: 380px; margin: 0; }"
+    },
+    {
+      "name": "Text Input Field",
+      "kind": "input",
+      "refersTo": "input-text",
+      "description": "Clean 1px border input with sharp rectangular corners and high-contrast focus ring.",
+      "html": "<input type=\"text\" class=\"ds-input\" placeholder=\"Enter query or subject...\" />",
+      "css": ".ds-input { width: 100%; padding: 12px 16px; background: #ffffff; border: 1px solid #e4e4e7; color: #18181b; font-family: 'DM Sans', sans-serif; font-size: 14px; border-radius: 0; box-sizing: border-box; transition: border-color 0.2s ease; } .ds-input:focus { outline: none; border-color: #18181b; } .ds-input::placeholder { color: #a1a1aa; }"
+    },
+    {
+      "name": "Monospace Tag Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Delicate rectangular tag with uppercase monospace tracking for project keywords.",
+      "html": "<span class=\"ds-chip\">ROS 2 HUMBLE</span>",
+      "css": ".ds-chip { display: inline-block; padding: 4px 10px; font-family: ui-monospace, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; border: 1px solid #e4e4e7; color: #71717a; border-radius: 0; background: transparent; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Robotics Blueprint",
+    "overview": "The B401 Robotics Laboratory design system is built on the aesthetic and mechanical discipline of technical engineering blueprints and physical laboratory instruments. The interface prioritizes clarity, informational density, and high-contrast readability. Every visual element communicates structural intent: stark monochrome zinc surfaces, razor-thin 1px architectural hairlines, technical monospace metadata kickers, and mechanical L-shaped corner framing ticks.\n\nRather than decorative embellishment, the system achieves distinction through precise proportions, deliberate typographic contrast, and restrained motion. Display headlines are rendered in geometric, bold Poppins to establish presence, anchored by a neutral DM Sans reading body, and cataloged via wide-tracked monospace tags.\n\nAnti-reference: Consumer SaaS slop. The interface rejects saturated purple/indigo gradient buttons, pill-shaped bubble badges, noisy decorative drop shadows, and artificial glassmorphism. Surfaces are flat, intentional, and strictly grounded in authentic laboratory evidence.",
+    "keyCharacteristics": [
+      "Strict architectural flatness bounded by 1px hairline dividers.",
+      "L-shaped corner ticks enclosing specimen cards, robotic hardware photos, and project assets.",
+      "Monochrome blueprint zinc palette with functional status signaling only.",
+      "High-contrast typography pairing Poppins display, DM Sans body, and monospace label scales.",
+      "Clean technical affordances with sharp right-angle geometries."
+    ],
+    "rules": [
+      {
+        "name": "The Zero-Gradient Rule",
+        "body": "Gradients are strictly forbidden across backgrounds, text, and buttons. Visual hierarchy is achieved exclusively through scale, weight, and tonal contrast.",
+        "section": "colors"
+      },
+      {
+        "name": "The Functional Color Rule",
+        "body": "Chromatic color may never be used for decoration. Red is permitted only for error states; green and amber are permitted only for verified operational status.",
+        "section": "colors"
+      },
+      {
+        "name": "The Kicker Precedence Rule",
+        "body": "Every major section heading must be preceded by an uppercase monospace kicker establishing context or taxonomy before the title is read.",
+        "section": "typography"
+      },
+      {
+        "name": "The Solid Heading Rule",
+        "body": "Display headings remain solid high-contrast foreground color; secondary muted words are reserved only for deliberate secondary sub-phrases.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline Boundary Rule",
+        "body": "Never separate flat content blocks with shadow elevation; always delineate boundaries with a 1px solid hairline border.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do precede major section headings with a monospace uppercase kicker.",
+      "Do enclose hardware images and research specimen photography inside .corner-frame containers with L-shaped corner ticks.",
+      "Do enforce sharp 0px radius on buttons, inputs, tags, and content cards.",
+      "Do use 1px hairlines (border-zinc-200 dark:border-white/10) for all spatial dividers and borders.",
+      "Do maintain strict monochrome zinc tones for all layout surfaces and typography."
+    ],
+    "donts": [
+      "Don't use purple, indigo, cyan, or rainbow gradient fills on buttons, backgrounds, or text.",
+      "Don't introduce bubbly rounded pill buttons or high-radius cards.",
+      "Don't apply heavy diffuse drop shadows to resting cards.",
+      "Don't use color decoratively; reserve chromatic red exclusively for error conditions and alerts.",
+      "Don't omit dark mode support for any new component or view."
+    ]
+  }
+}

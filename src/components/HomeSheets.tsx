@@ -9,7 +9,7 @@ import { ChatbotSection } from "./ChatbotSection";
 
 export function HomeSheets() {
   return (
-    <div className="flex flex-col">
+    <div className="relative flex flex-col">
       <HeroSection />
       <AboutSection />
       <ResearchSection preview />

@@ -26,7 +26,7 @@ export function PreviewSectionLayout({
   imageAlt,
 }: PreviewSectionLayoutProps) {
   return (
-    <section id={id} className="section-padding min-h-[calc(100vh-4.75rem)] flex flex-col justify-center">
+    <section id={id} className="section-padding flex flex-col">
       <div className="max-w-[85rem] w-full mx-auto">
         <div
           className={`flex flex-col gap-10 lg:gap-20 items-center animate-fade-in ${
@@ -36,11 +36,10 @@ export function PreviewSectionLayout({
         >
           {/* Summary column */}
           <div className="w-full lg:w-5/12">
-            <p className="kicker mb-4">{sectionLabel}</p>
             <h2 className="section-heading text-4xl md:text-6xl mb-5">
-              {heading} <span className="text-zinc-400 dark:text-zinc-600">{headingAccent}</span>
+              {heading} <span className="fg-muted">{headingAccent}</span>
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-300 text-base md:text-lg leading-relaxed mb-8 max-w-xl">
+            <p className="fg-muted text-base md:text-lg leading-relaxed mb-8 max-w-xl">
               {body}
             </p>
             <Link
@@ -59,8 +58,11 @@ export function PreviewSectionLayout({
                 <img
                   src={image}
                   alt={imageAlt || heading}
+                  width={800}
+                  height={600}
                   className="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-[1.04]"
                   loading="lazy"
+                  decoding="async"
                 />
               ) : null}
             </div>

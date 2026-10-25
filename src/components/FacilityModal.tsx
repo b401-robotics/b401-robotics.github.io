@@ -1,3 +1,5 @@
+import { useDialog } from "../hooks/useDialog";
+
 interface FacilityModalProps {
   facility: {
     name: string;
@@ -9,8 +11,14 @@ interface FacilityModalProps {
 }
 
 export function FacilityModal({ facility, onClose }: FacilityModalProps) {
+  const modalRef = useDialog<HTMLDivElement>(onClose);
+
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="facility-modal-title"
+      ref={modalRef}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-fade-in"
       style={{ animationDuration: "0.15s", animationDelay: "0s" }}
     >
@@ -25,8 +33,8 @@ export function FacilityModal({ facility, onClose }: FacilityModalProps) {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center bg-black/20 hover:bg-black/30 text-white backdrop-blur-sm transition-colors"
-          aria-label="Close"
+          className="absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center bg-black/20 hover:bg-black/30 text-white backdrop-blur-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          aria-label="Close dialog"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
@@ -39,7 +47,11 @@ export function FacilityModal({ facility, onClose }: FacilityModalProps) {
             <img
               src={facility.image}
               alt={facility.name}
+              width={960}
+              height={540}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-zinc-400 dark:text-zinc-600 text-sm">
@@ -49,14 +61,14 @@ export function FacilityModal({ facility, onClose }: FacilityModalProps) {
         </div>
 
         {/* Info */}
-        <div className="p-6 sm:p-8 overflow-y-auto scrollbar-hide">
+        <div className="p-6 sm:p-8 overflow-y-auto scrollbar-fade">
           <p className="kicker mb-2">
             {facility.category}
           </p>
-          <h3 className="font-display font-bold text-xl md:text-2xl lg:text-3xl text-zinc-900 dark:text-zinc-100 leading-tight mb-4">
+          <h3 id="facility-modal-title" className="font-display font-bold text-xl md:text-2xl lg:text-3xl text-zinc-900 dark:text-zinc-100 leading-tight mb-4">
             {facility.name}
           </h3>
-          <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed">
+          <p className="fg-muted text-sm md:text-base leading-relaxed">
             {facility.description}
           </p>
         </div>

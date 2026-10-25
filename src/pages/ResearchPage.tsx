@@ -6,7 +6,9 @@ export function ResearchPage() {
   return (
     <>
       <ResearchHero />
-      <ThesisSection />
+      <div className="-mt-12 md:-mt-16">
+        <ThesisSection />
+      </div>
       <ProjectsSection />
     </>
   );

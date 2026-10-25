@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { translations } from "../contents/translations";
-import { PreviewSectionLayout } from "./PreviewSectionLayout";
+import { PdfViewerModal } from "./PdfViewerModal";
 
 interface PracticumsSectionProps {
   preview?: boolean;
@@ -8,29 +9,104 @@ interface PracticumsSectionProps {
 
 export function PracticumsSection({ preview = false }: PracticumsSectionProps = {}) {
   const t = translations.practicums;
-  const [selectedCode, setSelectedCode] = useState<string>(t.items[0]?.code ?? "");
+  const [activePdf, setActivePdf] = useState<{ title: string; url: string } | null>(null);
 
   if (preview) {
     return (
-      <PreviewSectionLayout
-        id="practicums"
-        sectionLabel={t.sectionLabel}
-        heading={t.heading}
-        headingAccent={t.headingAccent}
-        body={t.body}
-        ctaTo="/practicums"
-        ctaLabel={t.viewAll}
-        imagePosition="left"
-        image={t.image}
-        imageAlt={t.heading}
-      />
+      <section id="practicums" className="section-padding flex flex-col justify-center">
+        <div className="max-w-[85rem] w-full mx-auto">
+          {/* Header */}
+          <div className="mb-10 shrink-0 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 className="section-heading text-4xl md:text-6xl">
+                  {t.heading} <span className="fg-muted">{t.headingAccent}</span>
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg dark:text-zinc-300">
+                {t.body}
+              </p>
+            </div>
+            <div className="mt-6 h-px w-full bg-zinc-200 dark:bg-white/10" />
+          </div>
+
+          {/* Asymmetric Hardware Specimen + Curriculum Tracks Ledger — Zero Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 mb-10 items-start animate-fade-in" style={{ animationDelay: "0.15s" }}>
+            {/* Left Column: Physical Hardware Specimen Frame */}
+            <div className="lg:col-span-5">
+              <div className="corner-frame aspect-[4/3] w-full">
+                {t.image ? (
+                  <img
+                    src={t.image}
+                    alt={t.heading}
+                    width={800}
+                    height={600}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+              </div>
+            </div>
+
+            {/* Right Column: Open Continuous Syllabus Ledger (Hairline Strips) */}
+            <div className="lg:col-span-7 border-t border-zinc-200 dark:border-white/10 flex flex-col">
+              {t.items.map((p) => (
+                <div
+                  key={p.code}
+                  className="py-5 border-b border-zinc-200/80 dark:border-white/10 flex flex-col gap-2 hover:bg-zinc-900/[0.02] dark:hover:bg-white/[0.02] transition-colors px-2"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs uppercase tracking-[0.16em] text-zinc-900 dark:text-zinc-100 font-bold">
+                      {p.code}
+                    </span>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.16em] fg-muted">
+                      {p.sessions ? `${p.sessions} ${t.sessions}` : "Development"}
+                    </span>
+                  </div>
+
+                  <h3 className="font-display font-semibold text-lg md:text-xl text-zinc-900 dark:text-zinc-100 leading-snug">
+                    {p.title}
+                  </h3>
+
+                  <p className="fg-meta text-sm leading-relaxed">
+                    {p.summary}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Action Row */}
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            <Link
+              to="/practicums"
+              className="inline-flex items-center gap-3 border border-zinc-900 bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition-[opacity,transform] duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 group dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:focus:ring-zinc-100"
+            >
+              {t.viewAll}
+              <span className="transition-transform group-hover:translate-x-1">→</span>
+            </Link>
+            <a
+              href={t.registerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:border-zinc-900 dark:hover:border-zinc-100 transition-colors"
+            >
+              {t.registerLabel} ↗
+            </a>
+          </div>
+        </div>
+
+        {activePdf && (
+          <PdfViewerModal
+            title={activePdf.title}
+            url={activePdf.url}
+            onClose={() => setActivePdf(null)}
+          />
+        )}
+      </section>
     );
   }
-
-  const selected = t.items.find((p) => p.code === selectedCode) ?? t.items[0];
-  if (!selected) return null;
-
-  const images: readonly string[] = selected.images;
 
   return (
     <section
@@ -41,126 +117,160 @@ export function PracticumsSection({ preview = false }: PracticumsSectionProps = 
         {/* Header */}
         <header className="section-header animate-fade-in" style={{ animationDelay: "0.1s" }}>
           <div>
-            <p className="kicker mb-3">{t.sectionLabel}</p>
             <h2 className="section-heading text-4xl md:text-6xl">
-              {t.heading} <span className="text-zinc-400 dark:text-zinc-600">{t.headingAccent}</span>
+              {t.heading} <span className="fg-muted">{t.headingAccent}</span>
             </h2>
           </div>
-          <p className="max-w-sm font-mono text-xs uppercase leading-relaxed tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+          <p className="max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg dark:text-zinc-300">
             {t.body}
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 lg:gap-10 items-start">
-          {/* Left: seamless practicum list */}
-          <div className="flex flex-col">
-            {t.items.map((p, idx) => {
-              const isActive = p.code === selected.code;
-              return (
-                <button
-                  key={p.code}
-                  type="button"
-                  onClick={() => setSelectedCode(p.code)}
-                  className={`group relative text-left w-full flex items-start gap-3 py-4 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 animate-fade-in ${
-                    idx !== 0 ? "border-t border-zinc-200/70 dark:border-white/10" : ""
-                  }`}
-                  style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
-                >
-                  {/* Text */}
-                  <div className="min-w-0 flex-1">
-                    <div
-                      className={`font-display font-bold text-base mb-1 leading-snug transition-colors duration-200 ${
-                        isActive
-                          ? "text-zinc-900 dark:text-zinc-100"
-                          : "text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100"
-                      }`}
-                    >
-                      {p.title}
-                    </div>
-                    <div
-                      className={`text-xs leading-relaxed transition-colors duration-200 ${
-                        isActive
-                          ? "text-zinc-600 dark:text-zinc-300"
-                          : "text-zinc-400 dark:text-zinc-500"
-                      }`}
-                    >
-                      {p.summary}
-                    </div>
-                  </div>
-
-                  {/* Active indicator bar */}
-                  <div
-                    className={`w-[3px] self-stretch transition-colors duration-300 {
-                      isActive
-                        ? "bg-zinc-900 dark:bg-zinc-100"
-                        : "bg-transparent group-hover:bg-zinc-300 dark:group-hover:bg-white/20"
-                    }`}
-                  />
-
-                  {/* Bottom underline animation */}
-                  <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-zinc-900 dark:bg-zinc-100 transition-transform duration-300 ease-out group-hover:scale-x-100" />
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Right: selected practicum detail */}
-          <div key={selected.code} className="animate-fade-in">
-            {/* Image carousel — auto-advances every 5s, or manually via the arrows */}
+        <div className="flex flex-col gap-16 md:gap-24">
+          {t.items.map((item) => {
+            const selected = item;
+            const images = item.images;
+            return (
+        <article key={item.code} className="animate-fade-in grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+          {/* Specimen + its record strip */}
+          <div className="lg:col-span-6">
             <ImageCarousel images={images} alt={selected.title} />
 
-            <h3 className="font-display font-bold text-xl md:text-2xl tracking-tight text-zinc-900 dark:text-zinc-100 mb-2 leading-tight">
-              {selected.title}
-            </h3>
+            <div className="flex items-baseline justify-between gap-4 mt-4 pt-3 border-t border-zinc-200 dark:border-white/10">
+              <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-zinc-900 dark:text-zinc-100 font-bold">
+                {selected.code}
+              </span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.16em] fg-muted">
+                {selected.sessions ? `${selected.sessions} ${t.sessions}` : "Development"}
+              </span>
+            </div>
 
-            <p className="text-zinc-600 dark:text-zinc-300 text-sm md:text-base leading-relaxed mb-4">
-              {selected.description}
-            </p>
+          </div>
 
-            {selected.topics.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-4">
-                {selected.topics.map((topic) => {
-                  const label = topic.label;
-                  const url = "url" in topic ? topic.url : undefined;
-                  const baseClass =
-                    "px-2.5 py-1 border font-mono text-[11px] uppercase tracking-[0.16em] transition-colors duration-200";
-
-                  return url ? (
-                    <a
-                      key={label}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${baseClass} border-zinc-300 dark:border-white/15 text-zinc-700 dark:text-zinc-200 hover:border-zinc-900 dark:hover:border-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-white/5 cursor-pointer`}
-                    >
-                      {label} ↗
-                    </a>
-                  ) : (
-                    <span
-                      key={label}
-                      className={`${baseClass} border-zinc-300 dark:border-white/15 text-zinc-600 dark:text-zinc-300`}
-                    >
-                      {label}
-                    </span>
-                  );
-                })}
-              </div>
-            )}
-
-            <div className="pt-4 border-t border-zinc-200 dark:border-white/10">
+          {/* Brief */}
+          <div className="lg:col-span-6">
+            <div className="mb-5 flex flex-wrap items-center gap-4">
+              <h3 className="section-heading text-2xl md:text-3xl">
+                {selected.title}
+              </h3>
               <a
                 href={t.registerUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.16em] text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-opacity duration-300 group dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:focus:ring-zinc-100"
+                className="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-opacity duration-300 group dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:focus:ring-zinc-100"
               >
                 {t.registerLabel}
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </a>
             </div>
+
+            <p className="fg-muted text-sm md:text-base leading-relaxed">
+              {selected.description}
+            </p>
+
+            {/* Guidebook link / trigger */}
+            {"guidebookUrl" in selected && selected.guidebookUrl ? (
+              <button
+                type="button"
+                onClick={() =>
+                  setActivePdf({
+                    title: `${selected.title} — Guidebook`,
+                    url: selected.guidebookUrl as string,
+                  })
+                }
+                className="mt-6 border border-zinc-300 dark:border-white/20 p-4 flex items-center justify-between gap-4 w-full text-left transition-colors hover:border-zinc-900 dark:hover:border-zinc-100 hover:bg-zinc-900/[0.02] dark:hover:bg-white/[0.02] cursor-pointer group"
+              >
+                <div className="flex items-center gap-4 min-w-0">
+                  <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-zinc-900 dark:text-zinc-100">
+                    <path d="M4 4h9l7 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" />
+                    <path d="M13 4v7h7" />
+                  </svg>
+                  <div className="min-w-0">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-zinc-900 dark:text-zinc-100 font-semibold">
+                      Practicum guidebook
+                    </p>
+                    <p className="text-sm fg-meta">
+                      Click to read guidebook PDF
+                    </p>
+                  </div>
+                </div>
+                <span aria-hidden="true" className="font-mono text-xs fg-meta group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-transform group-hover:translate-x-0.5">
+                  ↗
+                </span>
+              </button>
+            ) : (
+              <div className="mt-6 border border-dashed border-zinc-300 dark:border-white/20 p-4 flex items-center gap-4">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="shrink-0 fg-meta">
+                  <path d="M4 4h9l7 7v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" />
+                  <path d="M13 4v7h7" />
+                </svg>
+                <div className="min-w-0">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.16em] fg-muted">
+                    Practicum guidebook
+                  </p>
+                  <p className="text-sm fg-meta">
+                    Coming soon
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {selected.topics.length > 0 && (
+              <ul className="mt-8 border-y border-zinc-200 dark:border-white/10 divide-y divide-zinc-200 dark:divide-white/10">
+                {selected.topics.map((topic, i) => {
+                  const label = topic.label;
+                  const url = "url" in topic ? topic.url : undefined;
+                  const rowClass =
+                    "group flex items-center gap-4 py-3.5 min-h-[44px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100";
+                  const inner = (
+                    <>
+                      <span className="font-mono text-[11px] tabular-nums fg-meta">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="font-display font-semibold text-sm md:text-base text-zinc-900 dark:text-zinc-100 leading-snug">
+                        {label}
+                      </span>
+                      {url && (
+                        <span aria-hidden="true" className="ml-auto fg-meta transition-transform group-hover:translate-x-0.5 group-hover:text-zinc-900 dark:group-hover:text-zinc-100">
+                          ↗
+                        </span>
+                      )}
+                    </>
+                  );
+
+                  return (
+                    <li key={label}>
+                      {url ? (
+                        <button
+                          type="button"
+                          onClick={() => setActivePdf({ title: `${selected.title} — ${label}`, url })}
+                          className={`w-full text-left ${rowClass} hover:text-zinc-900 dark:hover:text-zinc-100 cursor-pointer`}
+                        >
+                          {inner}
+                        </button>
+                      ) : (
+                        <span className={rowClass}>{inner}</span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
           </div>
+        </article>
+            );
+          })}
         </div>
       </div>
+
+      {activePdf && (
+        <PdfViewerModal
+          title={activePdf.title}
+          url={activePdf.url}
+          onClose={() => setActivePdf(null)}
+        />
+      )}
     </section>
   );
 }
@@ -191,26 +301,26 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
   if (count === 0) return null;
 
   return (
-    <div className="corner-frame group relative aspect-video w-full mb-4">
-      {/* object-contain keeps the whole image inside the frame — nothing
-          is cropped and nothing overflows the placeholder bounds. */}
+    <div className="corner-frame group relative aspect-[4/3] w-full">
+      {/* object-cover fills the frame edge to edge. */}
       <img
         src={images[index]}
         alt={alt}
-        className="w-full h-full object-contain"
+        width={800}
+        height={600}
+        className="w-full h-full object-cover"
         loading="lazy"
+        decoding="async"
       />
 
       {count > 1 && (
         <>
-          {/* Arrow controls — hidden until the frame is hovered. On touch
-              devices there is no hover, so the group-hover classes leave
-              them permanently visible. */}
+          {/* Arrow controls — visible on touch devices, hover-gated on desktop. */}
           <button
             type="button"
             onClick={() => setIndex((prev) => (prev - 1 + count) % count)}
             aria-label="Previous image"
-            className="absolute top-1/2 left-3 -translate-y-1/2 w-11 h-11 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
+            className="absolute top-1/2 left-3 -translate-y-1/2 w-11 h-11 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white opacity-100 pointer-events-auto sm:opacity-0 sm:pointer-events-none sm:group-hover:opacity-100 sm:group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
           >
             <svg
               width="18"
@@ -230,7 +340,7 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
             type="button"
             onClick={() => setIndex((prev) => (prev + 1) % count)}
             aria-label="Next image"
-            className="absolute top-1/2 right-3 -translate-y-1/2 w-11 h-11 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
+            className="absolute top-1/2 right-3 -translate-y-1/2 w-11 h-11 bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white opacity-100 pointer-events-auto sm:opacity-0 sm:pointer-events-none sm:group-hover:opacity-100 sm:group-hover:pointer-events-auto focus:opacity-100 focus:pointer-events-auto"
           >
             <svg
               width="18"
@@ -246,9 +356,8 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
             </svg>
           </button>
 
-          {/* Index dots — one per image, active one filled. Same hover-gated
-              visibility as the arrows. Clicking a dot jumps to that image. */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 transition-all duration-300 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+          {/* Index dots — one per image, active one filled. */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center px-1.5 py-0.5 rounded-full bg-black/40 backdrop-blur-xs transition-all duration-300 opacity-100 pointer-events-auto sm:opacity-0 sm:pointer-events-none sm:group-hover:opacity-100 sm:group-hover:pointer-events-auto">
             {images.map((_, i) => (
               <button
                 key={`dot-${i}`}
@@ -256,12 +365,16 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
                 onClick={() => setIndex(i)}
                 aria-label={`Go to image ${i + 1}`}
                 aria-current={i === index}
-                className={`w-2 h-2 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/60 ${
-                  i === index
-                    ? "bg-white"
-                    : "bg-white/50 hover:bg-white/80"
-                }`}
-              />
+                className="w-11 h-11 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
+              >
+                <span
+                  className={`block h-2 rounded-full transition-colors duration-200 ${
+                    i === index
+                      ? "bg-white w-4"
+                      : "bg-white/50 w-2 hover:bg-white/80"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </>
