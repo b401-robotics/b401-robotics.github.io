@@ -2,7 +2,6 @@ import unpr71J3ljxblp76qhIxqyxuhmkvt8j1kpkTutawu6jYdwqar7c1eegdtlpgjvcbaba0ss0bm
 
 export const highlightEN = {
   sectionLabel: "Highlight",
-  badge: "Lab Highlights",
   heading: "Moments of",
   headingAccent: "Impact",
   body: "Competition results, awards, and recognitions earned by student members across national and international robotics competitions.",

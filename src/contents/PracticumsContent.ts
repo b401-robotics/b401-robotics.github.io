@@ -33,7 +33,6 @@ export const practicumsEN = {
   body: "Our practicum program is designed to complement theoretical coursework with hands on, real world engineering experience.",
   sessions: "sessions",
   viewAll: "View All Practicums",
-  listHeading: "List of our practicum",
   registerLabel: "Register",
   registerUrl: "https://ceits.id/praktikum/pendaftaran",
   image: rdigImage,
@@ -41,14 +40,12 @@ export const practicumsEN = {
     {
       code: "P01",
       title: "Telematics Workshop",
-      icon: "📡",
       images: [rdigImage],
       summary:
         "Foundations of telematics, PCB design, and ESP8266 development boards.",
       description:
         "Introduces students to the fundamentals of telematics, from reading and drawing schematics through to laying out a printed circuit board. Students also get hands on with 3D enclosure design in Fusion 360 before writing their first firmware for the ESP8266 development board.",
       sessions: "4",
-      level: "",
       guidebookUrl: telematikaGuidebook,
       topics: [
         {
@@ -72,7 +69,6 @@ export const practicumsEN = {
     {
       code: "P02",
       title: "Digital Circuit",
-      icon: "🔌",
       images: [
         _20250926193050Image,
         _20251020190750Image,
@@ -83,7 +79,6 @@ export const practicumsEN = {
       description:
         "Builds a solid grounding in digital logic design. Students work through decoders, multiplexers, and demultiplexers, learn to simplify Boolean expressions with Karnaugh maps, and finish by implementing sequential circuits such as registers and synchronous and asynchronous counters.",
       sessions: "5",
-      level: "",
       guidebookUrl: digitalCircuitGuidebook,
       topics: [
         {
@@ -111,13 +106,11 @@ export const practicumsEN = {
     {
       code: "P03",
       title: "Embedded Systems",
-      icon: "🧩",
       images: [],
       summary:
         "Programming microcontrollers and interfacing with the physical world.",
       description: "Still in development.",
       sessions: "-",
-      level: "",
       topics: [],
     },
   ],

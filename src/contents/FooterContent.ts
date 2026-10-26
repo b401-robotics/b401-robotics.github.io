@@ -1,3 +1,9 @@
+export interface FooterSocial {
+  name: string;
+  href: string;
+  type: "email" | "instagram" | "linkedin" | "github";
+}
+
 export const footerEN = {
   labName: "Robotics & Intelligent\nSystems Lab",
   tagline:
@@ -10,14 +16,31 @@ export const footerEN = {
     "Surabaya, Jawa Timur, Indonesia",
   ],
   contactLabel: "Contact Us",
-  emailValue: "b401robotics@gmail.com",
-  followLabel: "Follow Us",
-  institutionLabel: "Institution",
-  institutionLines: [
-    "Institut Teknologi Sepuluh Nopember",
-    "Dept. of Computer Engineering",
-    "Faculty Intelligent Electrical and Informatics Technology",
-  ],
+  socials: [
+    {
+      name: "Email",
+      href: "mailto:b401robotics@gmail.com",
+      type: "email",
+    },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/itsb401lab/",
+      type: "instagram",
+    },
+    {
+      name: "LinkedIn",
+      href: "https://www.linkedin.com/company/b401-robotics/",
+      type: "linkedin",
+    },
+    {
+      name: "GitHub",
+      href: "https://github.com/b401-robotics",
+      type: "github",
+    },
+  ] as const satisfies readonly FooterSocial[],
+  departmentWebsite: {
+    label: "its.ac.id/komputer ↗",
+    href: "https://www.its.ac.id/komputer/",
+  },
   copyright: "B401 Robotics & Intelligent Systems Laboratory. All rights reserved.",
-  builtWith: "Built with React & Tailwind CSS",
 } as const;

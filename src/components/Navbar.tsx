@@ -69,7 +69,7 @@ export function Navbar() {
   };
 
   const navLinks = [
-    { label: "Home", path: "home" },
+    { label: t.home, path: "home" },
     { label: t.research, path: "research" },
     { label: t.highlight, path: "highlight" },
     { label: t.facility, path: "equipment" },

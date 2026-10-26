@@ -12,7 +12,6 @@
 //
 // When `image` is omitted or empty, the card and modal fall back to
 // rendering the person's `initials` on a dark placeholder.
-import nrfImage from "../assets/webp/nrf.webp";
 import nrfImage2 from "../assets/webp/people/NRF.webp";
 import na70Image from "../assets/webp/people/Na70.webp";
 import senimanImage from "../assets/webp/Seniman.webp";
@@ -35,7 +34,7 @@ import rianImage from "../assets/webp/people/Rian.webp";
 export interface I_lecturers {
   name: string;
   role: string;
-  specialty: string;
+  specialty?: string;
   initials: string;
   education?: readonly string[];
   expertise?: string;
@@ -46,7 +45,6 @@ export const lecturers: Array<I_lecturers> = [
   {
     name: "Dr. Ahmad Zaini, S.T., M.Sc.",
     role: "Head of Laboratory",
-    specialty: "",
     initials: "AZ",
     education: [
       "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -60,7 +58,6 @@ export const lecturers: Array<I_lecturers> = [
   {
     name: "Muhtadin, S.T., M.T.",
     role: "Lecturer",
-    specialty: "",
     initials: "M",
     education: [
       "S1: Teknik Sistem Komputer, Institut Teknologi Sepuluh Nopember",
@@ -74,7 +71,6 @@ export const lecturers: Array<I_lecturers> = [
   {
     name: "Eko Pramunanto, S.T., M.T.",
     role: "Lecturer",
-    specialty: "",
     initials: "EP",
     education: [
       "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -88,7 +84,6 @@ export const lecturers: Array<I_lecturers> = [
   {
     name: "Ir. Hany Boedinugroho, M.T.",
     role: "Lecturer",
-    specialty: "",
     initials: "HB",
     education: [
       "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -102,7 +97,6 @@ export const lecturers: Array<I_lecturers> = [
   {
     name: "Prof. Dr. Ir. Mauridhi Hery Purnomo, M.Eng.",
     role: "Lecturer",
-    specialty: "",
     initials: "MH",
     education: [
       "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",
@@ -117,7 +111,6 @@ export const lecturers: Array<I_lecturers> = [
   {
     name: "Atar Fuady Babgei, S.T., M.Sc.",
     role: "Lecturer",
-    specialty: "",
     initials: "AF",
     education: [
       "S1: Teknik Elektro, Institut Teknologi Sepuluh Nopember",

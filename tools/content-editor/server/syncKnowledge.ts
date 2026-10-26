@@ -111,7 +111,7 @@ export async function generateKnowledgeBase(): Promise<{
     equipmentMod,
     practicumsMod,
     membersMod,
-    contactMod,
+    footerMod,
   ] = await Promise.all([
     import(`${path.join(contentsDir, "AboutContent.ts")}?t=${timestamp}`),
     import(`${path.join(contentsDir, "ResearchContent.ts")}?t=${timestamp}`),
@@ -121,7 +121,7 @@ export async function generateKnowledgeBase(): Promise<{
     import(`${path.join(contentsDir, "EquipmentContent.ts")}?t=${timestamp}`),
     import(`${path.join(contentsDir, "PracticumsContent.ts")}?t=${timestamp}`),
     import(`${path.join(contentsDir, "memberList.ts")}?t=${timestamp}`),
-    import(`${path.join(contentsDir, "ContactContent.ts")}?t=${timestamp}`),
+    import(`${path.join(contentsDir, "FooterContent.ts")}?t=${timestamp}`),
   ]);
 
   const rawChunks: RawChunk[] = [];
@@ -481,18 +481,20 @@ ${details.join("\n")}`,
   }
 
   // 9. Contact & Location
-  const contact = contactMod.contactEN;
-  if (contact) {
+  const footer = footerMod.footerEN;
+  if (footer) {
+    const address = (footer.addressLines || []).join(", ");
+    const emailSocial = (footer.socials || []).find((s: any) => s.type === "email")?.href || "b401robotics@gmail.com";
     rawChunks.push({
       id: "contact-location",
       category: "Contact",
-      title: "Lab Contact, Location & Office Hours",
-      aliases: "kontak lokasi alamat email jam buka office hours contact address",
+      title: "Lab Contact, Location & Socials",
+      aliases: "kontak lokasi alamat email instagram linkedin github contact address",
       content: `# B401 Laboratory Contact & Location
-Location: ${contact.locationValue}
-Email: ${contact.emailValue}
-Office Hours: ${contact.hoursValue}
-Inquiries: ${contact.body}`,
+Address / Location: ${address}
+Email / Inquiries: ${emailSocial}
+Tagline: ${footer.tagline}
+Department Website: ${footer.departmentWebsite?.href || "https://www.its.ac.id/komputer/"}`,
     });
   }
 

@@ -1,5 +1,4 @@
 export const thesisEN = {
-  sectionLabel: "",
   heading: "Student",
   headingAccent: "Theses",
   body: "Undergraduate and postgraduate theses conducted at the B401 Robotics & Intelligent Systems Laboratory.",

@@ -12,7 +12,7 @@ export function HomeSheets() {
     <div className="relative flex flex-col">
       <HeroSection />
       <AboutSection />
-      <ResearchSection preview />
+      <ResearchSection />
       <HighlightSection />
       <EquipmentSection preview />
       <PracticumsSection preview />

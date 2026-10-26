@@ -7,7 +7,6 @@ import { practicumsEN } from "./PracticumsContent";
 import { projectsEN } from "./ProjectsContent";
 import { membersEN } from "./MembersContent";
 import { equipmentEN } from "./EquipmentContent";
-import { contactEN } from "./ContactContent";
 import { footerEN } from "./FooterContent";
 import { achievementsEN } from "./AchievementContent";
 import { thesisEN } from "./ThesisContent";
@@ -24,7 +23,6 @@ export const translations = {
   members: membersEN,
   equipment: equipmentEN,
   achievements: achievementsEN,
-  contact: contactEN,
   footer: footerEN,
 } as const;
 

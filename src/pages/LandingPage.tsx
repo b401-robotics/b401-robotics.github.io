@@ -19,13 +19,6 @@ const ResearchPage = lazy(() =>
 const ProjectsSection = lazy(() =>
   import("../components/ProjectsSection").then((m) => ({ default: m.ProjectsSection }))
 );
-const AchievementSection = lazy(() =>
-  import("../components/AchievementSection").then((m) => ({ default: m.AchievementSection }))
-);
-const ContactSection = lazy(() =>
-  import("../components/ContactSection").then((m) => ({ default: m.ContactSection }))
-);
-
 export function LandingPage() {
   const { section } = useParams<{ section?: string }>();
   const location = useLocation();
@@ -85,8 +78,6 @@ export function LandingPage() {
                   {section === "projects" && <ProjectsSection />}
                   {section === "members" && <MembersSection />}
                   {section === "equipment" && <EquipmentSection />}
-                  {section === "achievements" && <AchievementSection />}
-                  {section === "contact" && <ContactSection />}
                 </Suspense>
               </motion.div>
             </AnimatePresence>
