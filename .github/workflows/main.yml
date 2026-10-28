@@ -24,6 +24,8 @@ jobs:
         run: bun install
 
       - name: Build project
+        env:
+          VITE_CHATBOT_API_URL: ${{ vars.VITE_CHATBOT_API_URL }}
         run: bun run build # Ensure your package.json has a build script
 
       - name: Upload artifact

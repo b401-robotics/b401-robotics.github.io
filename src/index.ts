@@ -33,8 +33,14 @@ const server = serve({
       async POST(req) {
         const targetUrl =
           process.env.VITE_CHATBOT_API_URL ||
-          process.env.CHATBOT_API_URL ||
-          "https://b401-chatbot.b431.workers.dev/api/chat";
+          process.env.CHATBOT_API_URL;
+
+        if (!targetUrl) {
+          return Response.json(
+            { error: "VITE_CHATBOT_API_URL or CHATBOT_API_URL not configured in environment" },
+            { status: 500 }
+          );
+        }
 
         try {
           const body = await req.text();

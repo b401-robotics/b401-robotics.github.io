@@ -301,9 +301,9 @@ const SUGGESTED_QUESTIONS = [
 declare const __CHATBOT_API_URL__: string | undefined;
 
 const CHATBOT_API_URL =
-  typeof __CHATBOT_API_URL__ !== "undefined"
-    ? __CHATBOT_API_URL__
-    : "https://b401-chatbot.b431.workers.dev/api/chat";
+  (typeof __CHATBOT_API_URL__ !== "undefined" && __CHATBOT_API_URL__) ||
+  (typeof process !== "undefined" && process.env?.VITE_CHATBOT_API_URL) ||
+  "/api/chat";
 
 export function ChatbotSection() {
   const [prompt, setPrompt] = useState("");
