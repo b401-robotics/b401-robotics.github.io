@@ -25,7 +25,7 @@ jobs:
 
       - name: Build project
         env:
-          VITE_CHATBOT_API_URL: ${{ vars.VITE_CHATBOT_API_URL }}
+          VITE_CHATBOT_API_URL: ${{ secrets.VITE_CHATBOT_API_URL || vars.VITE_CHATBOT_API_URL }}
         run: bun run build # Ensure your package.json has a build script
 
       - name: Upload artifact
