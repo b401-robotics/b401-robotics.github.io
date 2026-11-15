@@ -4,6 +4,7 @@ interface FacilityModalProps {
   facility: {
     name: string;
     category: string;
+    room?: string;
     image?: string;
     description: string;
   };
@@ -63,7 +64,7 @@ export function FacilityModal({ facility, onClose }: FacilityModalProps) {
         {/* Info */}
         <div className="p-6 sm:p-8 overflow-y-auto scrollbar-fade">
           <p className="kicker mb-2">
-            {facility.category}
+            {[facility.category, facility.room].filter(Boolean).join(" · ")}
           </p>
           <h3 id="facility-modal-title" className="font-display font-bold text-xl md:text-2xl lg:text-3xl text-zinc-900 dark:text-zinc-100 leading-tight mb-4">
             {facility.name}

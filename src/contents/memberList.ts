@@ -255,7 +255,7 @@ export const assistants: Array<I_assistant> = [
     image: wildinImage,
   },
   {
-    name: "Rafila ",
+    name: "Rafila",
     role: "Laboratory Asisstant Batch 2023",
     initials: "OT",
     education: [],

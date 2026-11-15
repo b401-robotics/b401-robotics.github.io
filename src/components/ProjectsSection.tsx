@@ -63,17 +63,22 @@ export function ProjectsSection() {
                   {project.description}
                 </p>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.16em] border border-zinc-300 dark:border-white/15 fg-muted"
-                    >
-                      {tag}
+                {/* Members */}
+                {project.tags && project.tags.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-2 mt-auto pt-2">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.16em] fg-muted">
+                      MEMBER :
                     </span>
-                  ))}
-                </div>
+                    {project.tags.map((member) => (
+                      <span
+                        key={member}
+                        className="px-2.5 py-1 text-xs border border-zinc-300 dark:border-white/15 text-zinc-700 dark:text-zinc-300"
+                      >
+                        {member}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </article>
             ))}
           </div>
