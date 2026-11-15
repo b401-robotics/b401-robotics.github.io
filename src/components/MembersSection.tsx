@@ -180,6 +180,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
               education: selectedLecturer.education,
               expertise: selectedLecturer.expertise,
             }}
+            aboutLabel={t.modalAboutLabel}
             educationLabel={t.modalEducationLabel}
             researchLabel={t.modalResearchLabel}
             onClose={() => setSelectedLecturer(null)}
@@ -259,6 +260,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             education: selectedLecturer.education,
             expertise: selectedLecturer.expertise,
           }}
+          aboutLabel={t.modalAboutLabel}
           educationLabel={t.modalEducationLabel}
           researchLabel={t.modalResearchLabel}
           onClose={() => setSelectedLecturer(null)}
@@ -272,12 +274,14 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             initials: selectedAssistant.initials,
             image: selectedAssistant.image,
             role: selectedAssistant.role,
+            about: selectedAssistant.about,
             education: selectedAssistant.education,
             expertise: selectedAssistant.expertise,
             experience: selectedAssistant.experience,
             achievements: selectedAssistant.achievements,
             contact: selectedAssistant.contact,
           }}
+          aboutLabel={t.modalAboutLabel}
           educationLabel={t.modalEducationLabel}
           researchLabel={t.modalResearchLabel}
           experienceLabel={t.modalExperienceLabel}
@@ -294,12 +298,14 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             initials: selectedAlumni.initials,
             image: selectedAlumni.image,
             role: selectedAlumni.role,
+            about: selectedAlumni.about,
             education: selectedAlumni.education,
             thesis: selectedAlumni.thesis,
             experience: selectedAlumni.experience,
             achievements: selectedAlumni.achievements,
             contact: selectedAlumni.contact,
           }}
+          aboutLabel={t.modalAboutLabel}
           educationLabel={t.modalEducationLabel}
           researchLabel={t.modalResearchLabel}
           thesisLabel={t.modalThesisLabel}

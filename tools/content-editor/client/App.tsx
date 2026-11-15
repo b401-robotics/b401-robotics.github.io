@@ -71,6 +71,10 @@ function EditorApp() {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("b401_theme", "light");
     }
+    const meta = document.querySelector('meta[name="color-scheme"]');
+    if (meta) {
+      meta.setAttribute("content", darkMode ? "dark" : "light");
+    }
   }, [darkMode]);
 
   // Load section data

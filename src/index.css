@@ -4,7 +4,27 @@
 
 @layer base {
   :root {
+    color-scheme: light dark;
     font-family: 'DM Sans', sans-serif;
+
+    &:has(> head > meta[name="color-scheme"][content="dark"]) {
+      color-scheme: dark;
+    }
+    &:has(> head > meta[name="color-scheme"][content="light"]) {
+      color-scheme: light;
+    }
+  }
+
+  /* Modern dialog and top layer defaults */
+  dialog:modal {
+    overscroll-behavior: contain;
+  }
+
+  dialog::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    background-color: rgba(9, 9, 11, 0.6);
+    backdrop-filter: blur(4px);
   }
 
   html {

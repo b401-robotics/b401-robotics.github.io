@@ -98,7 +98,7 @@ export function Footer() {
                 href={t.departmentWebsite.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="fg-muted hover:text-zinc-700 dark:hover:text-zinc-100 text-sm transition-colors duration-200"
+                className="inline-flex items-center min-h-[44px] fg-muted hover:text-zinc-700 dark:hover:text-zinc-100 text-sm transition-colors duration-200"
               >
                 {t.departmentWebsite.label}
               </a>

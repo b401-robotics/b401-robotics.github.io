@@ -1,68 +1,66 @@
 import { useEffect, useRef } from "react";
 
-const FOCUSABLE =
-  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
 /**
- * Shared modal behaviour: initial focus, Tab trap, Escape to close, focus
- * restoration to the invoking element, and body scroll lock (with scrollbar
- * width compensation so the page does not jump).
+ * Shared native modal behavior:
+ * - Opens the HTMLDialogElement using showModal() on mount
+ * - Closes on unmount
+ * - Handles the native "cancel" event (Escape key) to notify onClose
+ * - Implements Modern Web Guidance light-dismiss fallback for browsers without native closedby support
  */
-export function useDialog<T extends HTMLElement>(onClose: () => void) {
+export function useDialog<T extends HTMLDialogElement = HTMLDialogElement>(onClose: () => void) {
   const ref = useRef<T | null>(null);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    const dialog = ref.current;
+    if (!dialog) return;
 
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    const prevOverflow = document.body.style.overflow;
-    const prevPaddingRight = document.body.style.paddingRight;
-    const scrollbar = window.innerWidth - document.documentElement.clientWidth;
-
-    document.body.style.overflow = "hidden";
-    if (scrollbar > 0) document.body.style.paddingRight = `${scrollbar}px`;
-
-    const focusables = () =>
-      Array.from(el.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
-        (node) => node.offsetParent !== null || node === document.activeElement
-      );
-
-    focusables()[0]?.focus();
-
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        onClose();
-        return;
-      }
-      if (e.key !== "Tab") return;
-
-      const list = focusables();
-      if (list.length === 0) {
-        e.preventDefault();
-        return;
-      }
-
-      const first = list[0]!;
-      const last = list[list.length - 1]!;
-
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+    // Open via native showModal if not already open
+    if (!dialog.open) {
+      try {
+        dialog.showModal();
+      } catch {
+        // Fallback or ignore if already open
       }
     }
 
-    document.addEventListener("keydown", handleKeyDown);
+    // Native cancel event fires on Escape or mobile back gesture
+    const handleCancel = (e: Event) => {
+      e.preventDefault();
+      onClose();
+    };
+
+    dialog.addEventListener("cancel", handleCancel);
+
+    // Modern Web Guidance light-dismiss fallback for browsers without closedby="any" support
+    const handleBackdropClick = (event: MouseEvent) => {
+      if (event.target !== dialog) return;
+
+      const rect = dialog.getBoundingClientRect();
+      const isWithinDialog =
+        rect.top <= event.clientY &&
+        event.clientY <= rect.top + rect.height &&
+        rect.left <= event.clientX &&
+        event.clientX <= rect.left + rect.width;
+
+      if (!isWithinDialog) {
+        onClose();
+      }
+    };
+
+    if (!("closedBy" in HTMLDialogElement.prototype)) {
+      dialog.addEventListener("click", handleBackdropClick);
+    }
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = prevOverflow;
-      document.body.style.paddingRight = prevPaddingRight;
-      previouslyFocused?.focus?.();
+      dialog.removeEventListener("cancel", handleCancel);
+      dialog.removeEventListener("click", handleBackdropClick);
+      if (dialog.open) {
+        try {
+          dialog.close();
+        } catch {
+          // ignore
+        }
+      }
     };
   }, [onClose]);
 

@@ -87,7 +87,7 @@ function renderInlineMarkdown(text: string): ReactNode[] {
       return (
         <code
           key={idx}
-          className="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono text-[0.88em] border border-zinc-200 dark:border-zinc-700"
+          className="px-1.5 py-0.5 rounded-none bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono text-[0.88em] border border-zinc-200 dark:border-zinc-700"
         >
           {part.slice(1, -1)}
         </code>
@@ -356,6 +356,10 @@ export function ChatbotSection() {
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
+      // Block submission if composing via IME or if keyCode is 229
+      if (e.nativeEvent.isComposing || e.keyCode === 229) {
+        return;
+      }
       if (canSubmit) {
         void handleSubmit();
       }

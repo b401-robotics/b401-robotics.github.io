@@ -12,6 +12,7 @@ export const membersEN = {
   lecturers,
   assistants,
   alumni,
+  modalAboutLabel: "About",
   modalEducationLabel: "Education",
   modalResearchLabel: "Research Interests",
   modalThesisLabel: "Thesis",

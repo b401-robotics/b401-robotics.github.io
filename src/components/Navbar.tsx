@@ -22,7 +22,23 @@ export function Navbar() {
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDarkMode);
+    const meta = document.querySelector('meta[name="color-scheme"]');
+    if (meta) {
+      meta.setAttribute("content", isDarkMode ? "dark" : "light");
+    }
+  }, [isDarkMode]);
 
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === "theme" && e.newValue) {
+        setIsDarkMode(e.newValue === "dark");
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
+  useEffect(() => {
     let lastScrollY = window.scrollY;
     const maxOffset = 70; // full navbar height
 

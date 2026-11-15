@@ -356,8 +356,8 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
             </svg>
           </button>
 
-          {/* Index dots — one per image, active one filled. */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center px-1.5 py-0.5 rounded-full bg-black/40 backdrop-blur-xs transition-all duration-300 opacity-100 pointer-events-auto sm:opacity-0 sm:pointer-events-none sm:group-hover:opacity-100 sm:group-hover:pointer-events-auto">
+          {/* Index indicator steps — one per image, active one extended. */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-2 py-1 border border-white/20 bg-black/75 backdrop-blur-xs transition-all duration-300 opacity-100 pointer-events-auto sm:opacity-0 sm:pointer-events-none sm:group-hover:opacity-100 sm:group-hover:pointer-events-auto">
             {images.map((_, i) => (
               <button
                 key={`dot-${i}`}
@@ -365,13 +365,13 @@ function ImageCarousel({ images, alt }: ImageCarouselProps) {
                 onClick={() => setIndex(i)}
                 aria-label={`Go to image ${i + 1}`}
                 aria-current={i === index}
-                className="w-11 h-11 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-full"
+                className="w-11 h-11 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-none"
               >
                 <span
-                  className={`block h-2 rounded-full transition-colors duration-200 ${
+                  className={`block h-1 transition-all duration-200 ${
                     i === index
-                      ? "bg-white w-4"
-                      : "bg-white/50 w-2 hover:bg-white/80"
+                      ? "bg-white w-5"
+                      : "bg-white/40 w-2.5 hover:bg-white/70"
                   }`}
                 />
               </button>

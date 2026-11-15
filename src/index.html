@@ -3,6 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var isDark =
+            stored === "dark" ||
+            (!stored &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (isDark) document.documentElement.classList.add("dark");
+          var meta = document.querySelector('meta[name="color-scheme"]');
+          if (meta && (stored === "dark" || stored === "light")) {
+            meta.content = stored;
+          }
+        } catch (_) {}
+      })();
+    </script>
     <!--
       Restores the real path after the GitHub Pages 404 redirect.
       The 404.html page rewrites /en/research to /?/en/research; this

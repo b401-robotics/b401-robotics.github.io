@@ -14,7 +14,7 @@ export function ThesisSection() {
         {/* Header */}
         <div className="mb-8 md:mb-10 shrink-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
           <h2 className="section-heading mb-3 text-2xl md:text-3xl">
-            {t.heading} {t.headingAccent}
+            {t.heading} <span className="fg-muted">{t.headingAccent}</span>
           </h2>
           <p className="fg-muted text-sm md:text-base max-w-2xl leading-relaxed">
             {t.body}
@@ -48,7 +48,7 @@ export function ThesisSection() {
                       onClick={() => setOpenIndex(open ? null : i)}
                       aria-expanded={open}
                       aria-controls={abstractId}
-                      className="w-full text-left bg-transparent cursor-pointer grid grid-cols-[1fr_auto] items-start gap-4 md:gap-6 py-6 md:py-8 px-1"
+                      className="w-full text-left bg-transparent cursor-pointer grid grid-cols-[1fr_auto] items-start gap-4 md:gap-6 py-6 md:py-8 px-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
                     >
                       {/* Title + author */}
                       <span className="min-w-0">

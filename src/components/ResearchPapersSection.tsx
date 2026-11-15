@@ -836,11 +836,9 @@ export function ResearchPapersSection() {
           className="mb-10 animate-fade-in"
           style={{ animationDelay: "0.1s" }}
         >
-          <div className="kicker mb-3">RESEARCH OUTPUT</div>
-
           <h2 className="section-heading mb-3 text-2xl md:text-3xl">
             Research Papers{" "}
-            <span className="fg-accent">& Publications</span>
+            <span className="fg-muted">& Publications</span>
           </h2>
 
           <p className="fg-muted text-sm md:text-base max-w-2xl leading-relaxed">
@@ -869,7 +867,7 @@ export function ResearchPapersSection() {
             >
               {/* Metadata */}
               <div className="flex flex-wrap items-center gap-x-2 gap-y-2 mb-4">
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] fg-accent">
+                <span className="font-mono text-[10px] uppercase tracking-[0.14em] fg-meta">
                   {paper.category}
                 </span>
 
@@ -923,7 +921,7 @@ export function ResearchPapersSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Open publication: ${paper.title}`}
-                    className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-900 dark:text-zinc-100 hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors"
+                    className="inline-flex items-center gap-2 min-h-[44px] text-xs font-semibold text-zinc-900 dark:text-zinc-100 hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors"
                   >
                     View Paper
                     <span

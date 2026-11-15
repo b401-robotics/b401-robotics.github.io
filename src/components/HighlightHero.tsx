@@ -16,7 +16,7 @@ export function HighlightHero() {
           <div>
             <h1 className="section-heading text-4xl md:text-6xl">
               {t.heading}{" "}
-              <span className="fg-meta">{t.headingAccent}</span>
+              <span className="fg-muted">{t.headingAccent}</span>
             </h1>
           </div>
           <p className="max-w-xl text-base leading-relaxed text-zinc-600 md:text-lg dark:text-zinc-300">

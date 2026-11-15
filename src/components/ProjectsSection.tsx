@@ -21,7 +21,7 @@ export function ProjectsSection() {
         {/* Header */}
         <div className="mb-10 shrink-0 animate-fade-in relative" style={{ animationDelay: "0.1s" }}>
           <h2 className="section-heading mb-3 text-2xl md:text-3xl">
-            {t.heading} {t.headingAccent}
+            {t.heading} <span className="fg-muted">{t.headingAccent}</span>
           </h2>
           <p className="fg-muted text-sm md:text-base max-w-2xl leading-relaxed">
             {t.body}
@@ -65,14 +65,14 @@ export function ProjectsSection() {
 
                 {/* Members */}
                 {project.tags && project.tags.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-2 mt-auto pt-2">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.16em] fg-muted">
-                      MEMBER :
+                  <div className="mt-auto pt-2 flex flex-wrap items-center gap-1.5">
+                    <span className="kicker mr-1">
+                      Member:
                     </span>
                     {project.tags.map((member) => (
                       <span
                         key={member}
-                        className="px-2.5 py-1 text-xs border border-zinc-300 dark:border-white/15 text-zinc-700 dark:text-zinc-300"
+                        className="inline-flex items-center px-2.5 py-1 border border-zinc-300 text-[11px] text-zinc-600 dark:border-white/15 dark:text-zinc-300"
                       >
                         {member}
                       </span>
