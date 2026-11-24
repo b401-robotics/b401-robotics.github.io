@@ -47,19 +47,19 @@ export function Navbar() {
       const delta = currentScrollY - lastScrollY;
 
       if (menuOpen) {
-        setOffsetY(0);
+        setOffsetY((prev) => (prev === 0 ? prev : 0));
         lastScrollY = currentScrollY;
         return;
       }
 
       if (currentScrollY <= 20) {
-        setOffsetY(0);
+        setOffsetY((prev) => (prev === 0 ? prev : 0));
       } else {
         // delta > 0 (scroll down) -> pushes navbar up towards -maxOffset
         // delta < 0 (scroll up) -> pulls navbar down towards 0 by exact scroll distance
         setOffsetY((prev) => {
-          const next = prev - delta;
-          return Math.min(0, Math.max(-maxOffset, next));
+          const next = Math.min(0, Math.max(-maxOffset, prev - delta));
+          return next === prev ? prev : next;
         });
       }
 

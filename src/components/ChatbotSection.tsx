@@ -23,14 +23,18 @@ function renderInlineMarkdown(text: string): ReactNode[] {
   return parts.map((part, idx) => {
     if (!part) return null;
 
-    // Markdown Link: [label](url)
+    // Markdown Link: [label](url) — allow only safe http(s) and mailto schemes
     const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     if (linkMatch) {
       const [, label, url] = linkMatch;
+      const safeUrl = url?.trim();
+      if (!safeUrl || !/^(https?:\/\/|mailto:)/i.test(safeUrl)) {
+        return <span key={idx}>{label}</span>;
+      }
       return (
         <a
           key={idx}
-          href={url}
+          href={safeUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="text-zinc-900 dark:text-zinc-100 underline decoration-zinc-400 hover:decoration-zinc-900 dark:hover:decoration-zinc-100 font-medium break-all"
@@ -332,10 +336,14 @@ export function ChatbotSection() {
         body: JSON.stringify({ prompt: question }),
       });
 
-      const data = (await res.json()) as ChatResponse;
+      const data = (await res.json().catch(() => null)) as ChatResponse | null;
 
       if (!res.ok) {
-        throw new Error(data.error || `Server responded with status ${res.status}`);
+        throw new Error(data?.error || `Server responded with status ${res.status}`);
+      }
+
+      if (!data || typeof data.answer !== "string") {
+        throw new Error("Received an invalid response from the assistant service.");
       }
 
       setResult(data);

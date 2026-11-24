@@ -1,7 +1,6 @@
-import rawKnowledge from "./knowledge.json";
-
 export interface GuardrailResult {
   passed: boolean;
+  unavailable?: boolean;
   reason?: string;
 }
 
@@ -49,43 +48,11 @@ function getRandomVariant(variants: string[]): string {
   return variants[index]!;
 }
 
-// Build dynamic scope from knowledge base chunks at worker initialization
-const FIXED_SCOPE = `- B401 Robotics & Intelligent Systems Laboratory (Laboratorium Robotika dan Sistem Cerdas)
-- Location: Room TW2-901, Tower 2 Building, Department of Computer Engineering, Institut Teknologi Sepuluh Nopember (ITS), Surabaya, Indonesia
-- Practicums: Telematics Workshop (P01), Digital Circuit (P02), Embedded Systems (P03)`;
-
-const CAT_ORDER = [
-  "Research",
-  "Thesis",
-  "Projects",
-  "Achievements",
-  "Facilities",
-  "Practicums",
-  "People",
-  "Contact",
-];
-
-const SCOPE_TEXT = (() => {
-  try {
-    const chunks = (rawKnowledge as any)?.chunks || [];
-    const byCat = new Map<string, string[]>();
-
-    for (const c of chunks) {
-      if (c.category === "About") continue;
-      if (!byCat.has(c.category)) byCat.set(c.category, []);
-      byCat.get(c.category)!.push(c.title);
-    }
-
-    const lines = CAT_ORDER
-      .filter((cat) => byCat.has(cat))
-      .map((cat) => `${cat}: ${byCat.get(cat)!.join("; ")}`);
-
-    if (lines.length === 0) return FIXED_SCOPE;
-    return `${FIXED_SCOPE}\n\nDocumented Laboratory Entities & Activities:\n${lines.join("\n")}`;
-  } catch {
-    return FIXED_SCOPE;
-  }
-})();
+// Compact lab scope summary for guardrail classification (~600 chars)
+const SCOPE_TEXT = `- B401 Robotics & Intelligent Systems Laboratory (Laboratorium Robotika dan Sistem Cerdas), Department of Computer Engineering, ITS Surabaya
+- Lab Rooms: TW2-901 (main robotics/AI floor), B401 (automation & electronics), A108 (computing, IoT & networking)
+- Practicums: P01 Telematics Workshop, P02 Digital Circuit, P03 Embedded Systems
+- Documented Categories: Research publications & focus areas, Student theses (skripsi/TA), Robotics & IoT projects, Competition achievements & awards (RoboCup, KRI, KRSTI, FIRA), Lab equipment & facilities (robot arms, drones, TurtleBot, 3D printers, RTX PCs), Lecturers/supervisors, Lab assistants & alumni, Contact & location`;
 
 export async function validateWithJevGuardrails(
   prompt: string,
@@ -119,16 +86,17 @@ export async function validateWithJevGuardrails(
   }
 
   // 3. TypeSafe Jev System One API check (if API key configured)
-  if (typesafeApiKey) {
+  const trimmedKey = typesafeApiKey?.trim();
+  if (trimmedKey) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
 
       const res = await fetch("https://api.typesafe.ai/v1/systemone", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${typesafeApiKey}`,
+          Authorization: `Bearer ${trimmedKey}`,
         },
         body: JSON.stringify({
           model: "jev-latest",
@@ -210,6 +178,7 @@ Also include general robotics, AI, machine learning, computer vision, IoT, contr
         console.warn(`TypeSafe API responded with HTTP ${res.status}: ${errText}`);
         return {
           passed: false,
+          unavailable: true,
           reason: SERVICE_UNAVAILABLE_MESSAGE,
         };
       }
@@ -217,6 +186,7 @@ Also include general robotics, AI, machine learning, computer vision, IoT, contr
       console.warn("TypeSafe Jev check failed/timed out:", err);
       return {
         passed: false,
+        unavailable: true,
         reason: SERVICE_UNAVAILABLE_MESSAGE,
       };
     }

@@ -1,5 +1,5 @@
-import { lecturers, assistants, alumni } from "./memberList";
-
+// Member arrays (`lecturers`, `assistants`, `alumni`) live in `./memberList`
+// so both the UI and chatbot knowledge sync share one source of truth.
 export const membersEN = {
   sectionLabel: "Our People",
   heading: "The People Behind",
@@ -9,9 +9,6 @@ export const membersEN = {
   activeMembersLabel: "Active Laboratory Members",
   assistantsLabel: "Laboratory Assistants",
   alumniLabel: "Laboratory Alumni",
-  lecturers,
-  assistants,
-  alumni,
   modalAboutLabel: "About",
   modalEducationLabel: "Education",
   modalResearchLabel: "Research Interests",

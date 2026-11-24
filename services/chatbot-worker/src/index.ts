@@ -10,6 +10,7 @@ type Bindings = {
   GEMINI_API_KEY?: string;
   TYPESAFE_API_KEY?: string;
   MAX_PROMPT_LENGTH?: string;
+  CHAT_RATE_LIMITER?: RateLimit;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -51,6 +52,20 @@ app.get("/health", (c) => {
 
 app.post("/api/chat", async (c) => {
   try {
+    if (c.env?.CHAT_RATE_LIMITER) {
+      const ip =
+        c.req.header("CF-Connecting-IP") ||
+        c.req.header("X-Forwarded-For")?.split(",")[0]?.trim() ||
+        "unknown";
+      const { success } = await c.env.CHAT_RATE_LIMITER.limit({ key: ip });
+      if (!success) {
+        return c.json(
+          { error: "Too many requests. Please wait a minute and try again." },
+          429
+        );
+      }
+    }
+
     const body = await c.req.json().catch(() => null);
     if (!body || typeof body.prompt !== "string") {
       return c.json(
@@ -76,6 +91,12 @@ app.post("/api/chat", async (c) => {
     // 1. Guardrail inspection (TypeSafe Jev + Local heuristics)
     const guardrail = await validateWithJevGuardrails(prompt, c.env?.TYPESAFE_API_KEY, maxLen);
     if (!guardrail.passed) {
+      if (guardrail.unavailable) {
+        return c.json(
+          { error: guardrail.reason || "Service temporarily unavailable." },
+          503
+        );
+      }
       return c.json({
         answer:
           guardrail.reason || "Please only ask topics related to this Laboratory.",
@@ -87,11 +108,12 @@ app.post("/api/chat", async (c) => {
     // 2. In-Worker Vector Similarity Search (Gemini Embedding with offline fallback)
     const relevantChunks = await searchRelevantChunks(prompt, 6, c.env?.GEMINI_API_KEY);
 
-    // 3. Multi-Provider Generation (Gemini prioritized, Relayer fallback)
-    let result = await askGemini(prompt, relevantChunks, c.env?.GEMINI_API_KEY);
+    // 3. Multi-Provider Generation (Gemini prioritized, Relayer fallback) under shared deadline
+    const deadlineMs = Date.now() + 18000;
+    let result = await askGemini(prompt, relevantChunks, c.env?.GEMINI_API_KEY, deadlineMs);
 
     if (!result) {
-      result = await askRelayer(prompt, relevantChunks, c.env?.RELAYER_API_KEY);
+      result = await askRelayer(prompt, relevantChunks, c.env?.RELAYER_API_KEY, deadlineMs);
     }
 
     if (!result) {

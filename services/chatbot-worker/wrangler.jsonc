@@ -4,5 +4,15 @@
   "compatibility_date": "2026-03-01",
   "vars": {
     "MAX_PROMPT_LENGTH": "500"
-  }
+  },
+  "ratelimits": [
+    {
+      "name": "CHAT_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
+  ]
 }

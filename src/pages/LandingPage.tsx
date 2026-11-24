@@ -1,14 +1,23 @@
 import { useEffect, lazy, Suspense } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "../components/Navbar";
 import { HomeSheets } from "../components/HomeSheets";
 import { PracticumsSection } from "../components/PracticumsSection";
-import { ResearchSection } from "../components/ResearchSection";
 import { MembersSection } from "../components/MembersSection";
 import { EquipmentSection } from "../components/EquipmentSection";
 import { Footer } from "../components/Footer";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+
+const VALID_SECTIONS = new Set([
+  "home",
+  "research",
+  "highlight",
+  "practicums",
+  "projects",
+  "members",
+  "equipment",
+]);
 
 const HighlightPage = lazy(() =>
   import("./HighlightPage").then((m) => ({ default: m.HighlightPage }))
@@ -32,6 +41,10 @@ export function LandingPage() {
     }
     window.scrollTo(0, 0);
   }, [location.pathname, reduceMotion]);
+
+  if (section && !VALID_SECTIONS.has(section)) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <>

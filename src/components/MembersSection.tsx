@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { translations } from "../contents/translations";
-import type { I_lecturers, I_assistant, I_alumni } from "../contents/memberList";
-import { PreviewSectionLayout } from "./PreviewSectionLayout";
+import {
+  lecturers,
+  assistants,
+  alumni,
+  type I_lecturers,
+  type I_assistant,
+  type I_alumni,
+} from "../contents/memberList";
 import { PersonModal } from "./PersonModal";
 
 interface MembersSectionProps {
@@ -143,7 +149,7 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
           <div className="mb-10 animate-fade-in" style={{ animationDelay: "0.15s" }}>
             <p className="kicker mb-4">{t.lecturersLabel}</p>
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {t.lecturers.map((lecturer, idx) => (
+              {lecturers.map((lecturer, idx) => (
                 <PersonCard
                   key={lecturer.name}
                   name={lecturer.name}
@@ -204,8 +210,8 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
         </header>
 
         <div className="space-y-28">
-          <Group numeral="I" label={t.lecturersLabel} count={t.lecturers.length}>
-            {t.lecturers.map((lecturer, idx) => (
+          <Group numeral="I" label={t.lecturersLabel} count={lecturers.length}>
+            {lecturers.map((lecturer, idx) => (
               <PersonCard
                 key={lecturer.name}
                 name={lecturer.name}
@@ -218,8 +224,8 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             ))}
           </Group>
 
-          <Group numeral="II" label={t.activeMembersLabel} count={t.assistants.length}>
-            {t.assistants.map((assistant, idx) => (
+          <Group numeral="II" label={t.activeMembersLabel} count={assistants.length}>
+            {assistants.map((assistant, idx) => (
               <PersonCard
                 key={idx}
                 name={assistant.name}
@@ -232,13 +238,13 @@ export function MembersSection({ preview = false }: MembersSectionProps = {}) {
             ))}
           </Group>
 
-          <Group numeral="III" label={t.alumniLabel} count={t.alumni.length}>
-            {t.alumni.map((person, idx) => (
+          <Group numeral="III" label={t.alumniLabel} count={alumni.length}>
+            {alumni.map((person, idx) => (
               <PersonCard
                 key={idx}
                 name={person.name}
                 role={person.role}
-                image={"image" in person ? person.image : undefined}
+                image={person.image}
                 initials={person.initials}
                 year={person.year}
                 delay={0.05 * idx}

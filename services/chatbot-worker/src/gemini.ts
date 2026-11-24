@@ -3,8 +3,6 @@ import type { KnowledgeChunk } from "./vectorSearch";
 const MODEL_CANDIDATES = [
   "gemini-3.1-flash-lite",
   "gemini-3-flash-preview",
-  "gemini-3.5-flash-lite",
-  "gemini-3.1-flash-lite-preview",
 ];
 
 export const SYSTEM_INSTRUCTION = `You are the virtual AI assistant for the B401 Robotics & Intelligent Systems Laboratory (Laboratorium Robotika dan Sistem Cerdas), Department of Computer Engineering, Institut Teknologi Sepuluh Nopember (ITS), Surabaya.
@@ -21,7 +19,8 @@ Strict Guidelines:
 export async function askGemini(
   prompt: string,
   contextChunks: KnowledgeChunk[],
-  apiKey?: string
+  apiKey?: string,
+  deadlineMs?: number
 ): Promise<{ answer: string; modelUsed: string } | null> {
   const trimmedKey = apiKey?.trim();
   if (!trimmedKey) {
@@ -34,15 +33,19 @@ export async function askGemini(
 
   const userContent = `Lab Documentation Context:\n${contextText}\n\nUser Question:\n${prompt}`;
 
-  let lastError: Error | null = null;
-
   for (const model of MODEL_CANDIDATES) {
+    const remaining = deadlineMs !== undefined ? deadlineMs - Date.now() : 10000;
+    if (remaining <= 500) break;
+
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: AbortSignal.timeout(12000),
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": trimmedKey,
+        },
+        signal: AbortSignal.timeout(Math.min(10000, remaining)),
         body: JSON.stringify({
           contents: [
             {
@@ -61,13 +64,20 @@ export async function askGemini(
       });
 
       if (res.status === 429 || res.status === 503) {
-        console.warn(`Model ${model} hit rate limit / unavailable (HTTP ${res.status}), trying next model...`);
+        const errBody = (await res.text().catch(() => "")).slice(0, 300);
+        console.warn(`Gemini ${model} HTTP ${res.status}: ${errBody}`);
         continue;
       }
 
+      if (res.status === 400 || res.status === 401 || res.status === 403) {
+        const errBody = (await res.text().catch(() => "")).slice(0, 300);
+        console.warn(`Gemini ${model} non-retryable HTTP ${res.status}: ${errBody}`);
+        break;
+      }
+
       if (!res.ok) {
-        const errorBody = await res.text();
-        console.warn(`Model ${model} error (HTTP ${res.status}): ${errorBody}`);
+        const errorBody = (await res.text().catch(() => "")).slice(0, 300);
+        console.warn(`Gemini ${model} error (HTTP ${res.status}): ${errorBody}`);
         continue;
       }
 
@@ -84,11 +94,10 @@ export async function askGemini(
         return { answer: text.trim(), modelUsed: model };
       }
     } catch (err) {
-      lastError = err as Error;
       console.warn(`Failed call to ${model}:`, err);
     }
   }
 
-  console.warn("All Gemini models failed or timed out, falling back to CodeCraft.");
+  console.warn("All Gemini models failed or timed out, falling back to Relayer.");
   return null;
 }

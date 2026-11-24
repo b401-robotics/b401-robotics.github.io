@@ -14,23 +14,31 @@ import { addClient, removeClient, broadcast } from "./watcher";
 import { convertImages, getConversionStats } from "./convertImages";
 import { generateKnowledgeBase } from "./syncKnowledge";
 
-function json(data: any, status = 200) {
+function getCorsOrigin(req?: Request): string {
+  const vitePort = process.env.EDITOR_VITE_PORT || "5174";
+  const allowed = new Set([`http://127.0.0.1:${vitePort}`, `http://localhost:${vitePort}`]);
+  const origin = req?.headers.get("origin");
+  if (origin && allowed.has(origin)) return origin;
+  return `http://127.0.0.1:${vitePort}`;
+}
+
+function jsonWithCors(data: any, status = 200, corsOrigin = getCorsOrigin()) {
   return new Response(JSON.stringify(data), {
     status,
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": corsOrigin,
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization, Origin",
     },
   });
 }
 
-function verifySecurity(req: Request): Response | null {
+function verifySecurity(req: Request, corsOrigin: string): Response | null {
   const host = req.headers.get("host") || "";
   const hostName = host.split(":")[0];
   if (hostName !== "localhost" && hostName !== "127.0.0.1") {
-    return json({ error: "Forbidden host" }, 403);
+    return jsonWithCors({ error: "Forbidden host" }, 403, corsOrigin);
   }
 
   if (req.method === "PUT" || req.method === "POST" || req.method === "DELETE") {
@@ -39,10 +47,10 @@ function verifySecurity(req: Request): Response | null {
       try {
         const url = new URL(origin);
         if (url.hostname !== "localhost" && url.hostname !== "127.0.0.1") {
-          return json({ error: "Forbidden origin" }, 403);
+          return jsonWithCors({ error: "Forbidden origin" }, 403, corsOrigin);
         }
       } catch {
-        return json({ error: "Invalid origin" }, 403);
+        return jsonWithCors({ error: "Invalid origin" }, 403, corsOrigin);
       }
     }
   }
@@ -83,18 +91,20 @@ export async function handleRequest(req: Request): Promise<Response> {
   const apiPort = process.env.EDITOR_API_PORT || "3100";
   const vitePort = process.env.EDITOR_VITE_PORT || "5174";
   const viteUrl = `http://127.0.0.1:${vitePort}`;
+  const corsOrigin = getCorsOrigin(req);
+  const json = (data: any, status = 200) => jsonWithCors(data, status, corsOrigin);
 
   if (req.method === "OPTIONS") {
     return new Response(null, {
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": corsOrigin,
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization, Origin",
       },
     });
   }
 
-  const securityErr = verifySecurity(req);
+  const securityErr = verifySecurity(req, corsOrigin);
   if (securityErr) return securityErr;
 
   // Root landing page redirect to Vite frontend
@@ -151,7 +161,7 @@ export async function handleRequest(req: Request): Promise<Response> {
           "Content-Type": "text/event-stream",
           "Cache-Control": "no-cache",
           "Connection": "keep-alive",
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": corsOrigin,
         },
       });
     }
@@ -193,7 +203,7 @@ export async function handleRequest(req: Request): Promise<Response> {
       return new Response(file, {
         headers: {
           "Cache-Control": "no-cache",
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": corsOrigin,
         },
       });
     }

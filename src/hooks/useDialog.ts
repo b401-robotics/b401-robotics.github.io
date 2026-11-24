@@ -9,6 +9,8 @@ import { useEffect, useRef } from "react";
  */
 export function useDialog<T extends HTMLDialogElement = HTMLDialogElement>(onClose: () => void) {
   const ref = useRef<T | null>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     const dialog = ref.current;
@@ -26,7 +28,7 @@ export function useDialog<T extends HTMLDialogElement = HTMLDialogElement>(onClo
     // Native cancel event fires on Escape or mobile back gesture
     const handleCancel = (e: Event) => {
       e.preventDefault();
-      onClose();
+      onCloseRef.current();
     };
 
     dialog.addEventListener("cancel", handleCancel);
@@ -43,7 +45,7 @@ export function useDialog<T extends HTMLDialogElement = HTMLDialogElement>(onClo
         event.clientX <= rect.left + rect.width;
 
       if (!isWithinDialog) {
-        onClose();
+        onCloseRef.current();
       }
     };
 
@@ -62,7 +64,7 @@ export function useDialog<T extends HTMLDialogElement = HTMLDialogElement>(onClo
         }
       }
     };
-  }, [onClose]);
+  }, []);
 
   return ref;
 }

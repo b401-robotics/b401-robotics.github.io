@@ -8,7 +8,8 @@ const RELAYER_MODELS = [
 export async function askRelayer(
   prompt: string,
   contextChunks: KnowledgeChunk[],
-  apiKey?: string
+  apiKey?: string,
+  deadlineMs?: number
 ): Promise<{ answer: string; modelUsed: string } | null> {
   const trimmedKey = apiKey?.trim();
   if (!trimmedKey) {
@@ -22,6 +23,9 @@ export async function askRelayer(
   const userContent = `Lab Documentation Context:\n${contextText}\n\nUser Question:\n${prompt}`;
 
   for (const model of RELAYER_MODELS) {
+    const remaining = deadlineMs !== undefined ? deadlineMs - Date.now() : 12000;
+    if (remaining <= 500) break;
+
     try {
       const res = await fetch("https://api.relayer.id/v1/chat/completions", {
         method: "POST",
@@ -29,7 +33,7 @@ export async function askRelayer(
           "Content-Type": "application/json",
           Authorization: `Bearer ${trimmedKey}`,
         },
-        signal: AbortSignal.timeout(15000),
+        signal: AbortSignal.timeout(Math.min(12000, remaining)),
         body: JSON.stringify({
           model,
           messages: [
@@ -48,12 +52,19 @@ export async function askRelayer(
       });
 
       if (res.status === 429 || res.status >= 500) {
-        console.warn(`Relayer model ${model} unavailable (HTTP ${res.status}), trying next model...`);
+        const errorText = (await res.text().catch(() => "")).slice(0, 300);
+        console.warn(`Relayer model ${model} unavailable (HTTP ${res.status}): ${errorText}`);
         continue;
       }
 
+      if (res.status === 400 || res.status === 401 || res.status === 403) {
+        const errorText = (await res.text().catch(() => "")).slice(0, 300);
+        console.warn(`Relayer model ${model} non-retryable HTTP ${res.status}: ${errorText}`);
+        break;
+      }
+
       if (!res.ok) {
-        const errorText = await res.text();
+        const errorText = (await res.text().catch(() => "")).slice(0, 300);
         console.warn(`Relayer model ${model} error (HTTP ${res.status}): ${errorText}`);
         continue;
       }

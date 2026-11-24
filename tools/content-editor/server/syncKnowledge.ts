@@ -45,7 +45,7 @@ async function fetchGeminiBatchEmbeddings(
   apiKey: string,
   modelName: string
 ): Promise<(number[] | null)[]> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:batchEmbedContents?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:batchEmbedContents`;
   const requests = texts.map((text) => ({
     model: `models/${modelName}`,
     content: { parts: [{ text }] },
@@ -56,7 +56,10 @@ async function fetchGeminiBatchEmbeddings(
     try {
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
         signal: AbortSignal.timeout(30000),
         body: JSON.stringify({ requests }),
       });
@@ -105,6 +108,7 @@ export async function generateKnowledgeBase(): Promise<{
   const [
     aboutMod,
     researchMod,
+    researchPapersMod,
     thesisMod,
     projectsMod,
     achievementsMod,
@@ -115,6 +119,7 @@ export async function generateKnowledgeBase(): Promise<{
   ] = await Promise.all([
     import(`${path.join(contentsDir, "AboutContent.ts")}?t=${timestamp}`),
     import(`${path.join(contentsDir, "ResearchContent.ts")}?t=${timestamp}`),
+    import(`${path.join(contentsDir, "researchPapers.ts")}?t=${timestamp}`),
     import(`${path.join(contentsDir, "ThesisContent.ts")}?t=${timestamp}`),
     import(`${path.join(contentsDir, "ProjectsContent.ts")}?t=${timestamp}`),
     import(`${path.join(contentsDir, "AchievementContent.ts")}?t=${timestamp}`),
@@ -145,25 +150,30 @@ ${highlightsText}`,
     });
   }
 
-  // 2. Research Focus & Areas
+  // 2. Research Focus, Areas & Publications
   const research = researchMod.researchEN;
-  if (research) {
-    const areasList = (research.areas || [])
+  const papers = Array.isArray(researchPapersMod.researchPapers)
+    ? researchPapersMod.researchPapers
+    : [];
+  if (research || papers.length > 0) {
+    const areasList = (research?.areas || [])
       .map((a: any) => `- **${a.title}** [${a.tag}]: ${a.description}`)
+      .join("\n");
+    const papersList = papers
+      .map((p: any) => `- **${p.title}** (${p.year}) [${p.category}] — ${p.venue}`)
       .join("\n");
     rawChunks.push({
       id: "research-overview",
       category: "Research",
-      title: "Research Focus & Areas of Expertise Overview",
-      aliases: "riset penelitian fokus bidang kajian topik penelitian semua riset research areas",
-      content: `# Research Areas & Focus Overview
-${research.body}
-
-All research areas:
-${areasList}`,
+      title: "Research Focus, Publications & Areas of Expertise Overview",
+      aliases: "riset penelitian publikasi paper jurnal fokus bidang kajian topik penelitian semua riset research areas publications",
+      content: `# Research Areas & Publications Overview
+${research?.body || ""}
+${areasList ? `\nAll research areas:\n${areasList}` : ""}
+${papersList ? `\nLab research publications (${papers.length} papers):\n${papersList}` : ""}`.trim(),
     });
 
-    if (Array.isArray(research.areas)) {
+    if (Array.isArray(research?.areas)) {
       for (const area of research.areas) {
         rawChunks.push({
           id: `research-${slugify(area.title)}`,
@@ -174,6 +184,21 @@ ${areasList}`,
 ${area.description}`,
         });
       }
+    }
+
+    for (const p of papers) {
+      rawChunks.push({
+        id: `paper-${slugify(p.title)}`,
+        category: "Research",
+        title: `Publication: ${p.title} (${p.year})`,
+        aliases: `paper publikasi jurnal penelitian ${p.category} ${p.venue} ${p.authors}`,
+        content: `# ${p.title} (${p.year})
+Category: ${p.category}
+Venue: ${p.venue}
+Authors: ${p.authors}
+Summary: ${p.description}
+URL: ${p.url}`,
+      });
     }
   }
 
@@ -285,6 +310,31 @@ Description: ${a.description}`,
   // 6. Facilities & Equipment
   const equipment = equipmentMod.equipmentEN;
   if (equipment && Array.isArray(equipment.labRooms)) {
+    const topFacilities: any[] = Array.isArray(equipment.facilities) ? equipment.facilities : [];
+    const facilitiesByRoom = new Map<string, any[]>();
+    const seenKeys = new Set<string>();
+
+    for (const room of equipment.labRooms) {
+      const list: any[] = [];
+      for (const f of room.facilities || []) {
+        const key = `${room.code}:${f.name}`;
+        if (!seenKeys.has(key)) {
+          seenKeys.add(key);
+          list.push(f);
+        }
+      }
+      facilitiesByRoom.set(room.code, list);
+    }
+    for (const f of topFacilities) {
+      const roomCode = f.room || "Unassigned";
+      const key = `${roomCode}:${f.name}`;
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        if (!facilitiesByRoom.has(roomCode)) facilitiesByRoom.set(roomCode, []);
+        facilitiesByRoom.get(roomCode)!.push(f);
+      }
+    }
+
     // 6a. Rooms Overview (Only rooms purpose, NO facility clutter)
     const roomsList = equipment.labRooms
       .map((r: any) => `- **${r.name} (${r.code})**: ${r.description}`)
@@ -303,8 +353,15 @@ ${roomsList}`,
     // 6b. Facilities Overview (Complete list grouped by room)
     const catalogList = equipment.labRooms
       .map((r: any) => {
-        const fList = (r.facilities || []).map((f: any) => `  - **${f.name}** [${f.category}]: ${f.description}`).join("\n");
-        return `### ${r.name} (${r.code}):\n${fList}`;
+        const roomFacs = facilitiesByRoom.get(r.code) || [];
+        const fList = roomFacs
+          .map((f: any) => {
+            const cat = f.category ? ` [${f.category}]` : "";
+            const desc = f.description ? `: ${f.description}` : "";
+            return `  - **${f.name}**${cat}${desc}`;
+          })
+          .join("\n");
+        return `### ${r.name} (${r.code}):\n${fList || "  - No documented items"}`;
       })
       .join("\n\n");
     rawChunks.push({
@@ -321,10 +378,11 @@ ${catalogList}`,
     // 6c. Per-room deep dives with full facility details
     for (const room of equipment.labRooms) {
       const roomSlug = slugify(room.code || room.name);
-      const facDetails = (room.facilities || [])
+      const roomFacs = facilitiesByRoom.get(room.code) || [];
+      const facDetails = roomFacs
         .map(
           (f: any, i: number) =>
-            `${i + 1}. **${f.name}** [${f.category}]: ${f.description}${f.specs ? "\n   Specifications: " + f.specs.join(", ") : ""}`
+            `${i + 1}. **${f.name}**${f.category ? ` [${f.category}]` : ""}${f.description ? `: ${f.description}` : ""}${f.specs ? "\n   Specifications: " + f.specs.join(", ") : ""}`
         )
         .join("\n\n");
 
@@ -336,22 +394,19 @@ ${catalogList}`,
         content: `# Laboratory Room: ${room.name} (${room.code})
 ${room.description}
 
-### Complete Facilities located in ${room.name} (${room.facilities?.length || 0} items):
+### Complete Facilities located in ${room.name} (${roomFacs.length} items):
 ${facDetails}`,
       });
 
-      if (Array.isArray(room.facilities)) {
-        for (const f of room.facilities) {
-          rawChunks.push({
-            id: `facility-${slugify(f.name)}`,
-            category: "Facilities",
-            title: `Facility: ${f.name} (${room.code})`,
-            aliases: `alat fasilitas perlengkapan ${f.name} ${f.category} ${room.code}`,
-            content: `# Facility: ${f.name} [Category: ${f.category}]
-Location: ${room.name} (${room.code})
-Description: ${f.description}${f.specs ? "\nSpecifications: " + f.specs.join(", ") : ""}`,
-          });
-        }
+      for (const f of roomFacs) {
+        rawChunks.push({
+          id: `facility-${slugify(f.name)}`,
+          category: "Facilities",
+          title: `Facility: ${f.name} (${room.code})`,
+          aliases: `alat fasilitas perlengkapan ${f.name} ${f.category || ""} ${room.code}`.trim(),
+          content: `# Facility: ${f.name}${f.category ? ` [Category: ${f.category}]` : ""}
+Location: ${room.name} (${room.code})${f.description ? `\nDescription: ${f.description}` : ""}${f.specs ? "\nSpecifications: " + f.specs.join(", ") : ""}`,
+        });
       }
     }
   }
@@ -416,6 +471,10 @@ Topics covered: ${topics}`,
     .map(([batch, names]) => `### Laboratory Assistants (${batch} — ${names.length} members):\n${names.map((n) => `- ${n}`).join("\n")}`)
     .join("\n\n");
 
+  const alumniList = alumni
+    .map((alm: any) => `- ${alm.name} (${alm.role}${alm.year ? `, Class of ${alm.year}` : ""})`)
+    .join("\n");
+
   rawChunks.push({
     id: "people-overview",
     category: "People",
@@ -426,7 +485,10 @@ Topics covered: ${topics}`,
 ## Lecturers & Supervisors:
 ${lecNames}
 
-${astBatchSections}`,
+${astBatchSections}
+
+## Alumni (${alumni.length} members):
+${alumniList}`,
   });
 
   // 8b. Individual People Chunks
@@ -500,8 +562,9 @@ Department Website: ${footer.departmentWebsite?.href || "https://www.its.ac.id/k
 
   // Generate 256-dim embeddings for all chunks if GEMINI_API_KEY available
   const apiKey = getGeminiApiKey(root);
+  let embeddingModelUsed: string | undefined;
   if (apiKey) {
-    const model = "gemini-embedding-2-preview";
+    const model = "gemini-embedding-2";
     console.log(`Embedding chunks using ${model} batchEmbedContents...`);
     let count = 0;
     const batchSize = 45;
@@ -524,13 +587,7 @@ Department Website: ${footer.departmentWebsite?.href || "https://www.its.ac.id/k
       }
 
       const texts = slice.map((c) => `${c.title}\n${c.aliases || ""}\n${c.content}`.slice(0, 2000));
-      let vectors = await fetchGeminiBatchEmbeddings(texts, apiKey, model);
-
-      // If gemini-embedding-2 fails completely, fallback to gemini-embedding-001
-      if (vectors.every((v) => v === null) && model === "gemini-embedding-2-preview") {
-        console.warn("gemini-embedding-2-preview failed, falling back to gemini-embedding-001...");
-        vectors = await fetchGeminiBatchEmbeddings(texts, apiKey, "gemini-embedding-001");
-      }
+      const vectors = await fetchGeminiBatchEmbeddings(texts, apiKey, model);
 
       for (let j = 0; j < slice.length; j++) {
         const vec = vectors[j];
@@ -547,12 +604,16 @@ Department Website: ${footer.departmentWebsite?.href || "https://www.its.ac.id/k
         await new Promise((r) => setTimeout(r, 1000));
       }
     }
+    if (count > 0) {
+      embeddingModelUsed = model;
+    }
     console.log(`Successfully embedded ${count}/${rawChunks.length} chunks.`);
   } else {
     console.warn("GEMINI_API_KEY not found. Chunks saved without embeddings (offline keyword search will be used).");
   }
 
   const knowledgeJson = {
+    ...(embeddingModelUsed ? { embeddingModel: embeddingModelUsed } : {}),
     chunks: rawChunks,
   };
 
